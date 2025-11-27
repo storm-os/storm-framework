@@ -1,0 +1,7 @@
+# Isi file requirement.txt:
+requests
+colorama
+python-nmap
+python-whois
+dnspython
+paramiko
