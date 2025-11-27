@@ -14,20 +14,29 @@ Pengembang (Developer) TIDAK bertanggung jawab atas segala kerusakan, kerugian, 
 
 ​Penggunaan tanpa izin adalah ILEGAL. Gunakan dengan bijak dan atas risiko Anda sendiri.
 
+<<<<<<< HEAD
 ​🚀 Pendahuluan 
 
 El-Cyber_Pentest adalah suite tool siber yang dirancang untuk membantu profesional keamanan, bug bounty hunter, dan peneliti dalam fase pengumpulan informasi dan analisis kerentanan awal.
 
 ​🛠️ Instalasi 
 
+=======
+ ​🚀 Pendahuluan
+​
+El-Cyber_Pentest adalah suite tool siber yang dirancang untuk membantu profesional keamanan, bug bounty hunter, dan peneliti dalam fase pengumpulan informasi dan analisis kerentanan awal.
+
+ ​🛠️ Instalasi
+​
+>>>>>>> 09818f6c762d29da97c071945c02f1786eb34207
 Pastikan Anda memiliki Python 3.12.x terinstal pada sistem Anda. Tool ini juga dapat dijalankan di lingkungan Kali Linux.
 
-1. Kloning Repositori
+ 1. Kloning Repositori
 
 git clone https://github.com/Proot9/El-Cyber_Pentest.git
 cd El-Cyber_Pentest
 
-2. Instalasi Dependensi
+ 2. Instalasi Dependensi
 
 Install semua pustaka (library) Python yang dibutuhkan:
 
