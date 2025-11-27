@@ -1,11 +1,16 @@
 ​⚠️ Peringatan Penting dan Disclaimer Hukum (Harap Baca!)
+
 ​El-Cyber_Pentest adalah tool yang dikembangkan hanya untuk tujuan edukasi, penelitian, dan pengujian penetrasi (penetration testing) yang sah dan berizin.
 
 Tanggung Jawab Pengguna
 ​Pengembang (Developer) TIDAK bertanggung jawab atas segala kerusakan, kerugian, atau tindakan ilegal yang timbul dari penggunaan tool ini. Pengguna sepenuhnya bertanggung jawab atas:
+
 ​1. Kepatuhan Hukum: Mematuhi semua hukum dan peraturan lokal, nasional, dan internasional yang berlaku.
+
 ​2. Izin Tertulis: Memperoleh izin tertulis dan eksplisit dari pemilik sistem atau jaringan sebelum melakukan pengujian apa pun menggunakan tool ini.
+
 ​3. Penggunaan Etis: Menggunakan tool ini secara etis dan bertanggung jawab.
+
 ​Penggunaan tanpa izin adalah ILEGAL. Gunakan dengan bijak dan atas risiko Anda sendiri.
 
 ​🚀 Pendahuluan
