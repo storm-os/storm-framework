@@ -101,9 +101,10 @@ def main():
 
         elif pilihan.upper() == 'C1':
             credential_target = input(C["INPUT"] + "Masukkan IP Target: " + C["RESET"])
+            pass_path = input(C["INPUT"] + "Masukkan Path Pass: " + C["RESET"])
 
             # Panggil Fungsi
-            check_default_credentials(credential_target, C)
+            check_default_credentials(credential_target, C, pass_path)
 
         elif pilihan.upper() == 'C2':
             hash_target = input(C["INPUT"] + "Masukkan Hash Target: " + C["RESET"])

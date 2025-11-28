@@ -3,7 +3,7 @@
 DEFAULT_CREDS = [
     ("admin", "admin"),
     ("user", "user"),
-    ("root", "toor"),
+    ("root", "root"),
     ("ftp", "ftp"),
     ("guest", "guest"),
     ("root", "Zte521"),
@@ -17,4 +17,15 @@ DEFAULT_CREDS = [
 ]
 
 # Anda bisa menambahkan list lain di sini, misalnya:
-# COMMON_USERNAMES = ["admin", "root", "tester"] 
+COMMON_USERS = [
+     "admin",
+     "root",
+     "tester",
+     "grafana",
+     "user"
+     "service"
+     "mikrotik"
+     "postgres",
+     "mysql",
+     "operator"
+]

@@ -5,8 +5,10 @@ import paramiko # Untuk SSH
 import ftplib # Untuk FTP
 import telnetlib # Untuk Telnet
 import concurrent.futures
+import requests
+import os
 
-from script.wordlist import DEFAULT_CREDS
+from script.wordlist import DEFAULT_CREDS, COMMON_USERS
 
 SYM_SUCCESS = "🔑"
 SYM_FAILED = "🔒"
@@ -87,8 +89,46 @@ def test_telnet(target_ip, port, username, password, C):
         # Kesalahan umum
         return False
 
+# --- Fungsi Pengujian Grafana (DISINKRONKAN) ---
+def test_grafana(target_ip, port, username, password, C):
+    """Mencoba login Grafana menggunakan requests (HTTP POST)."""
+    login_url = f"http://{target_ip}:{port}/login"
+
+    # Payload yang dikirim sebagai JSON
+    payload = {
+        "user": username,
+        "password": password
+    }
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    try:
+        # allow_redirects=False agar kita bisa menangkap kode 302 (tanda sukses login)
+        response = requests.post(
+            login_url,
+            json=payload,
+            headers=headers,
+            timeout=3,
+            allow_redirects=False
+        )
+
+        # Sukses Grafana: Kode 302 Found dan diarahkan ke /dashboard atau /
+        # Kita memeriksa kode status dan header location
+        if response.status_code == 302 and 'location' in response.headers and response.headers['location'].startswith('/'):
+            return True
+        else:
+            return False
+
+    except requests.exceptions.RequestException:
+        # Menangani kesalahan koneksi atau timeout
+        return False
+    except Exception:
+        return False
+
 # --- Fungsi Utama ---
-def check_default_credentials(target_ip, C):
+def check_default_credentials(target_ip, C, wordlist_path=None): # MODIFIKASI SIGNATURE
     """Menjalankan pengujian kredensial lemah pada layanan umum."""
 
     print(C["HEADER"] + f"\n--- CREDENTIAL CHECKER untuk {target_ip} ---")
@@ -97,10 +137,9 @@ def check_default_credentials(target_ip, C):
     services_to_test = {
         21: ("FTP", test_ftp),
         22: ("SSH", test_ssh),
-        23: ("Telnet", test_telnet), # <-- test_telnet sudah didefinisikan
+        23: ("Telnet", test_telnet),
+        3000: ("Grafana (Web)", test_grafana),
     }
-
-    found_weak_creds = False
 
     for port, (service_name, test_function) in services_to_test.items():
         print(C["MENU"] + f"\n{service_name} (Port {port}) Analisis:")
@@ -114,17 +153,56 @@ def check_default_credentials(target_ip, C):
             continue
         s.close()
 
-        # Mulai pengujian kredensial
+        # ---------------------------------------------
+        # Tahap 1: Coba Kredensial Default Tetap
+        # ---------------------------------------------
+        print(C["MENU"] + "  [*] Memulai Tahap 1: Kredensial Default...")
+        found_weak_creds = False
+
         for user, passwd in DEFAULT_CREDS:
             if test_function(target_ip, port, user, passwd, C):
                 print(C["SUCCESS"] + f"  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{user} P:{passwd}" + C["RESET"])
                 found_weak_creds = True
-                break # Berhenti setelah menemukan kredensial yang berhasil
+                break
             else:
-                # Opsi: Menampilkan kredensial yang gagal
                 print(C["MENU"] + f"  {SYM_FAILED} GAGAL: {user}:{passwd}")
 
-        if not found_weak_creds:
+        if found_weak_creds:
+            continue
+
+        # ---------------------------------------------
+        # Tahap 2: Coba Brute Force dengan Wordlist Dinamis
+        # ---------------------------------------------
+        if wordlist_path and os.path.exists(wordlist_path): 
+            print(C["MENU"] + f"  [*] Memulai Tahap 2: Brute Force dengan {wordlist_path}...")
+
+            try:
+                with open(wordlist_path, 'r', encoding='latin-1') as f:
+                    for target_user in COMMON_USERS:
+                        f.seek(0) # Kembali ke awal file wordlist untuk setiap user baru
+                        for line in f:
+                            passwd = line.strip()
+                            if not passwd:
+                                continue
+
+                            if test_function(target_ip, port, target_user, passwd, C):
+                                print(C["SUCCESS"] + f"\n  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{target_user} P:{passwd}" + C["RESET"])
+                                return # Hentikan proses total jika berhasil
+
+                            # Tampilkan kemajuan di baris yang sama (\r)
+                            print(f"{C['MENU']}  Mencoba: {target_user}:{passwd} {C['RESET']}", end='\r')
+
+                    print(C["MENU"] + "\n  [!] Brute Force selesai tanpa menemukan kredensial yang cocok.")
+
+            except FileNotFoundError:
+                print(C["ERROR"] + f"  {SYM_ERROR} ERROR: File Wordlist tidak ditemukan di {wordlist_path}.")
+            except Exception as e:
+                print(C["ERROR"] + f"  {SYM_ERROR} ERROR tak terduga saat Brute Force: {e}")
+        elif wordlist_path:
+             print(C["MENU"] + "  [!] Tahap 2 dilewati. Wordlist Path diberikan, tetapi file tidak ditemukan.")
+
+        if not found_weak_creds and not wordlist_path:
             print(C["MENU"] + f"  {SYM_FAILED} Semua kredensial default gagal untuk {service_name}." + C["RESET"])
+
 
     print(C["HEADER"] + "---------------------------------------------")
