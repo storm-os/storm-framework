@@ -24,14 +24,7 @@ Pastikan Anda memiliki Python 3.12.x terinstal pada sistem Anda. Tool ini juga d
 
  1. Kloning Repositori
 
-git clone https://github.com/Proot9/El-Cyber_Pentest.git
-cd El-Cyber_Pentest
-
- 2. Instalasi Dependensi
-
-Install semua pustaka (library) Python yang dibutuhkan:
-
-pip install -r requirements.txt
+curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/install.sh | bash
 
 📜 Lisensi
 ​

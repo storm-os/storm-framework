@@ -7,6 +7,7 @@ import telnetlib # Untuk Telnet
 import concurrent.futures
 import requests
 import os
+import time
 
 from script.wordlist import DEFAULT_CREDS, COMMON_USERS
 
@@ -127,24 +128,57 @@ def test_grafana(target_ip, port, username, password, C):
     except Exception:
         return False
 
+
 # --- Fungsi Utama ---
-def check_default_credentials(target_ip, C, wordlist_path=None): # MODIFIKASI SIGNATURE
-    """Menjalankan pengujian kredensial lemah pada layanan umum."""
+def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=None):
+    """Menjalankan pengujian kredensial lemah pada layanan yang ditentukan."""
 
     print(C["HEADER"] + f"\n--- CREDENTIAL CHECKER untuk {target_ip} ---")
 
-    # Port dan Protokol yang akan diuji
-    services_to_test = {
+    # Mapping Port ke Fungsi Pengujian
+    ALL_SERVICES_MAPPING = {
         21: ("FTP", test_ftp),
         22: ("SSH", test_ssh),
         23: ("Telnet", test_telnet),
         3000: ("Grafana (Web)", test_grafana),
     }
 
-    for port, (service_name, test_function) in services_to_test.items():
+    # ---------------------------------------------
+    # Logika Penentuan Port Target
+    # ---------------------------------------------
+    ports_to_run = []
+
+    if target_ports:
+        # Jika port diberikan, parse port_string
+        try:
+            # Mengubah string "22,23,3000" menjadi list [22, 23, 3000]
+            for p in target_ports.split(','):
+                port_int = int(p.strip())
+                if port_int in ALL_SERVICES_MAPPING:
+                    ports_to_run.append(port_int)
+                else:
+                    print(C["ERROR"] + f"  {SYM_ERROR} Port {port_int} tidak didukung oleh script ini. Melewati.")
+        except ValueError:
+             print(C["ERROR"] + f"  {SYM_ERROR} Format port tidak valid. Gunakan format '22,23,3000'.")
+             return
+    else:
+        # Jika target_ports tidak diberikan, gunakan semua port default
+        print(C["MENU"] + "  [!] Port tidak ditentukan. Menggunakan semua port default (21, 22, 23, 3000).")
+        ports_to_run = list(ALL_SERVICES_MAPPING.keys())
+
+    if not ports_to_run:
+        print(C["ERROR"] + "  {SYM_ERROR} Tidak ada port yang valid untuk diuji. Keluar.")
+        return
+
+    # ---------------------------------------------
+    # Proses Pengujian
+    # ---------------------------------------------
+    for port in ports_to_run:
+        service_name, test_function = ALL_SERVICES_MAPPING[port]
+
         print(C["MENU"] + f"\n{service_name} (Port {port}) Analisis:")
 
-        # Cek apakah port terbuka sebelum mencoba brute force
+        # Cek apakah port terbuka sebelum mencoba brute force (Tetap dipertahankan)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(0.5)
         if s.connect_ex((target_ip, port)) != 0:
@@ -153,9 +187,12 @@ def check_default_credentials(target_ip, C, wordlist_path=None): # MODIFIKASI SI
             continue
         s.close()
 
+        # --- Lanjutkan dengan Tahap 1 dan Tahap 2 yang sudah ada ---
+
         # ---------------------------------------------
         # Tahap 1: Coba Kredensial Default Tetap
         # ---------------------------------------------
+        # (Salin semua kode Tahap 1 dari script lama Anda ke sini)
         print(C["MENU"] + "  [*] Memulai Tahap 1: Kredensial Default...")
         found_weak_creds = False
 
@@ -173,6 +210,7 @@ def check_default_credentials(target_ip, C, wordlist_path=None): # MODIFIKASI SI
         # ---------------------------------------------
         # Tahap 2: Coba Brute Force dengan Wordlist Dinamis
         # ---------------------------------------------
+        # (Salin semua kode Tahap 2 dari script lama Anda ke sini)
         if wordlist_path and os.path.exists(wordlist_path): 
             print(C["MENU"] + f"  [*] Memulai Tahap 2: Brute Force dengan {wordlist_path}...")
 
@@ -206,3 +244,4 @@ def check_default_credentials(target_ip, C, wordlist_path=None): # MODIFIKASI SI
 
 
     print(C["HEADER"] + "---------------------------------------------")
+

@@ -8,6 +8,7 @@ from script.credential_checker import check_default_credentials
 from script.firebase_db import firebase_write_exploit_db
 from script.firebase_fs import firestore_write_exploit
 from script.md5_crypt import crack_shadow_hash
+from script.osint import run_osint
 
 from colorama import Fore, Style, init
 init(autoreset=True) # Inisialisasi Colorama dan reset warna otomatis
@@ -49,6 +50,7 @@ def tampilkan_menu():
     print(C["MENU"] + "3. Whois Lookup")
     print(C["MENU"] + "4. DNS Enumeration")
     print(C["MENU"] + "5. Subdomain Enumeration")
+    print(C["MENU"] + "6. OSINT")
     print(C["ERROR"] + "99. Keluar")
     print(C["HEADER"] + "--------------------------------------")
 
@@ -99,16 +101,23 @@ def main():
             # Panggil Fungsi
             enumerate_subdomains(subdomain_target, C)
 
+        elif pilihan == '6':
+            osint_target = input(C["INPUT"] + "Masukkan Email Target: " + C["RESET"])
+
+            # Panggil Fungsi
+            run_osint(osint_target, C)
+
         elif pilihan.upper() == 'C1':
             credential_target = input(C["INPUT"] + "Masukkan IP Target: " + C["RESET"])
+            credential_port = input(C["INPUT"] + "Masukkan PORT: " + C["RESET"])
             pass_path = input(C["INPUT"] + "Masukkan Path Pass: " + C["RESET"])
 
             # Panggil Fungsi
-            check_default_credentials(credential_target, C, pass_path)
+            check_default_credentials(credential_target, C, credential_port, pass_path)
 
         elif pilihan.upper() == 'C2':
             hash_target = input(C["INPUT"] + "Masukkan Hash Target: " + C["RESET"])
-            path_pw = input(C["INPUT"] + "Masukkan Path Passwd.txt: " + C["RESET"])
+            path_pw = input(C["INPUT"] + "Masukkan Path Pass: " + C["RESET"])
 
             # Panggil Fungsi
             crack_shadow_hash(hash_target, path_pw, C)
