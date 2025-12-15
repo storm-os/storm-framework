@@ -42,6 +42,7 @@ Gunakan perintah `curl` berikut untuk mengkloning repositori dan menjalankan skr
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/install.sh | bash 
+```
 
 ### 📜 Lisensi 
 
