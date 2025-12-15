@@ -41,7 +41,7 @@ Pastikan Anda memiliki **Python 3.12.x** terinstal pada sistem Anda. Tool ini ju
 Gunakan perintah `curl` berikut untuk mengkloning repositori dan menjalankan skrip instalasi yang diperlukan:
 
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/install.sh](https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/install.sh) | bash```
+curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/install.sh | bash 
 
 ### 📜 Lisensi 
 
