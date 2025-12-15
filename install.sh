@@ -2,7 +2,7 @@
 
 # --- KONFIGURASI ---
 TOOL_NAME="pentest"
-REPO_NAME="El-Cyber-Pentest"
+REPO_NAME="El-Cyber_Pentest"
 GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
 INSTALL_DIR="/opt/$REPO_NAME"
 
