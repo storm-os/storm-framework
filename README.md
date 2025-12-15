@@ -46,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber-Pentest/main/instal
 
 ### 📜 Lisensi 
 
-Tool ini didistribusikan di bawah Lisensi MIT.
-​Ringkasan Lisensi
-​Anda bebas untuk menggunakan, memodifikasi, dan mendistribusikan kode ini untuk penggunaan pribadi maupun komersial, dengan syarat Anda menyertakan pemberitahuan hak cipta dan izin lisensi asli.
-​PENAFIAN (DISCLAIMER): SEPERTI TERCANTUM DALAM LISENSI MIT, KODE INI DIBERIKAN "SEBAGAIMANA ADANYA" (AS IS), TANPA JAMINAN APAPUN.
+Tool ini didistribusikan di bawah Lisensi MIT. 
+Ringkasan Lisensi 
+Anda bebas untuk menggunakan, memodifikasi, dan mendistribusikan kode ini untuk penggunaan pribadi maupun komersial, dengan syarat Anda menyertakan pemberitahuan hak cipta dan izin lisensi asli. 
+PENAFIAN (DISCLAIMER): SEPERTI TERCANTUM DALAM LISENSI MIT, KODE INI DIBERIKAN "SEBAGAIMANA ADANYA" TANPA JAMINAN APAPUN.
