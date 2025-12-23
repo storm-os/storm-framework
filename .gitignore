@@ -1,0 +1,17 @@
+# Python Cache (Sangat penting!)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Wordlist besar (Agar tidak terkena limit GitHub 100MB)
+rockyou
+*.txt
+*.save
+
+# File log dan temporer
+*.log
+.DS_Store
+
+# Folder virtual environment (Jika ada)
+venv/
+env/
