@@ -53,7 +53,8 @@ fi
 
 # 2. Persiapan Direktori Instalasi
 if [ -d "$INSTALL_DIR" ]; then
-    echo -e "${RED}[!] Menghapus instalasi lama di $INSTALL_DIR...${NC}"
+    echo -e "${RED}[!] Menghapus instalasi lama...${NC}"
+    cd ~
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
 
