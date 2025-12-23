@@ -17,7 +17,6 @@ from script.osint import run_osint
 from colorama import Fore, Style, init
 init(autoreset=True) # Inisialisasi Colorama dan reset warna otomatis
 
-import os
 # Dictionary Warna Global
 C = {
     "HEADER": Fore.MAGENTA + Style.BRIGHT,
@@ -68,7 +67,7 @@ def run_update():
     print("[+] Update selesai. Silakan jalankan kembali tools Anda.")
     sys.exit()
 
-def main():
+def run():
     # Jalankan pengecekan setiap kali aplikasi dibuka
     check_update()
 
@@ -107,6 +106,7 @@ def main():
 
     while True:
         tampilkan_menu()
+        run()
 
         # Menerapkan warna pada prompt input
         pilihan = input(C["INPUT"] + "Masukkan pilihan Anda: " + C["RESET"])
