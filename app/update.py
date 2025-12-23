@@ -1,7 +1,7 @@
 import os
 import sys
 
-def run_update():
+def run_update(C):
     print(C["SUCCESS"] + "[+] Memulai pembaruan otomatis..." + C["RESET"])
     # Jalankan ulang install.sh
     update_command = "curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash"
