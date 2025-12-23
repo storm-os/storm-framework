@@ -44,7 +44,7 @@ def clear_screen():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "1.0.0"
+CURRENT_VERSION = "1.1.0"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
@@ -66,7 +66,7 @@ def check_update():
 def tampilkan_menu():
     """Menampilkan pilihan menu utama dengan warna."""
     print(C["HEADER"] + "\n######################################")
-    print(C["HEADER"] + "  TOOL KEAMANAN PYTHON V1.0 ")
+    print(C["HEADER"] + "  TOOL KEAMANAN PYTHON  ")
     print(C["HEADER"] + "######################################")
     print(C["MENU"] + "1. Jalankan Port Scanner Cepat")
     print(C["MENU"] + "2. Scan Header Website")
@@ -79,7 +79,7 @@ def tampilkan_menu():
     print(C["HEADER"] + "--------------------------------------")
 
     print(C["HEADER"] + "\n######################################")
-    print(C["HEADER"] + "  TOOL ATTACKER PYTHON V1.0 ")
+    print(C["HEADER"] + "  TOOL EXPLOIT PYTHON  ")
     print(C["HEADER"] + "######################################")
     print(C["MENU"] + "C1. BruteForce (Network)")
     print(C["MENU"] + "C2. BruteForce (MD5-Crypt)")
