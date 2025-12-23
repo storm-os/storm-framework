@@ -4,6 +4,7 @@
 TOOL_NAME="pentest"
 REPO_NAME="El-Cyber_Pentest"
 GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
+VERSION=$(< version.txt)
 
 # Warna
 GREEN='\033[92m'
@@ -111,7 +112,6 @@ EOF
 chmod +x "$WRAPPER_SRC"
 
 if [ -f "$WRAPPER_DST" ]; then
-    echo -e "[!] Wrapper lama ditemukan, mengganti..."
     if $NEEDS_SUDO; then sudo rm "$WRAPPER_DST"; else rm "$WRAPPER_DST"; fi
 fi
 
@@ -126,5 +126,5 @@ fi
 echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"
 echo -e "${GREEN}[✓] Memasang wrapper ke: ${BIN_DIR}${NC}"
-echo -e "${GREEN}[✓] INSTALASI SELESAI${NC}"
+echo -e "${GREEN}[✓] INSTALASI SELESAI VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"
