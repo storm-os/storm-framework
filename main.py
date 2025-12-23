@@ -1,4 +1,8 @@
 # main.py
+import os
+import sys
+import requests
+
 from script.scanner import scan_target
 from script.web_head import check_web_headers
 from script.whois import get_whois_info
@@ -37,6 +41,42 @@ def clear_screen():
 
 # --- Akhir fungsi clear screen ---
 
+# --- Cek update ---
+
+# 1. Tentukan versi lokal tools saat ini
+CURRENT_VERSION = "1.0.0"
+
+def check_update():
+    # URL mentah ke file version.txt di GitHub
+    url = "https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/version.txt"
+    try:
+        response = requests.get(url, timeout=5)
+        latest_version = response.text.strip()
+
+        # Jika versi di GitHub lebih tinggi dari versi lokal
+        if latest_version > CURRENT_VERSION:
+            print(f"\n\033[93m[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})")
+            print("[!] Jalankan 'pentest --update' untuk memperbarui.\033[0m\n")
+    except:
+        pass
+
+def run_update():
+    print("[+] Memulai pembaruan otomatis...")
+    # Jalankan ulang install.sh
+    update_command = "curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash"
+    os.system(update_command)
+    print("[+] Update selesai. Silakan jalankan kembali tools Anda.")
+    sys.exit()
+
+def main():
+    # Jalankan pengecekan setiap kali aplikasi dibuka
+    check_update()
+
+    # Logika untuk menangani argumen --update
+    if len(sys.argv) > 1 and sys.argv[1] == "--update":
+        run_update()
+
+# --- Akhir fungsi cek update ---
 
 # --- Fungsi Menu ---
 
