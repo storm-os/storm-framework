@@ -39,7 +39,7 @@ fi
 
 # -----------------------------------------------------------------------------
 
-echo -e "${GREEN}[!][!] Mulai Instalasi ${REPO_NAME} [!][!] ${NC}"
+echo -e "${GREEN}[!] Mulai Instalasi ${REPO_NAME} [!] ${NC}"
 
 # 1. Cek Python dan Git
 if ! command -v git &> /dev/null; then
@@ -53,7 +53,7 @@ fi
 
 # 2. Persiapan Direktori Instalasi
 if [ -d "$INSTALL_DIR" ]; then
-    echo -e "${RED}[!] Menghapus instalasi lama...${NC}"
+    echo -e "${GREEN}[-] Menghapus instalasi lama...${NC}"
     cd ~
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
