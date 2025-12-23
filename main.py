@@ -1,7 +1,8 @@
 # main.py
 import os
-import sys
 import requests
+
+from app.update import run_update
 
 from script.scanner import scan_target
 from script.web_head import check_web_headers
@@ -54,26 +55,10 @@ def check_update():
 
         # Jika versi di GitHub lebih tinggi dari versi lokal
         if latest_version > CURRENT_VERSION:
-            print(f"\n\033[93m[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})")
-            print("[!] Jalankan 'pentest --update' untuk memperbarui.\033[0m\n")
+            print(C["SUCCESS"] + f"\n[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})" + C["RESET"])
+            print(C["INPUT"] + "[!] Input '100' untuk update versi terbaru.\n" + C["RESET"])
     except:
         pass
-
-def run_update():
-    print("[+] Memulai pembaruan otomatis...")
-    # Jalankan ulang install.sh
-    update_command = "curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash"
-    os.system(update_command)
-    print("[+] Update selesai. Silakan jalankan kembali tools Anda.")
-    sys.exit()
-
-def run():
-    # Jalankan pengecekan setiap kali aplikasi dibuka
-    check_update()
-
-    # Logika untuk menangani argumen --update
-    if len(sys.argv) > 1 and sys.argv[1] == "--update":
-        run_update()
 
 # --- Akhir fungsi cek update ---
 
@@ -91,6 +76,7 @@ def tampilkan_menu():
     print(C["MENU"] + "5. Subdomain Enumeration")
     print(C["MENU"] + "6. OSINT")
     print(C["ERROR"] + "99. Keluar")
+    print(C["MENU"] + "100. Update Tools")
     print(C["HEADER"] + "--------------------------------------")
 
     print(C["HEADER"] + "\n######################################")
@@ -101,12 +87,13 @@ def tampilkan_menu():
     print(C["MENU"] + "C3. Firebase Exploit FS")
     print(C["MENU"] + "C4. Firebase Exploit DB")
     print(C["HEADER"] + "--------------------------------------")
+
 def main():
     clear_screen()
 
     while True:
         tampilkan_menu()
-        run()
+        check_update()
 
         # Menerapkan warna pada prompt input
         pilihan = input(C["INPUT"] + "Masukkan pilihan Anda: " + C["RESET"])
@@ -175,6 +162,10 @@ def main():
         elif pilihan == '99':
             print(C["SUCCESS"] + "Terima kasih, sampai jumpa!")
             break
+
+        elif pilihan == '100':
+            update_version = input(C["INPUT"] + "Masukan Perintah: " + C["RESET"])
+            run_update(C)
 
         else:
             print(C["ERROR"] + "Pilihan tidak valid. Silakan coba lagi.")
