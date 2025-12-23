@@ -56,7 +56,6 @@ def check_update():
         # Jika versi di GitHub lebih tinggi dari versi lokal
         if latest_version > CURRENT_VERSION:
             print(C["SUCCESS"] + f"\n[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})" + C["RESET"])
-            print(C["INPUT"] + "[!] Input '100' untuk update versi terbaru.\n" + C["RESET"])
     except:
         pass
 
@@ -76,7 +75,7 @@ def tampilkan_menu():
     print(C["MENU"] + "5. Subdomain Enumeration")
     print(C["MENU"] + "6. OSINT")
     print(C["ERROR"] + "99. Keluar")
-    print(C["MENU"] + "100. Update Tools")
+    print(C["ERROR"] + "100. Update Tools")
     print(C["HEADER"] + "--------------------------------------")
 
     print(C["HEADER"] + "\n######################################")
@@ -164,7 +163,6 @@ def main():
             break
 
         elif pilihan == '100':
-            update_version = input(C["INPUT"] + "Masukan Perintah: " + C["RESET"])
             run_update(C)
 
         else:
