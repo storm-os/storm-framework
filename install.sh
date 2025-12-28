@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # --- KONFIGURASI ---
 TOOL_NAME="pentest"
 REPO_NAME="El-Cyber_Pentest"
@@ -102,21 +101,27 @@ WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
 echo -e "${GREEN}[+] Membuat script wrapper ${TOOL_NAME}...${NC}"
 
-# Gunakan sudo dan pastikan variabel di dalam EOF tidak tertukar
-sudo bash -c "cat << 'EOF' > $WRAPPER_SRC
+# Membuat konten wrapper dalam variabel agar mudah dikelola
+CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
-
-# Lokasi instalasi yang benar
 PROJECT_DIR=\"$INSTALL_DIR\"
-
 cd \"\$PROJECT_DIR\" || { echo \"Error: Gagal mengakses direktori proyek.\"; exit 1; }
 $PYTHON_CMD main.py \"\$@\"
 EOF"
 
-# Berikan izin eksekusi
-sudo chmod +x "$WRAPPER_SRC"
-sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
-sudo chmod +x "$WRAPPER_DST"
+# Eksekusi pembuatan file berdasarkan hak akses (Sudo vs User)
+if $NEEDS_SUDO; then
+    sudo bash -c "$CREATE_WRAPPER"
+    sudo chmod +x "$WRAPPER_SRC"
+    sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
+    sudo chmod +x "$WRAPPER_DST"
+else
+    # Untuk Termux (Tanpa Sudo)
+    bash -c "$CREATE_WRAPPER"
+    chmod +x "$WRAPPER_SRC"
+    cp "$WRAPPER_SRC" "$WRAPPER_DST"
+    chmod +x "$WRAPPER_DST"
+fi
 
 echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"

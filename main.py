@@ -44,7 +44,7 @@ def clear_screen():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "1.1.0"
+CURRENT_VERSION = "1.1.2"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
