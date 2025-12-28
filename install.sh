@@ -100,31 +100,25 @@ fi
 WRAPPER_SRC="$INSTALL_DIR/$TOOL_NAME"
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
-echo -e "${GREEN}[+] Membuat script wrapper ${TOOL_NAME}${NC}"
+echo -e "${GREEN}[+] Membuat script wrapper ${TOOL_NAME}...${NC}"
 
-# Membuat script wrapper menggunakan SHEBANG_PATH dan PYTHON_CMD yang dinamis
-cat << EOF > "$WRAPPER_SRC"
+# Gunakan sudo tee untuk menulis file ke direktori yang diproteksi (/opt)
+sudo bash -c "cat << EOF > $WRAPPER_SRC
 $SHEBANG_PATH
-
-PROJECT_DIR="$INSTALL_DIR"
-cd "\$PROJECT_DIR" || { echo "[x] Error: Gagal mengakses source code tools."; exit 1; }
-$PYTHON_CMD main.py "\$@"
-EOF
+PROJECT_DIR=\"$INSTALL_DIR\"
+cd \"\$PROJECT_DIR\" || { echo \"Error: Gagal mengakses source code tools.\"; exit 1; }
+$PYTHON_CMD main.py \"\$@\"
+EOF"
 
 # 5. Memasang Wrapper ke $PATH
-chmod +x "$WRAPPER_SRC"
+sudo chmod +x "$WRAPPER_SRC"
 
 if [ -f "$WRAPPER_DST" ]; then
-    if $NEEDS_SUDO; then sudo rm "$WRAPPER_DST"; else rm "$WRAPPER_DST"; fi
+    sudo rm "$WRAPPER_DST"
 fi
 
-if $NEEDS_SUDO; then
-    sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
-    sudo chmod +x "$WRAPPER_DST"
-else
-    cp "$WRAPPER_SRC" "$WRAPPER_DST"
-    chmod +x "$WRAPPER_DST"
-fi
+sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
+sudo chmod +x "$WRAPPER_DST"
 
 echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"
