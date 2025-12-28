@@ -82,14 +82,17 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
     echo -e "${GREEN}[+] Menginstal dependensi Python...${NC}"
 
     if $NEEDS_SUDO; then
-        sudo "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt"
+        # Di Ubuntu/Kali, kita tambahkan flag --break-system-packages
+        sudo "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt" --break-system-packages
     else
+        # Di Termux, pip biasanya tidak butuh flag tambahan
         "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt"
     fi
 
     if [ $? -ne 0 ]; then
-        echo -e "${RED}[x] Error: Gagal menginstal dependensi Python.${NC}"
-        exit 1
+        echo -e "${RED}Error: Gagal menginstal dependensi Python.${NC}"
+        # Opsional: Jangan langsung exit jika gagal, beri peringatan saja
+        # exit 1 
     fi
 fi
 
