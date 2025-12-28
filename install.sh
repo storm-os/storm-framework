@@ -102,21 +102,19 @@ WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
 echo -e "${GREEN}[+] Membuat script wrapper ${TOOL_NAME}...${NC}"
 
-# Gunakan sudo tee untuk menulis file ke direktori yang diproteksi (/opt)
-sudo bash -c "cat << EOF > $WRAPPER_SRC
+# Gunakan sudo dan pastikan variabel di dalam EOF tidak tertukar
+sudo bash -c "cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
+
+# Lokasi instalasi yang benar
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"Error: Gagal mengakses source code tools.\"; exit 1; }
+
+cd \"\$PROJECT_DIR\" || { echo \"Error: Gagal mengakses direktori proyek.\"; exit 1; }
 $PYTHON_CMD main.py \"\$@\"
 EOF"
 
-# 5. Memasang Wrapper ke $PATH
+# Berikan izin eksekusi
 sudo chmod +x "$WRAPPER_SRC"
-
-if [ -f "$WRAPPER_DST" ]; then
-    sudo rm "$WRAPPER_DST"
-fi
-
 sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
 sudo chmod +x "$WRAPPER_DST"
 
