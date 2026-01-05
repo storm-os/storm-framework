@@ -3,30 +3,18 @@ import os
 import requests
 
 from app.update import run_update
+from app.colors import C
 
-from script.scanner import scan_target
-from script.web_head import check_web_headers
-from script.whois import get_whois_info
-from script.dns import enumerate_dns_records
-from script.subdomain import enumerate_subdomains
-from script.attc_net import check_default_credentials
-from script.firebase_db import firebase_write_exploit_db
-from script.firebase_fs import firestore_write_exploit
-from script.md5_crypt import crack_shadow_hash
-from script.osint import run_osint
-
-from colorama import Fore, Style, init
-init(autoreset=True) # Inisialisasi Colorama dan reset warna otomatis
-
-# Dictionary Warna Global
-C = {
-    "HEADER": Fore.MAGENTA + Style.BRIGHT,
-    "MENU": Fore.CYAN,
-    "INPUT": Fore.YELLOW,
-    "SUCCESS": Fore.GREEN + Style.BRIGHT,
-    "ERROR": Fore.RED + Style.BRIGHT,
-    "RESET": Style.RESET_ALL
-}
+from app.modules.scanner import scan_target
+from app.modules.web_head import check_web_headers
+from app.modules.whois import get_whois_info
+from app.modules.dns import enumerate_dns_records
+from app.modules.subdomain import enumerate_subdomains
+from app.modules.attc_net import check_default_credentials
+from app.modules.firebase_db import firebase_write_exploit_db
+from app.modules.firebase_fs import firestore_write_exploit
+from app.modules.md5_crypt import crack_shadow_hash
+from app.modules.osint import run_osint
 
 # --- Fungsi Clear Screen ---
 
@@ -55,10 +43,10 @@ def check_update():
 
         # Jika versi di GitHub lebih tinggi dari versi lokal
         if latest_version > CURRENT_VERSION:
-            print(C["HEADER"] + "\n######################################")
-            print(C["SUCCESS"] + f"\n[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})" + C["RESET"])
-            print(C["SUCCESS"] + "\n[-] Ketik: npm update pentest" + C["RESET"])
-            print(C["HEADER"] + "\n######################################")
+            print(f"{C.HEADER}\n######################################")
+            print(f"{C.SUCCESS}\n[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})")
+            print(f"{C.SUCCESS}\n[-] Ketik: npm update pentest")
+            print(f"{C.HEADER}\n######################################")
     except:
         pass
 
@@ -68,26 +56,26 @@ def check_update():
 
 def tampilkan_menu():
     """Menampilkan pilihan menu utama dengan warna."""
-    print(C["HEADER"] + "\n######################################")
-    print(C["HEADER"] + "  TOOL KEAMANAN PYTHON  ")
-    print(C["HEADER"] + "######################################")
-    print(C["MENU"] + "1. Jalankan Port Scanner Cepat")
-    print(C["MENU"] + "2. Scan Header Website")
-    print(C["MENU"] + "3. Whois Lookup")
-    print(C["MENU"] + "4. DNS Enumeration")
-    print(C["MENU"] + "5. Subdomain Enumeration")
-    print(C["MENU"] + "6. OSINT")
-    print(C["ERROR"] + "99. Keluar")
-    print(C["HEADER"] + "--------------------------------------")
+    print(f"{C.HEADER}\n######################################")
+    print(f"{C.HEADER}  TOOL KEAMANAN PYTHON  ")
+    print(f"{C.HEADER}######################################")
+    print(f"{C.MENU} 1. Jalankan Port Scanner Cepat")
+    print(f"{C.MENU} 2. Scan Header Website")
+    print(f"{C.MENU} 3. Whois Lookup")
+    print(f"{C.MENU} 4. DNS Enumeration")
+    print(f"{C.MENU} 5. Subdomain Enumeration")
+    print(f"{C.MENU} 6. OSINT")
+    print(f"{C.ERROR} 99. Keluar")
+    print(f"{C.HEADER} --------------------------------------")
 
-    print(C["HEADER"] + "\n######################################")
-    print(C["HEADER"] + "  TOOL EXPLOIT PYTHON  ")
-    print(C["HEADER"] + "######################################")
-    print(C["MENU"] + "C1. BruteForce (Network)")
-    print(C["MENU"] + "C2. BruteForce (MD5-Crypt)")
-    print(C["MENU"] + "C3. Firebase Exploit FS")
-    print(C["MENU"] + "C4. Firebase Exploit DB")
-    print(C["HEADER"] + "--------------------------------------")
+    print(f"{C.HEADER}\n######################################")
+    print(f"{C.HEADER}  TOOL EXPLOIT PYTHON  ")
+    print(f"{C.HEADER}######################################")
+    print(f"{C.MENU} C1. BruteForce (Network)")
+    print(f"{C.MENU} C2. BruteForce (MD5-Crypt)")
+    print(f"{C.MENU} C3. Firebase Exploit FS")
+    print(f"{C.MENU} C4. Firebase Exploit DB")
+    print(f"{C.HEADER} --------------------------------------")
 
 def main():
     clear_screen()
@@ -97,78 +85,78 @@ def main():
         check_update()
 
         # Menerapkan warna pada prompt input
-        pilihan = input(C["INPUT"] + "Masukkan pilihan Anda: " + C["RESET"])
+        pilihan = input(f"{C.INPUT} Masukkan pilihan Anda: ")
 
         if pilihan == '1':
-            target = input(C["INPUT"] + "Masukkan IP Target: " + C["RESET"])
+            target = input(f"{C.INPUT} Masukkan IP Target: ")
 
             # Panggil Fungsi
-            scan_target(target, C)
+            scan_target(target)
 
         elif pilihan == '2':
-            url_target = input(C["INPUT"] + "Masukkan URL Target: " + C["RESET"])
+            url_target = input(f"{C.INPUT} Masukkan URL Target: ")
 
             # Panggil Fungsi
-            check_web_headers(url_target, C)
+            check_web_headers(url_target)
 
         elif pilihan == '3':
-            whois_target = input(C["INPUT"] + "Masukkan Domain/IP Target: " + C["RESET"])
+            whois_target = input(f"{C.INPUT} Masukkan Domain/IP Target: ")
 
             # Panggil Fungsi
-            get_whois_info(whois_target, C)
+            get_whois_info(whois_target)
 
         elif pilihan == '4':
-            dns_target = input(C["INPUT"] + "Masukkan Domain Target: " + C["RESET"])
+            dns_target = input(f"{C.INPUT} Masukkan Domain Target: ")
 
             # Panggil Fungsi
-            enumerate_dns_records(dns_target, C)
+            enumerate_dns_records(dns_target)
 
         elif pilihan == '5':
-            subdomain_target = input(C["INPUT"] + "Masukkan Domain Target: " + C["RESET"])
+            subdomain_target = input(f"{C.INPUT} Masukkan Domain Target: ")
 
             # Panggil Fungsi
-            enumerate_subdomains(subdomain_target, C)
+            enumerate_subdomains(subdomain_target)
 
         elif pilihan == '6':
-            osint_target = input(C["INPUT"] + "Masukkan Email Target: " + C["RESET"])
+            osint_target = input(f"{C.INPUT} Masukkan Email Target: ")
 
             # Panggil Fungsi
-            run_osint(osint_target, C)
+            run_osint(osint_target)
 
         elif pilihan.upper() == 'C1':
-            credential_target = input(C["INPUT"] + "Masukkan IP Target: " + C["RESET"])
-            credential_port = input(C["INPUT"] + "Masukkan PORT: " + C["RESET"])
-            pass_path = input(C["INPUT"] + "Masukkan Path Pass: " + C["RESET"])
+            credential_target = input(f"{C.INPUT} Masukkan IP Target: ")
+            credential_port = input(f"{C.INPUT} Masukkan PORT: ")
+            pass_path = input(f"{C.INPUT} Masukkan Path Pass: ")
 
             # Panggil Fungsi
-            check_default_credentials(credential_target, C, credential_port, pass_path)
+            check_default_credentials(credential_target, credential_port, pass_path)
 
         elif pilihan.upper() == 'C2':
-            hash_target = input(C["INPUT"] + "Masukkan Hash Target: " + C["RESET"])
-            path_pw = input(C["INPUT"] + "Masukkan Path Pass: " + C["RESET"])
+            hash_target = input(f"{C.INPUT} Masukkan Hash Target: ")
+            path_pw = input(f"{C.INPUT} Masukkan Path Pass: ")
 
             # Panggil Fungsi
-            crack_shadow_hash(hash_target, path_pw, C)
+            crack_shadow_hash(hash_target, path_pw)
 
         elif pilihan.upper() == 'C3':
 
             # Panggil Fungsi
-            firestore_write_exploit(C)
+            firestore_write_exploit()
 
         elif pilihan.upper() == 'C4':
 
             # Panggil Fungsi
-            firebase_write_exploit_db(C)
+            firebase_write_exploit_db()
 
         elif pilihan == '99':
-            print(C["SUCCESS"] + "Terima kasih, sampai jumpa!")
+            print(f"{C.SUCCESS} Terima kasih, sampai jumpa!")
             break
 
         elif pilihan == 'npm update pentest':
-            run_update(C)
+            run_update()
 
         else:
-            print(C["ERROR"] + "Pilihan tidak valid. Silakan coba lagi.")
+            print(f"{C.ERROR} Pilihan tidak valid. Silakan coba lagi.")
 
 if __name__ == "__main__":
     main()

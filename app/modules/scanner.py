@@ -2,10 +2,12 @@
 import socket
 import time
 
+from app.colors import C
+
 STATUS_OPEN = "✅"
 STATUS_CLOSED = "❌"
 
-def get_service_banner(target_ip, port, C, timeout=1.0):
+def get_service_banner(target_ip, port, timeout=1.0):
     """
     Mengecek status port dan mencoba mendapatkan banner/informasi versi.
     """
@@ -18,7 +20,7 @@ def get_service_banner(target_ip, port, C, timeout=1.0):
     # 1. Port Terbuka: Lakukan Banner Grabbing
     # ---------------------------------------------
     if result == 0:
-        status_color = C["SUCCESS"] + "OPEN " + STATUS_OPEN + C["RESET"]
+        status_color = f"{C.SUCCESS} OPEN " + STATUS_OPEN
         banner_info = "Tidak ada informasi versi."
 
         try:
@@ -62,10 +64,10 @@ def get_service_banner(target_ip, port, C, timeout=1.0):
     # ---------------------------------------------
     else:
         s.close()
-        return C["ERROR"] + "CLOSED " + STATUS_CLOSED + C["RESET"], None
+        return f"{C.ERROR} CLOSED " + STATUS_CLOSED, None
 
 
-def scan_target(target_ip, C):
+def scan_target(target_ip):
     """Fungsi utama untuk menjalankan scan dengan deteksi versi/banner."""
 
     port_names = {
@@ -83,7 +85,7 @@ def scan_target(target_ip, C):
     }
     ports_to_check = port_names.keys()
 
-    print(C["HEADER"] + f"\n--- SCANNING: PORT & VERSION di {target_ip} ---")
+    print(f"{C.HEADER} \n--- SCANNING: PORT & VERSION di {target_ip} ---")
 
     # Tentukan lebar kolom total untuk bagian Port dan Nama Layanan
     # Disesuaikan agar titik dua selalu sejajar
@@ -91,7 +93,7 @@ def scan_target(target_ip, C):
 
     for port in ports_to_check:
         # Panggil fungsi yang mengembalikan status dan banner
-        status_line, banner = get_service_banner(target_ip, port, C)
+        status_line, banner = get_service_banner(target_ip, port)
         service_name = port_names.get(port, "Unknown Service")
 
         # 1. Menyiapkan bagian awal baris (Port dan Nama Layanan)
@@ -105,7 +107,7 @@ def scan_target(target_ip, C):
 
         # Membuat output awal: Port 80 (HTTP)       : OPEN ✅
         # Kunci: Hapus \t dan gunakan ljust() untuk perataan konsisten
-        output_line = C["MENU"] + f"{padding_string}: {status_line}"
+        output_line = f"{C.MENU}{padding_string}: {status_line}"
 
         # 2. Menambahkan Banner/Versi (Hanya jika port terbuka)
         if "OPEN" in status_line:
@@ -115,16 +117,16 @@ def scan_target(target_ip, C):
                 clean_banner = banner.replace('\n', ' ').strip()
 
                 # Menambahkan pemisah dan Versi/Banner, konsisten dengan titik dua di Versi/Banner
-                output_line += f" {C['MENU']} | {C['SUCCESS']}Versi: {clean_banner}"
+                output_line += f" {C.MENU} | {C.SUCCESS}Versi: {clean_banner}"
 
             else:
                  # Pesan info jika gagal mengambil banner
-                 output_line += f" {C['MENU']} | INFO: {banner}"
+                 output_line += f" {C.MENU} | INFO: {banner}"
 
         # Akhiri baris dengan RESET
-        output_line += C['RESET']
+        output_line += f'{C.RESET}'
 
         # 3. Cetak Baris Tunggal Penuh
         print(output_line)
 
-    print(C["HEADER"] + "--- SCAN SELESAI ---" + C["RESET"])
+    print(f"{C.HEADER} --- SCAN SELESAI ---")

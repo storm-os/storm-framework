@@ -9,14 +9,15 @@ import requests
 import os
 import time
 
-from script.wordlist import DEFAULT_CREDS, COMMON_USERS
+from assets.wordlist import DEFAULT_CREDS, COMMON_USERS
+from app.colors import C
 
 SYM_SUCCESS = "🔑"
 SYM_FAILED = "🔒"
 SYM_ERROR = "❌"
 
 # --- Fungsi Pengujian SSH ---
-def test_ssh(target_ip, port, username, password, C):
+def test_ssh(target_ip, port, username, password):
     """Mencoba login SSH menggunakan Paramiko."""
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -33,7 +34,7 @@ def test_ssh(target_ip, port, username, password, C):
         client.close()
 
 # --- Fungsi Pengujian FTP ---
-def test_ftp(target_ip, port, username, password, C):
+def test_ftp(target_ip, port, username, password):
     """Mencoba login FTP menggunakan ftplib."""
     ftp = ftplib.FTP()
     try:
@@ -51,7 +52,7 @@ def test_ftp(target_ip, port, username, password, C):
             pass
 
 # --- Fungsi Pengujian Telnet (BARU) ---
-def test_telnet(target_ip, port, username, password, C):
+def test_telnet(target_ip, port, username, password):
     """
     Mencoba login Telnet menggunakan telnetlib dengan interaksi berbasis prompt.
     """
@@ -91,7 +92,7 @@ def test_telnet(target_ip, port, username, password, C):
         return False
 
 # --- Fungsi Pengujian Grafana (DISINKRONKAN) ---
-def test_grafana(target_ip, port, username, password, C):
+def test_grafana(target_ip, port, username, password):
     """Mencoba login Grafana menggunakan requests (HTTP POST)."""
     login_url = f"http://{target_ip}:{port}/login"
 
@@ -130,10 +131,10 @@ def test_grafana(target_ip, port, username, password, C):
 
 
 # --- Fungsi Utama ---
-def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=None):
+def check_default_credentials(target_ip, target_ports=None, wordlist_path=None):
     """Menjalankan pengujian kredensial lemah pada layanan yang ditentukan."""
 
-    print(C["HEADER"] + f"\n--- CREDENTIAL CHECKER untuk {target_ip} ---")
+    print(f"{C.HEADER} \n--- CREDENTIAL CHECKER untuk {target_ip} ---")
 
     # Mapping Port ke Fungsi Pengujian
     ALL_SERVICES_MAPPING = {
@@ -157,17 +158,17 @@ def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=Non
                 if port_int in ALL_SERVICES_MAPPING:
                     ports_to_run.append(port_int)
                 else:
-                    print(C["ERROR"] + f"  {SYM_ERROR} Port {port_int} tidak didukung oleh script ini. Melewati.")
+                    print(f"{C.ERROR}  {SYM_ERROR} Port {port_int} tidak didukung oleh script ini. Melewati.")
         except ValueError:
-             print(C["ERROR"] + f"  {SYM_ERROR} Format port tidak valid. Gunakan format '22,23,3000'.")
+             print(f"{C.ERROR}  {SYM_ERROR} Format port tidak valid. Gunakan format '22,23,3000'.")
              return
     else:
         # Jika target_ports tidak diberikan, gunakan semua port default
-        print(C["MENU"] + "  [!] Port tidak ditentukan. Menggunakan semua port default (21, 22, 23, 3000).")
+        print(f"{C.MENU}  [!] Port tidak ditentukan. Menggunakan semua port default (21, 22, 23, 3000).")
         ports_to_run = list(ALL_SERVICES_MAPPING.keys())
 
     if not ports_to_run:
-        print(C["ERROR"] + "  {SYM_ERROR} Tidak ada port yang valid untuk diuji. Keluar.")
+        print(f"{C.ERROR}  {SYM_ERROR} Tidak ada port yang valid untuk diuji. Keluar.")
         return
 
     # ---------------------------------------------
@@ -176,13 +177,13 @@ def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=Non
     for port in ports_to_run:
         service_name, test_function = ALL_SERVICES_MAPPING[port]
 
-        print(C["MENU"] + f"\n{service_name} (Port {port}) Analisis:")
+        print(f"{C.MENU} \n{service_name} (Port {port}) Analisis:")
 
         # Cek apakah port terbuka sebelum mencoba brute force (Tetap dipertahankan)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(0.5)
         if s.connect_ex((target_ip, port)) != 0:
-            print(C["ERROR"] + f"  {SYM_ERROR} Port {port} {service_name} tampaknya tertutup. Melewati.")
+            print(f"{C.ERROR}  {SYM_ERROR} Port {port} {service_name} tampaknya tertutup. Melewati.")
             s.close()
             continue
         s.close()
@@ -193,16 +194,16 @@ def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=Non
         # Tahap 1: Coba Kredensial Default Tetap
         # ---------------------------------------------
         # (Salin semua kode Tahap 1 dari script lama Anda ke sini)
-        print(C["MENU"] + "  [*] Memulai Tahap 1: Kredensial Default...")
+        print(f"{C.MENU}  [*] Memulai Tahap 1: Kredensial Default...")
         found_weak_creds = False
 
         for user, passwd in DEFAULT_CREDS:
-            if test_function(target_ip, port, user, passwd, C):
-                print(C["SUCCESS"] + f"  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{user} P:{passwd}" + C["RESET"])
+            if test_function(target_ip, port, user, passwd):
+                print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{user} P:{passwd}")
                 found_weak_creds = True
                 break
             else:
-                print(C["MENU"] + f"  {SYM_FAILED} GAGAL: {user}:{passwd}")
+                print(f"{C.MENU}  {SYM_FAILED} GAGAL: {user}:{passwd}")
 
         if found_weak_creds:
             continue
@@ -211,8 +212,8 @@ def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=Non
         # Tahap 2: Coba Brute Force dengan Wordlist Dinamis
         # ---------------------------------------------
         # (Salin semua kode Tahap 2 dari script lama Anda ke sini)
-        if wordlist_path and os.path.exists(wordlist_path): 
-            print(C["MENU"] + f"  [*] Memulai Tahap 2: Brute Force dengan {wordlist_path}...")
+        if wordlist_path and os.path.exists(wordlist_path):
+            print(f"{C.MENU}  [*] Memulai Tahap 2: Brute Force dengan {wordlist_path}...")
 
             try:
                 with open(wordlist_path, 'r', encoding='latin-1') as f:
@@ -223,25 +224,25 @@ def check_default_credentials(target_ip, C, target_ports=None, wordlist_path=Non
                             if not passwd:
                                 continue
 
-                            if test_function(target_ip, port, target_user, passwd, C):
-                                print(C["SUCCESS"] + f"\n  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{target_user} P:{passwd}" + C["RESET"])
+                            if test_function(target_ip, port, target_user, passwd):
+                                print(f"{C.SUCCESS} \n  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{target_user} P:{passwd}")
                                 return # Hentikan proses total jika berhasil
 
                             # Tampilkan kemajuan di baris yang sama (\r)
-                            print(f"{C['MENU']}  Mencoba: {target_user}:{passwd} {C['RESET']}", end='\r')
+                            print(f"{C.MENU}  Mencoba: {target_user}:{passwd} {C.RESET}", end='\r')
 
-                    print(C["MENU"] + "\n  [!] Brute Force selesai tanpa menemukan kredensial yang cocok.")
+                    print(f"{C.MENU} \n[!] Brute Force selesai tanpa menemukan kredensial yang cocok.")
 
             except FileNotFoundError:
-                print(C["ERROR"] + f"  {SYM_ERROR} ERROR: File Wordlist tidak ditemukan di {wordlist_path}.")
+                print(f"{C.ERROR}  {SYM_ERROR} ERROR: File Wordlist tidak ditemukan di {wordlist_path}.")
             except Exception as e:
-                print(C["ERROR"] + f"  {SYM_ERROR} ERROR tak terduga saat Brute Force: {e}")
+                print(f"{C.ERROR}  {SYM_ERROR} ERROR tak terduga saat Brute Force: {e}")
         elif wordlist_path:
-             print(C["MENU"] + "  [!] Tahap 2 dilewati. Wordlist Path diberikan, tetapi file tidak ditemukan.")
+             print(f"{C.MENU}  [!] Tahap 2 dilewati. Wordlist Path diberikan, tetapi file tidak ditemukan.")
 
         if not found_weak_creds and not wordlist_path:
-            print(C["MENU"] + f"  {SYM_FAILED} Semua kredensial default gagal untuk {service_name}." + C["RESET"])
+            print(f"{C.MENU}  {SYM_FAILED} Semua kredensial default gagal untuk {service_name}.")
 
 
-    print(C["HEADER"] + "---------------------------------------------")
+    print(f"{C.HEADER} ---------------------------------------------")
 

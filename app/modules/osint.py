@@ -2,8 +2,10 @@ import requests
 import time
 import json
 
+from app.colors import C
+
 # --- Pengecekan Facebook ---
-def check_facebook_email(email, C):
+def check_facebook_email(email):
     """
     Mengirim permintaan POST ke endpoint identifikasi Facebook.
     """
@@ -27,18 +29,18 @@ def check_facebook_email(email, C):
         is_registered = not any(fs in response_text for fs in failure_strings)
 
         if is_registered:
-            return C["SUCCESS"] + f"✅ DITEMUKAN (Facebook): {email}" + C["RESET"]
+            return f"{C.SUCCESS} ✅ DITEMUKAN (Facebook): {email}{C.RESET}"
         else:
-            return C["ERROR"] + f"❌ TIDAK DITEMUKAN (Facebook): {email}" + C["RESET"]
+            return f"{C.ERROR} ❌ TIDAK DITEMUKAN (Facebook): {email}{C.RESET}"
 
     except requests.exceptions.RequestException as e:
-        return C["ERROR"] + f"🚨 ERROR Koneksi/Timeout (Facebook): {e}" + C["RESET"]
+        return f"{C.ERROR} 🚨 ERROR Koneksi/Timeout (Facebook): {e}{C.RESET}"
     except Exception as e:
-        return C["ERROR"] + f"🚨 ERROR tak terduga (Facebook): {e}" + C["RESET"]
+        return f"{C.ERROR} 🚨 ERROR tak terduga (Facebook): {e}{C.RESET}"
 
 
 # --- Pengecekan Instagram ---
-def check_instagram_email(email, C):
+def check_instagram_email(email):
     """
     Mengirim permintaan POST ke endpoint recovery Instagram yang lebih sederhana, 
     dan secara spesifik mencari string kegagalan dari screenshot (HTML).
@@ -73,7 +75,7 @@ def check_instagram_email(email, C):
         ]
 
         if any(fs in response_text for fs in failure_strings):
-            return C["ERROR"] + f"❌ TIDAK DITEMUKAN (Instagram): {email}" + C["RESET"]
+            return f"{C.ERROR} ❌ TIDAK DITEMUKAN (Instagram): {email}{C.RESET}"
 
         # --- LOGIKA KEBERHASILAN (Berbasis Status/JSON) ---
 
@@ -83,50 +85,50 @@ def check_instagram_email(email, C):
 
             # Jika ada objek 'user' atau status ok
             if data.get('status') == 'ok' or data.get('user') is not None:
-                return C["SUCCESS"] + f"✅ DITEMUKAN (Instagram): {email}" + C["RESET"]
+                return f"{C.SUCCESS} ✅ DITEMUKAN (Instagram): {email}{C.RESET}"
 
         except json.JSONDecodeError:
             # Jika GAGAL decode JSON, dan tidak ada string kegagalan di atas,
             # ini berarti kita menerima HTML aneh yang BUKAN pesan "Tidak Ditemukan"
-            return C["ERROR"] + f"🚨 ERROR: Respons non-JSON diterima (Blokir). Coba lagi nanti." + C["RESET"]
+            return f"{C.ERROR} 🚨 ERROR: Respons non-JSON diterima (Blokir). Coba lagi nanti.{C.RESET}"
 
         # Jika berhasil di-decode JSON tapi tidak ada indikator sukses:
-        return C["ERROR"] + f"🚨 ERROR: Respons tidak terduga/Diblokir oleh Instagram." + C["RESET"]
+        return f"{C.ERROR} 🚨 ERROR: Respons tidak terduga/Diblokir oleh Instagram.{C.RESET}"
 
     except requests.exceptions.RequestException as e:
-        return C["ERROR"] + f"🚨 ERROR Koneksi/Timeout (Instagram): {e}" + C["RESET"]
+        return f"{C.ERROR} 🚨 ERROR Koneksi/Timeout (Instagram): {e}{C.RESET}"
     except Exception as e:
-        return C["ERROR"] + f"🚨 ERROR tak terduga (Instagram): {e}" + C["RESET"]
+        return f"{C.ERROR} 🚨 ERROR tak terduga (Instagram): {e}{C.RESET}"
 
 
 
 
 
 # --- Fungsi Utama Runner ---
-def run_osint(email, C):
+def run_osint(email):
     """
     Fungsi utama untuk menjalankan pengecekan email tunggal di berbagai platform.
     """
     email_clean = email.strip()
 
-    print(C["HEADER"] + "\n--- OSINT MULTI-PLATFORM EMAIL CHECKER ---" + C["RESET"])
+    print(f"{C.HEADER} \n--- OSINT MULTI-PLATFORM EMAIL CHECKER ---")
 
     if not email_clean:
-        print(C["ERROR"] + "[-] ERROR: Email kosong.")
-        print(C["HEADER"] + "------------------------------------------" + C["RESET"])
+        print(f"{C.ERROR} [-] ERROR: Email kosong.")
+        print(f"{C.HEADER} ------------------------------------------")
         return
 
     # Pemisah visual
-    print(C["MENU"] + f"\n===== MEMERIKSA {email_clean} =====" + C["RESET"])
+    print(f"{C.MENU} \n===== MEMERIKSA {email_clean} =====")
 
     # 1. Jalankan Pengecekan Facebook
-    print(C["MENU"] + f"[*] Memeriksa Facebook..." + C["RESET"])
-    result_fb = check_facebook_email(email_clean, C)
+    print(f"{C.MENU} [*] Memeriksa Facebook...")
+    result_fb = check_facebook_email(email_clean)
     print(result_fb)
 
     # 2. Jalankan Pengecekan Instagram
-    print(C["MENU"] + f"[*] Memeriksa Instagram..." + C["RESET"])
-    result_ig = check_instagram_email(email_clean, C)
+    print(f"{C.MENU} [*] Memeriksa Instagram...")
+    result_ig = check_instagram_email(email_clean)
     print(result_ig)
 
-    print(C["HEADER"] + "\n------------------------------------------" + C["RESET"])
+    print(f"{C.HEADER} \n------------------------------------------")
