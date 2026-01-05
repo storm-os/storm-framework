@@ -4,66 +4,70 @@
 ![Debian](https://img.shields.io/badge/Debian-supported-red?logo=debian)
 ![Termux](https://img.shields.io/badge/Termux-supported-black?logo=android)
 
+*[Indonesia](README_ID.md) Documentation*
+
+---
+
 ## 🛡️ El-Cyber_Pentest 
 
-Tool Suite untuk Pengumpulan Informasi dan Analisis Kerentanan Awal.
+Tool Suite for Information Gathering and Initial Vulnerability Analysis.
 
 ---
 
-### 🚀 Pendahuluan
+### 🚀 Introduction
 
-**El-Cyber_Pentest** adalah suite tool siber yang dirancang khusus untuk membantu profesional keamanan siber, bug bounty hunter, dan peneliti dalam fase **pengumpulan informasi (reconnaissance)** dan **analisis kerentanan awal**. Tool ini bertujuan untuk menyederhanakan langkah-langkah awal dalam proses penetration testing (pentest).
-
----
-
-### ⚠️ Peringatan Penting & Disclaimer Hukum
-
-**HARAP BACA SEBELUM MENGGUNAKAN!**
-
-Tool ini dikembangkan **HANYA** untuk tujuan:
-
-* **Edukasi**
-* **Penelitian**
-* **Pengujian Penetrasi yang Sah dan Berizin (Legal & Authorized Penetration Testing)**
-
-#### Tanggung Jawab Pengguna
-
-Pengembang (Developer) **TIDAK** bertanggung jawab atas segala kerusakan, kerugian, atau tindakan ilegal yang timbul dari penggunaan tool ini. Pengguna sepenuhnya bertanggung jawab atas hal-hal berikut:
-
-1.  **Kepatuhan Hukum:** Mematuhi semua hukum dan peraturan lokal, nasional, dan internasional yang berlaku.
-2.  **Izin Tertulis:** Memperoleh **izin tertulis dan eksplisit** dari pemilik sistem atau jaringan sebelum melakukan pengujian apa pun menggunakan tool ini.
-3.  **Penggunaan Etis:** Menggunakan tool ini secara etis dan bertanggung jawab.
-
-> **PENGGUNAAN TANPA IZIN ADALAH ILEGAL. Gunakan dengan bijak dan atas risiko Anda sendiri.**
+**El-Cyber_Pentest** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
 
 ---
 
-### 🛠️ Instalasi
+### ⚠️ Important Warning & Legal Disclaimer
 
-Pastikan Anda memiliki **Python 3.12.x** terinstal pada sistem Anda. Tool ini dioptimalkan untuk dijalankan di lingkungan **Kali Linux/Ubuntu/Debian/Termux**.
+**PLEASE READ BEFORE USE!**
 
-#### 1. Kloning Repositori & Instalasi Otomatis
+This tool was developed for the purpose only:
 
-Gunakan perintah `curl` berikut untuk mengkloning repositori dan menjalankan skrip instalasi yang diperlukan:
+* **Education**
+* **Study**
+* **Legal and Licensed Penetration Testing ***
+
+#### User Responsibilities
+
+Developer **NO** responsible for any damage, loss, or illegal actions arising from the use of this tool. The user is fully responsible for the following:
+
+1.  **Legal Compliance:** Comply with all applicable local, national and international laws and regulations.
+2.  **Written Permission:** Get **written and explicit permission** from the system or network owner before performing any testing using this tool.
+3.  **Ethical Use:** Use this tool ethically and responsibly.
+
+> **UNAUTHORIZED USE IS ILLEGAL. Use with caution and at your own risk.**
+
+---
+
+### 🛠️ Installation
+
+Make sure you have **Python 3.12.x** installed on your system. This tool is optimized to run in an environment **Kali Linux/Ubuntu/Debian/Termux**.
+
+#### 1. Repository Cloning & Automated Installation
+
+Use the command `curl` following to clone the repository and run the necessary installation scripts:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash 
 ```
 
-### 2. Jalankan
+### 2. Run
 
-Gunakan perintah ini untuk menjalankannya.
+Use this command to run it.
 
 ```bash
 pentest
 ```
 
-### 📜 Lisensi 
+### 📜 License 
 
-Tool ini didistribusikan di bawah Lisensi MIT. 
+This tool is distributed under the MIT License.
 
-Ringkasan Lisensi 
+License Summary 
 
-Anda bebas untuk menggunakan, memodifikasi, dan mendistribusikan kode ini untuk penggunaan pribadi maupun komersial, dengan syarat Anda menyertakan pemberitahuan hak cipta dan izin lisensi asli. 
+You are free to use, modify, and distribute this code for personal or commercial use, provided you include the original copyright notice and license permissions. 
 
-PENAFIAN (DISCLAIMER): SEPERTI TERCANTUM DALAM LISENSI MIT, KODE INI DIBERIKAN "SEBAGAIMANA ADANYA" TANPA JAMINAN APAPUN.
+DISCLAIMER: AS STATED IN THE MIT LICENSE, THIS CODE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY.
