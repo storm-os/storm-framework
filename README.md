@@ -4,7 +4,7 @@
 ![Debian](https://img.shields.io/badge/Debian-supported-red?logo=debian)
 ![Termux](https://img.shields.io/badge/Termux-supported-black?logo=android)
 
-*[Indonesia](README_ID.md) Documentation*
+*[Indonesia 🇮🇩](README_ID.md) Documentation*
 
 ---
 
@@ -28,7 +28,7 @@ This tool was developed for the purpose only:
 
 * **Education**
 * **Study**
-* **Legal and Licensed Penetration Testing ***
+* **Legal and Licensed Penetration Testing**
 
 #### User Responsibilities
 
