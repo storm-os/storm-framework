@@ -58,7 +58,7 @@ if [ -d "$INSTALL_DIR" ]; then
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
 
-echo -e "${GREEN}[+] Membuat direktori instalasi{NC}"
+echo -e "${GREEN}[+] Membuat direktori instalasi"
 
 # Membuat direktori dan kloning repositori (menggunakan sudo jika perlu)
 if $NEEDS_SUDO; then
