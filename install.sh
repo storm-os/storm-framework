@@ -3,7 +3,6 @@
 TOOL_NAME="pentest"
 REPO_NAME="El-Cyber_Pentest"
 GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
-VERSION=$(< version.txt)
 
 # Warna
 GREEN='\033[92m'
@@ -91,7 +90,7 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
     if [ $? -ne 0 ]; then
         echo -e "${RED}Error: Gagal menginstal dependensi Python.${NC}"
         # Opsional: Jangan langsung exit jika gagal, beri peringatan saja
-        # exit 1 
+        # exit 1
     fi
 fi
 
@@ -123,6 +122,8 @@ else
     chmod +x "$WRAPPER_DST"
 fi
 
+DIREKTORI_SKRIP="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+VERSION=$(< "$DIREKTORI_SKRIP/version.txt")
 echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"
 echo -e "${GREEN}[✓] Memasang wrapper ke: ${BIN_DIR}${NC}"

@@ -9,7 +9,7 @@ from script.web_head import check_web_headers
 from script.whois import get_whois_info
 from script.dns import enumerate_dns_records
 from script.subdomain import enumerate_subdomains
-from script.credential_checker import check_default_credentials
+from script.attc_net import check_default_credentials
 from script.firebase_db import firebase_write_exploit_db
 from script.firebase_fs import firestore_write_exploit
 from script.md5_crypt import crack_shadow_hash
@@ -44,7 +44,7 @@ def clear_screen():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "1.1.2"
+CURRENT_VERSION = "1.1.3"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
@@ -55,7 +55,10 @@ def check_update():
 
         # Jika versi di GitHub lebih tinggi dari versi lokal
         if latest_version > CURRENT_VERSION:
+            print(C["HEADER"] + "\n######################################")
             print(C["SUCCESS"] + f"\n[!] Update tersedia: v{latest_version} (Versi Anda: v{CURRENT_VERSION})" + C["RESET"])
+            print(C["SUCCESS"] + "\n[-] Ketik: npm update pentest" + C["RESET"])
+            print(C["HEADER"] + "\n######################################")
     except:
         pass
 
@@ -75,7 +78,6 @@ def tampilkan_menu():
     print(C["MENU"] + "5. Subdomain Enumeration")
     print(C["MENU"] + "6. OSINT")
     print(C["ERROR"] + "99. Keluar")
-    print(C["ERROR"] + "100. Update Tools")
     print(C["HEADER"] + "--------------------------------------")
 
     print(C["HEADER"] + "\n######################################")
@@ -162,7 +164,7 @@ def main():
             print(C["SUCCESS"] + "Terima kasih, sampai jumpa!")
             break
 
-        elif pilihan == '100':
+        elif pilihan == 'npm update pentest':
             run_update(C)
 
         else:
