@@ -3,6 +3,7 @@
 TOOL_NAME="pentest"
 REPO_NAME="El-Cyber_Pentest"
 GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
+VERSION=$(curl -s https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/version.txt)
 
 # Warna
 GREEN='\033[92m'
@@ -122,8 +123,6 @@ else
     chmod +x "$WRAPPER_DST"
 fi
 
-DIREKTORI_SKRIP="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-VERSION=$(< "$DIREKTORI_SKRIP/version.txt")
 echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"
 echo -e "${GREEN}[✓] Memasang wrapper ke: ${BIN_DIR}${NC}"
