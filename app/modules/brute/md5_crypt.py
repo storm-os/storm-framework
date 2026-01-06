@@ -2,12 +2,17 @@
 import crypt
 
 from app.colors import C
+
+REQUIRED_OPTIONS = {
+        "HASH"          : "",
+        "PASS"          : ""
+    }
+
 # --- Fungsi Cracker Utama ---
 def execute(options):
     """
     Memecahkan hash password MD5-Crypt menggunakan wordlist.
     """
-
     shadow_entry = options.get("HASH")
     wordlist_file = options.get("PASS")
 

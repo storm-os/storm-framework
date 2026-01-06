@@ -12,6 +12,10 @@ SYM_SECURITY = "🔒"
 # List tipe record DNS yang ingin kita cari
 DNS_RECORDS = ['A', 'MX', 'NS', 'TXT', 'AAAA', 'SOA']
 
+REQUIRED_OPTIONS = {
+        "URL"           : ""
+    }
+
 def execute(options):
     """Mengambil berbagai tipe record DNS dari sebuah domain."""
 

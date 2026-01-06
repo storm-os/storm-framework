@@ -101,7 +101,9 @@ def check_instagram_email(email):
         return f"{C.ERROR} 🚨 ERROR tak terduga (Instagram): {e}{C.RESET}"
 
 
-
+REQUIRED_OPTIONS = {
+        "EMAIL"         : ""
+    }
 
 
 # --- Fungsi Utama Runner ---
@@ -109,6 +111,7 @@ def execute(options):
     """
     Fungsi utama untuk menjalankan pengecekan email tunggal di berbagai platform.
     """
+
     email = options.get("EMAIL")
 
     email_clean = email.strip()

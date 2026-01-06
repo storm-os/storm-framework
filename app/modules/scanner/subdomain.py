@@ -13,6 +13,10 @@ SUBDOMAINS = [
 SYM_FOUND = "🟢"
 SYM_NOT_FOUND = "⚫"
 
+REQUIRED_OPTIONS = {
+        "URL"           : ""
+    }
+
 def execute(options):
     """Mencari subdomain aktif dari domain target menggunakan list kata."""
 

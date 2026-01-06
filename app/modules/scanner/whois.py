@@ -8,6 +8,11 @@ from app.colors import C
 SYM_INFO = "💡"
 SYM_ERROR = "❌"
 
+REQUIRED_OPTIONS = {
+        "URL"           : "",
+        "IP"            : ""
+    }
+
 def execute(options):
     """Mengambil informasi Whois dari Domain/IP."""
 

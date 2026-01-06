@@ -136,6 +136,11 @@ def test_grafana(target_ip, port, username, password):
     except Exception:
         return False
 
+REQUIRED_OPTIONS = {
+        "IP"            : "",
+        "PORT"          : "",
+        "PASS"          : ""
+    }
 
 # --- Fungsi Utama ---
 def execute(options):

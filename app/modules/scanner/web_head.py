@@ -8,6 +8,10 @@ SYM_EXPOSED = "❗"
 SYM_WARNING = "⚠️"
 SYM_ERROR = "❌"
 
+REQUIRED_OPTIONS = {
+        "URL"           : ""
+    }
+
 def execute(options):
     """Memeriksa header keamanan sebuah URL."""
 

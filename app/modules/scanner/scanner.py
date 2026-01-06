@@ -67,6 +67,10 @@ def get_service_banner(target_ip, port, timeout=1.0):
         return f"{C.ERROR} CLOSED " + STATUS_CLOSED, None
 
 
+REQUIRED_OPTIONS = {
+        "IP"            : ""
+    }
+
 def execute(options):
     """Fungsi utama untuk menjalankan scan dengan deteksi versi/banner."""
 
