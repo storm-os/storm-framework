@@ -254,7 +254,7 @@ def main():
         elif cmd == "help":
             tampilkan_bantuan()
 
-        elif cmd == "pentest update"
+        elif cmd == "pentest update":
             run_update()
 
         elif cmd in ["exit"]:
