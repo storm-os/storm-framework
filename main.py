@@ -7,7 +7,8 @@ from app.update import run_update
 from app.colors import C
 from app.utils import resolve_path
 from app.utils import load_module_dynamically
-
+from app.utils import count_modules
+from app.banner import get_random_banner
 # --- Fungsi Clear Screen ---
 
 def clear_screen():
@@ -31,7 +32,7 @@ def tampilkan_bantuan():
   show modules			: Displaying module categories
   show <name_categories>	: Displays the complete contents
   search <filename>		: To search for files
-  info				: Information Development
+  about				: Information Development
   back				: Back from current position
   exit				: Exit the application
 
@@ -46,7 +47,7 @@ def tampilkan_bantuan():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "3.2.0"
+CURRENT_VERSION = "3.4.0"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
@@ -75,11 +76,16 @@ def banner():
     print(f"{C.HEADER}       Welcome to Cyber-Pentest  ")
     print(f"{C.HEADER}######################################")
     print(f"{C.HEADER}######################################")
-    print(f"{C.HEADER} --------------------------------------")
 
 def main():
     clear_screen()
     banner()
+    print(get_random_banner())
+
+    total_mod = count_modules()
+    print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
+    print("")
+
     current_module = None
     current_module_name = ""
 
@@ -225,14 +231,16 @@ def main():
             print("")
 
         # PERINTAH: Information Dev
-        elif cmd == "info":
-            if current_module:
-                desc = getattr(current_module, 'DESCRIPTION', 'No description available.')
-                auth = getattr(current_module, 'AUTHOR', 'Elzy')
-                print(f"\n{C.HEADER}--- Module Information ---")
-                print(f"Name   : {current_module_name}")
-                print(f"Author : {auth}")
-                print(f"Descr  : {desc}\n")
+        elif cmd == "about":
+            print(f"\n{C.HEADER}======================================")
+            print(f"{C.SUCCESS}       EL-CYBER PENTEST FRAMEWORK")
+            print(f"{C.HEADER}======================================")
+            print(f"{C.INPUT}  Developed by : Elzy")
+            print(f"{C.INPUT}  Contributor  : There isn't any yet")
+            print(f"{C.INPUT}  Purpose      : All-in-One Pentest Tools")
+            print(f"{C.INPUT}  Version      : {CURRENT_VERSION}")
+            print(f"{C.INPUT}  GitHub       : github.com/Proot9")
+            print(f"{C.HEADER}======================================\n")
 
         # 5. PERINTAH: run / exploit
         elif cmd in ["run", "exploit"]:

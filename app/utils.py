@@ -40,3 +40,18 @@ def load_module_dynamically(module_name):
                 # Load modulnya
                 return importlib.import_module(module_path)
     return None
+
+def count_modules():
+    total = 0
+    # Tentukan path folder modules kamu
+    path = "app/modules"
+
+    if not os.path.exists(path):
+        return 0
+
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            # Hanya hitung file .py dan abaikan __init__.py
+            if file.endswith(".py") and file != "__init__.py":
+                total += 1
+    return total
