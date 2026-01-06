@@ -8,8 +8,10 @@ SYM_EXPOSED = "❗"
 SYM_WARNING = "⚠️"
 SYM_ERROR = "❌"
 
-def check_web_headers(target_url):
+def execute(options):
     """Memeriksa header keamanan sebuah URL."""
+
+    target_url = options.get("URL")
 
     # 1. Pastikan URL memiliki skema (http:// atau https://)
     if not target_url.startswith(('https://', 'http://')):

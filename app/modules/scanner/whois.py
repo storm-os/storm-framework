@@ -8,8 +8,13 @@ from app.colors import C
 SYM_INFO = "💡"
 SYM_ERROR = "❌"
 
-def get_whois_info(target):
+def execute(options):
     """Mengambil informasi Whois dari Domain/IP."""
+
+    target_url = options.get("URL")
+    target_ip = options.get("IP")
+
+    target = target_url if target_url else target_ip
 
     # Menghapus 'http://' atau 'https://' jika ada
     target = target.replace('http://', '').replace('https://', '').strip('/')

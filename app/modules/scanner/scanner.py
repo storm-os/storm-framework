@@ -67,8 +67,10 @@ def get_service_banner(target_ip, port, timeout=1.0):
         return f"{C.ERROR} CLOSED " + STATUS_CLOSED, None
 
 
-def scan_target(target_ip):
+def execute(options):
     """Fungsi utama untuk menjalankan scan dengan deteksi versi/banner."""
+
+    target_ip = options.get("IP")
 
     port_names = {
         21: "FTP",

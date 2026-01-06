@@ -22,7 +22,14 @@ def test_ssh(target_ip, port, username, password):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
-        client.connect(target_ip, port=port, username=username, password=password, timeout=2)
+        client.connect(
+        target_ip,
+        port=port,
+        username=username,
+        password=password,
+        timeout=2,
+        banner_timeout=1.5
+        )
         return True
     except paramiko.AuthenticationException:
         return False
@@ -131,8 +138,12 @@ def test_grafana(target_ip, port, username, password):
 
 
 # --- Fungsi Utama ---
-def check_default_credentials(target_ip, target_ports=None, wordlist_path=None):
+def execute(options):
     """Menjalankan pengujian kredensial lemah pada layanan yang ditentukan."""
+
+    target_ip = options.get("IP")
+    target_ports = options.get("PORT")
+    wordlist_path = options.get("PASS")
 
     print(f"{C.HEADER} \n--- CREDENTIAL CHECKER untuk {target_ip} ---")
 
@@ -198,12 +209,20 @@ def check_default_credentials(target_ip, target_ports=None, wordlist_path=None):
         found_weak_creds = False
 
         for user, passwd in DEFAULT_CREDS:
-            if test_function(target_ip, port, user, passwd):
-                print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{user} P:{passwd}")
-                found_weak_creds = True
+            try:
+                if test_function(target_ip, port, user, passwd):
+                    print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> {user}:{passwd}")
+                    found_weak_creds = True
+                    break
+                else:
+                    print(f"{C.MENU}  {SYM_FAILED} GAGAL: {user}:{passwd}")
+
+            except (ConnectionError, TimeoutError):
+                print(f"{C.ERROR} [!] Koneksi terputus/Timeout. Menghentikan target ini...")
                 break
-            else:
-                print(f"{C.MENU}  {SYM_FAILED} GAGAL: {user}:{passwd}")
+            except Exception as e:
+                print(f"{C.ERROR} [!] Error Fatal: {e}")
+                break
 
         if found_weak_creds:
             continue
@@ -237,6 +256,7 @@ def check_default_credentials(target_ip, target_ports=None, wordlist_path=None):
                 print(f"{C.ERROR}  {SYM_ERROR} ERROR: File Wordlist tidak ditemukan di {wordlist_path}.")
             except Exception as e:
                 print(f"{C.ERROR}  {SYM_ERROR} ERROR tak terduga saat Brute Force: {e}")
+                break
         elif wordlist_path:
              print(f"{C.MENU}  [!] Tahap 2 dilewati. Wordlist Path diberikan, tetapi file tidak ditemukan.")
 

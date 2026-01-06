@@ -13,8 +13,10 @@ SUBDOMAINS = [
 SYM_FOUND = "🟢"
 SYM_NOT_FOUND = "⚫"
 
-def enumerate_subdomains(target_domain):
+def execute(options):
     """Mencari subdomain aktif dari domain target menggunakan list kata."""
+
+    target_domain = options.get("URL")
 
     # Menghapus 'http://' atau 'https://' jika ada
     target_domain = target_domain.replace('http://', '').replace('https://', '').strip('/')

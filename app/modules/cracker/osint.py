@@ -105,10 +105,12 @@ def check_instagram_email(email):
 
 
 # --- Fungsi Utama Runner ---
-def run_osint(email):
+def execute(options):
     """
     Fungsi utama untuk menjalankan pengecekan email tunggal di berbagai platform.
     """
+    email = options.get("EMAIL")
+
     email_clean = email.strip()
 
     print(f"{C.HEADER} \n--- OSINT MULTI-PLATFORM EMAIL CHECKER ---")

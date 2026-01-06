@@ -3,10 +3,13 @@ import crypt
 
 from app.colors import C
 # --- Fungsi Cracker Utama ---
-def crack_shadow_hash(shadow_entry, wordlist_file):
+def execute(options):
     """
     Memecahkan hash password MD5-Crypt menggunakan wordlist.
     """
+
+    shadow_entry = options.get("HASH")
+    wordlist_file = options.get("PASS")
 
     # 1. Parsing Hash dari /etc/shadow
     try:

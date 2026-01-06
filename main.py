@@ -1,20 +1,12 @@
 # main.py
 import os
 import requests
+import readline
 
 from app.update import run_update
 from app.colors import C
-
-from app.modules.scanner import scan_target
-from app.modules.web_head import check_web_headers
-from app.modules.whois import get_whois_info
-from app.modules.dns import enumerate_dns_records
-from app.modules.subdomain import enumerate_subdomains
-from app.modules.attc_net import check_default_credentials
-from app.modules.firebase_db import firebase_write_exploit_db
-from app.modules.firebase_fs import firestore_write_exploit
-from app.modules.md5_crypt import crack_shadow_hash
-from app.modules.osint import run_osint
+from app.utils import resolve_path
+from app.utils import load_module_dynamically
 
 # --- Fungsi Clear Screen ---
 
@@ -29,10 +21,28 @@ def clear_screen():
 
 # --- Akhir fungsi clear screen ---
 
+# --- MENU HELP
+def tampilkan_bantuan():
+    print(f"""
+{C.HEADER}================ COMMAND GUIDE ================
+{C.MENU} Perintah Umum:
+  help			: Menampilkan panduan ini
+  show options		: Melihat variabel yang sudah di-set (IP, Port, dll)
+  back			: Keluar dari modul saat ini
+  exit			: Keluar dari aplikasi
+
+{C.MENU} Perintah Workflow:
+  use <nama_modul>	: Memilih modul (Contoh: use scanner)
+  set <key> <val>	: Mengisi parameter (Contoh: set target 192.168.1.1)
+  run / exploit		: Menjalankan modul yang sudah dipilih
+{C.HEADER}===============================================
+    """)
+
+
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "2.1.2"
+CURRENT_VERSION = "3.1.0"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
@@ -54,109 +64,110 @@ def check_update():
 
 # --- Fungsi Menu ---
 
-def tampilkan_menu():
+def banner():
     """Menampilkan pilihan menu utama dengan warna."""
-    print(f"{C.HEADER}\n######################################")
-    print(f"{C.HEADER}  TOOL KEAMANAN PYTHON  ")
     print(f"{C.HEADER}######################################")
-    print(f"{C.MENU} 1. Jalankan Port Scanner Cepat")
-    print(f"{C.MENU} 2. Scan Header Website")
-    print(f"{C.MENU} 3. Whois Lookup")
-    print(f"{C.MENU} 4. DNS Enumeration")
-    print(f"{C.MENU} 5. Subdomain Enumeration")
-    print(f"{C.MENU} 6. OSINT")
-    print(f"{C.ERROR} 99. Keluar")
-    print(f"{C.HEADER} --------------------------------------")
-
-    print(f"{C.HEADER}\n######################################")
-    print(f"{C.HEADER}  TOOL EXPLOIT PYTHON  ")
     print(f"{C.HEADER}######################################")
-    print(f"{C.MENU} C1. BruteForce (Network)")
-    print(f"{C.MENU} C2. BruteForce (MD5-Crypt)")
-    print(f"{C.MENU} C3. Firebase Exploit FS")
-    print(f"{C.MENU} C4. Firebase Exploit DB")
+    print(f"{C.HEADER}       Welcome to Cyber-Pentest  ")
+    print(f"{C.HEADER}######################################")
+    print(f"{C.HEADER}######################################")
     print(f"{C.HEADER} --------------------------------------")
 
 def main():
     clear_screen()
+    banner()
+    current_module = None
+
+
+    options = {
+        "IP": "",
+        "PORT": "",
+        "PASS": "",
+        "URL": "",
+        "EMAIL": "",
+        "HASH": "",
+        "MESSAGE": "",
+        "ID": "",
+        "COUNT": "",
+        "PATH": ""
+    }
 
     while True:
-        tampilkan_menu()
         check_update()
 
-        # Menerapkan warna pada prompt input
-        pilihan = input(f"{C.INPUT} Masukkan pilihan Anda: ")
+        p_mod = f"({C.ERROR}{current_module_name}{C.INPUT})" if current_module else ""
+        cmd_line = input(f"{C.INPUT}[~]{p_mod}==> ").strip().split()
 
-        if pilihan == '1':
-            target = input(f"{C.INPUT} Masukkan IP Target: ")
+        if not cmd_line: continue
 
-            # Panggil Fungsi
-            scan_target(target)
+        cmd = cmd_line[0].lower()
+        args = cmd_line[1:]
 
-        elif pilihan == '2':
-            url_target = input(f"{C.INPUT} Masukkan URL Target: ")
+        # 1. PERINTAH: use <module>
+        if cmd == "use":
+            module_name = args[0].lower() if args else ""
+            mod = load_module_dynamically(module_name) # Panggil fungsi dari utils
+            if mod:
+                current_module = mod
+                current_module_name = module_name
+            else:
+                print(f"[-] Modul '{module_name}' tidak ditemukan di folder modules/.")
 
-            # Panggil Fungsi
-            check_web_headers(url_target)
+        # 2. PERINTAH: set <VARIABLE> <VALUE>
+        elif cmd == "set":
+            if len(args) >= 2:
+                var_name = args[0].upper()
+                var_value = args[1]
 
-        elif pilihan == '3':
-            whois_target = input(f"{C.INPUT} Masukkan Domain/IP Target: ")
+                # Logika otomatis jika yang di-set adalah path file
+                if "PATH" in var_name:
+                    found_path = resolve_path(var_value)
+                    if found_path:
+                        options[var_name] = found_path
+                        print(f"{var_name} => {found_path}")
+                    else:
+                        print(f"[-] File '{var_value}' tidak ditemukan!")
+                else:
+                    options[var_name] = var_value
+                    print(f"{var_name} => {var_value}")
+            else:
+                print("[-] Gunakan: set <NAMA_VARIABEL> <nilai>")
 
-            # Panggil Fungsi
-            get_whois_info(whois_target)
+        # 3. MENU HELP
+        elif cmd == "help":
+            tampilkan_bantuan()
 
-        elif pilihan == '4':
-            dns_target = input(f"{C.INPUT} Masukkan Domain Target: ")
+        # 4. PERINTAH: show <options/modules>
+        elif cmd == "show":
+            target_show = args[0].lower() if args else ""
+            if target_show == "options":
+                print("\nGlobal Options:")
+                for k, v in options.items():
+                    print(f"  {k:<12} : {v}")
+                print("")
 
-            # Panggil Fungsi
-            enumerate_dns_records(dns_target)
+        # 5. PERINTAH: run / exploit
+        elif cmd in ["run", "exploit"]:
+            if not current_module:
+                print("[-]==>  ")
+                continue
 
-        elif pilihan == '5':
-            subdomain_target = input(f"{C.INPUT} Masukkan Domain Target: ")
+            try:
+                # Pastikan setiap file di modules punya fungsi bernama 'execute'
+                current_module.execute(options)
+            except AttributeError:
+                print(f"[-] Error: Modul {current_module_name} tidak punya fungsi 'execute(options)'")
+            except Exception as e:
+                print(f"[-] Terjadi kesalahan saat eksekusi: {e}")
 
-            # Panggil Fungsi
-            enumerate_subdomains(subdomain_target)
+        elif cmd == "back":
+            current_module = None
 
-        elif pilihan == '6':
-            osint_target = input(f"{C.INPUT} Masukkan Email Target: ")
-
-            # Panggil Fungsi
-            run_osint(osint_target)
-
-        elif pilihan.upper() == 'C1':
-            credential_target = input(f"{C.INPUT} Masukkan IP Target: ")
-            credential_port = input(f"{C.INPUT} Masukkan PORT: ")
-            pass_path = input(f"{C.INPUT} Masukkan Path Pass: ")
-
-            # Panggil Fungsi
-            check_default_credentials(credential_target, credential_port, pass_path)
-
-        elif pilihan.upper() == 'C2':
-            hash_target = input(f"{C.INPUT} Masukkan Hash Target: ")
-            path_pw = input(f"{C.INPUT} Masukkan Path Pass: ")
-
-            # Panggil Fungsi
-            crack_shadow_hash(hash_target, path_pw)
-
-        elif pilihan.upper() == 'C3':
-
-            # Panggil Fungsi
-            firestore_write_exploit()
-
-        elif pilihan.upper() == 'C4':
-
-            # Panggil Fungsi
-            firebase_write_exploit_db()
-
-        elif pilihan == '99':
-            print(f"{C.SUCCESS} Terima kasih, sampai jumpa!")
+        elif cmd in ["exit"]:
             break
 
-        elif pilihan == 'npm update pentest':
-            run_update()
-
         else:
-            print(f"{C.ERROR} Pilihan tidak valid. Silakan coba lagi.")
+            print(f"[-] Perintah tidak dikenal: {cmd}")
 
 if __name__ == "__main__":
     main()
