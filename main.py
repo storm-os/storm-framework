@@ -60,7 +60,7 @@ def check_update():
         if latest_version > CURRENT_VERSION:
             print(f"{C.HEADER}\n######################################")
             print(f"{C.SUCCESS}\n[!] Update available: v{latest_version} (Current version: v{CURRENT_VERSION})")
-            print(f"{C.SUCCESS}\n[-] Type: pentest update")
+            print(f"{C.SUCCESS}\n[-] Type: update")
             print(f"{C.HEADER}\n######################################")
     except:
         pass
@@ -81,6 +81,7 @@ def main():
     clear_screen()
     banner()
     print(get_random_banner())
+    check_update():
 
     total_mod = count_modules()
     print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
@@ -275,7 +276,7 @@ def main():
         elif cmd == "help":
             tampilkan_bantuan()
 
-        elif cmd == "pentest update":
+        elif cmd == "update":
             run_update()
 
         elif cmd == "clear":
