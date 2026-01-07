@@ -81,7 +81,7 @@ def main():
     clear_screen()
     banner()
     print(get_random_banner())
-    check_update():
+    check_update()
 
     total_mod = count_modules()
     print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
