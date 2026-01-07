@@ -47,7 +47,7 @@ def tampilkan_bantuan():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "3.4.1"
+CURRENT_VERSION = "3.4.2"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
