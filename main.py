@@ -47,7 +47,7 @@ def tampilkan_bantuan():
 # --- Cek update ---
 
 # 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "3.4.0"
+CURRENT_VERSION = "3.4.1"
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
@@ -249,12 +249,25 @@ def main():
                 continue
 
             try:
-                # Pastikan setiap file di modules punya fungsi bernama 'execute'
+                # --- PROSES OTOMATIS SEBELUM RUN ---
+                # Kita ambil input PASS yang mungkin masih berupa nama singkat
+                user_pass_input = options.get("PASS")
+
+                if user_pass_input:
+                    # Kita cari path aslinya di folder assets
+                    full_path = resolve_path(user_pass_input)
+
+                    if full_path:
+                        # Kita "timpa" nilai PASS dengan path yang sudah lengkap
+                        options["PASS"] = full_path
+
+                # Jalankan modul dengan options yang sudah 'matang'
                 current_module.execute(options)
+
             except AttributeError:
-                print(f"[-] Error: Module {current_module_name} tidak punya fungsi 'execute(options)'")
+                print(f"{C.ERROR}[-] Error: Module {current_module_name} tidak punya fungsi 'execute(options)'")
             except Exception as e:
-                print(f"[-] An error occurred during execution: {e}")
+                print(f"{C.ERROR}[-] An error occurred during execution: {e}")
 
         elif cmd == "back":
             current_module = None
@@ -264,6 +277,13 @@ def main():
 
         elif cmd == "pentest update":
             run_update()
+
+        elif cmd == "clear":
+            clear_screen()
+            banner()
+            print(get_random_banner())
+            print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
+            print("")
 
         elif cmd in ["exit"]:
             break

@@ -2,18 +2,21 @@ import os
 import importlib
 
 def resolve_path(kata_kunci):
-    """Mencari file di folder assets secara otomatis atau validasi path manual."""
     if not kata_kunci: return None
 
-    # Path absolut folder assets (asumsi assets sejajar dengan app/)
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    assets_dir = os.path.join(base_dir, "assets")
+    # DIAGNOSA DIMULAI
+    current_file = os.path.abspath(__file__)
+    app_folder = os.path.dirname(current_file)
+    parent_folder = os.path.dirname(app_folder)
+    assets_dir = os.path.join(parent_folder, "assets")
 
-    # 1. Cek path manual
+    if os.path.exists(assets_dir):
+        # List file apa saja yang ada di sana untuk bukti
+        files_in_assets = os.listdir(assets_dir)
+
     if os.path.exists(kata_kunci):
         return os.path.abspath(kata_kunci)
 
-    # 2. Cari di assets
     if os.path.exists(assets_dir):
         for root, dirs, files in os.walk(assets_dir):
             for file in files:

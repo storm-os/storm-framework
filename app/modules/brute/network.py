@@ -253,7 +253,7 @@ def execute(options):
                                 return # Hentikan proses total jika berhasil
 
                             # Tampilkan kemajuan di baris yang sama (\r)
-                            print(f"{C.MENU}  Mencoba: {target_user}:{passwd} {C.RESET}", end='\r')
+                            print(f"{C.MENU}  [>] Mencoba: U:{target_user:<20}P:{passwd:<20}", end='\r', flush=True)
 
                     print(f"{C.MENU} \n[!] Brute Force selesai tanpa menemukan kredensial yang cocok.")
 
