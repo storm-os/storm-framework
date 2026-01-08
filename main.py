@@ -167,7 +167,7 @@ def main():
 
                 if user_pass_input:
                     # Kita cari path aslinya di folder assets
-                    full_path = resolve_path(user_pass_input)
+                    full_path = utils.resolve_path(user_pass_input)
 
                     if full_path:
                         # Kita "timpa" nilai PASS dengan path yang sudah lengkap

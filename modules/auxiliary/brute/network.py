@@ -216,7 +216,7 @@ def execute(options):
         for user, passwd in DEFAULT_CREDS:
             try:
                 if test_function(target_ip, port, user, passwd):
-                    print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> {user}:{passwd}")
+                    print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN BERHASIL! ({service_name}) -> U:{user} P:{passwd}")
                     found_weak_creds = True
                     break
                 else:
