@@ -12,9 +12,7 @@ def check_update():
 
         # Jika versi di GitHub lebih tinggi dari versi lokal
         if latest_version > VERSION:
-            print(f"{C.HEADER}\n######################################")
-            print(f"{C.SUCCESS}\n[!] Update available: v{latest_version} | Current version: v{VERSION}")
+            print(f"{C.SUCCESS}[!] Update available: v{latest_version} | Current version: v{VERSION}")
             print(f"{C.SUCCESS}\n[-] Type: update")
-            print(f"{C.HEADER}\n######################################")
     except:
         pass
