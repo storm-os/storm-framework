@@ -44,6 +44,7 @@ def main():
     print("The Cyber Pentest is a Proot9 Open Source Project")
     print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
     print("")
+    check_update()
 
     current_module = None
     current_module_name = ""
@@ -62,8 +63,6 @@ def main():
     }
 
     while True:
-        check_update()
-
         p_mod = f"({C.ERROR}{current_module_name}{C.INPUT})" if current_module else ""
         cmd_line = input(f"{C.INPUT}[~]{p_mod}==> ").strip().split()
 
