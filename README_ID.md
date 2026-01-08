@@ -60,6 +60,16 @@ Gunakan perintah ini untuk menjalankannya.
 pentest
 ```
 
+### 🤝 Contributing 
+
+Proyek open source Cyber Pentest Framework ini terbuka untuk siapapun. 
+Kalau kamu tertarik untuk membantu pengembangan project ini—baik lewat perbaikan bug, penambahan fitur, atau dokumentasi—silakan cek panduan kontribusi kami. 
+
+👉 **Baca panduan kontribusi di sini:** 
+[CONTRIBUTING.md](./CONTRIBUTING.md) 
+
+Terima kasih sudah tertarik berkontribusi! 💙 
+
 ### 📜 Lisensi 
 
 Tool ini didistribusikan di bawah Lisensi MIT. 
