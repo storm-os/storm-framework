@@ -8,7 +8,7 @@
 
 ---
 
-## 🛡️ El-Cyber_Pentest 
+## 🛡️ Cyber-Pentest 
 
 Tool Suite for Information Gathering and Initial Vulnerability Analysis.
 
@@ -16,7 +16,7 @@ Tool Suite for Information Gathering and Initial Vulnerability Analysis.
 
 ### 🚀 Introduction
 
-**El-Cyber_Pentest** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
+**Cyber-Pentest** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
 
 ---
 
@@ -51,7 +51,7 @@ Make sure you have **Python 3.12.x** installed on your system. This tool is opti
 Use the command `curl` following to clone the repository and run the necessary installation scripts:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash 
+curl -fsSL https://raw.githubusercontent.com/Proot9/Cyber-Pentest/main/install.sh | bash 
 ```
 
 ### 2. Run

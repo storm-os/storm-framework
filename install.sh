@@ -1,9 +1,9 @@
 #!/bin/bash
 # --- KONFIGURASI ---
 TOOL_NAME="pentest"
-REPO_NAME="El-Cyber_Pentest"
+REPO_NAME="Cyber-Pentest"
 GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
-VERSION=$(curl -s https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/version.txt)
+VERSION=$(curl -s https://raw.githubusercontent.com/Proot9/Cyber-Pentest/main/version.txt)
 
 # Warna
 GREEN='\033[92m'
@@ -15,7 +15,7 @@ NC='\033[0m'
 # -----------------------------------------------------------------------------
 if [ -d "/data/data/com.termux" ]; then
     # Lingkungan Termux
-    echo -e "${GREEN}[INFO] Lingkungan terdeteksi: Termux${NC}"
+    echo -e "${GREEN}[!] Environment detected: Termux${NC}"
 
     BIN_DIR="$PREFIX/bin"
     SHEBANG_PATH="#!$PREFIX/bin/bash"
@@ -26,7 +26,7 @@ if [ -d "/data/data/com.termux" ]; then
     pkg install -y python git
 else
     # Lingkungan Linux Standar
-    echo -e "${GREEN}[INFO] Lingkungan terdeteksi: Standard Linux${NC}"
+    echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
 
     BIN_DIR="/usr/local/bin"
     SHEBANG_PATH="#!/bin/bash"
@@ -39,26 +39,26 @@ fi
 
 # -----------------------------------------------------------------------------
 
-echo -e "${GREEN}[!] Mulai Instalasi ${REPO_NAME} [!] ${NC}"
+echo -e "${GREEN}[!] Start Installation ${REPO_NAME} [!] ${NC}"
 
 # 1. Cek Python dan Git
 if ! command -v git &> /dev/null; then
-    echo -e "${RED}[x] Error: Git tidak ditemukan. Instal Git terlebih dahulu.${NC}"
+    echo -e "${RED}[x] Error: Git not found. Install Git first.${NC}"
     exit 1
 fi
 if ! command -v "$PYTHON_CMD" &> /dev/null; then
-    echo -e "${RED}[x] Error: Python tidak ditemukan. Pastikan $PYTHON_CMD terinstal.${NC}"
+    echo -e "${RED}[x] Error: Python not found. Make sure $PYTHON_CMD installed.${NC}"
     exit 1
 fi
 
 # 2. Persiapan Direktori Instalasi
 if [ -d "$INSTALL_DIR" ]; then
-    echo -e "${GREEN}[-] Menghapus instalasi lama...${NC}"
+    echo -e "${GREEN}[-] Remove old installations...${NC}"
     cd ~
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
 
-echo -e "${GREEN}[+] Membuat direktori instalasi"
+echo -e "${GREEN}[+] Create installation directory"
 
 # Membuat direktori dan kloning repositori (menggunakan sudo jika perlu)
 if $NEEDS_SUDO; then
@@ -71,14 +71,14 @@ fi
 
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}[x] Error: Gagal mengkloning repository. Cek URL GitHub.${NC}"
+    echo -e "${RED}[x] Error: Failed to clone repository. Check URL GitHub.${NC}"
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
     exit 1
 fi
 
 # 3. Instal Dependensi Python
 if [ -f "$INSTALL_DIR/requirements.txt" ]; then
-    echo -e "${GREEN}[+] Menginstal dependensi Python...${NC}"
+    echo -e "${GREEN}[+] Installing Python dependencies...${NC}"
 
     if $NEEDS_SUDO; then
         # Di Ubuntu/Kali, kita tambahkan flag --break-system-packages
@@ -89,7 +89,7 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
     fi
 
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Gagal menginstal dependensi Python.${NC}"
+        echo -e "${RED}Error: Failed to install Python dependencies.${NC}"
         # Opsional: Jangan langsung exit jika gagal, beri peringatan saja
         # exit 1
     fi
@@ -99,13 +99,13 @@ fi
 WRAPPER_SRC="$INSTALL_DIR/$TOOL_NAME"
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
-echo -e "${GREEN}[+] Membuat script wrapper ${TOOL_NAME}...${NC}"
+echo -e "${GREEN}[+] Creating a wrapper script ${TOOL_NAME}...${NC}"
 
 # Membuat konten wrapper dalam variabel agar mudah dikelola
 CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"Error: Gagal mengakses direktori proyek.\"; exit 1; }
+cd \"\$PROJECT_DIR\" || { echo \"Error: Failed to access project directory.\"; exit 1; }
 $PYTHON_CMD main.py \"\$@\"
 EOF"
 
@@ -124,7 +124,7 @@ else
 fi
 
 echo -e "${GREEN}####################################################${NC}"
-echo -e "${GREEN}[✓] Tools terinstal di: $INSTALL_DIR${NC}"
-echo -e "${GREEN}[✓] Memasang wrapper ke: ${BIN_DIR}${NC}"
-echo -e "${GREEN}[✓] INSTALASI SELESAI VERSION: ${VERSION}${NC}"
+echo -e "${GREEN}[✓] Tools installed on: $INSTALL_DIR${NC}"
+echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
+echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"

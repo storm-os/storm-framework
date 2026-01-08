@@ -2,13 +2,17 @@
 import os
 import requests
 import readline
+import textwrap
 
-from app.update import run_update
-from app.colors import C
-from app.utils import resolve_path
-from app.utils import load_module_dynamically
-from app.utils import count_modules
-from app.banner import get_random_banner
+import app.utility.utils as utils
+import app.base.config_ui as config_ui
+import versi as v
+
+from app.utility.update import run_update
+from app.utility.colors import C
+from app.utility.search import search_modules
+from app.banners.banner import get_random_banner
+from app.base.config_update import check_update
 # --- Fungsi Clear Screen ---
 
 def clear_screen():
@@ -22,69 +26,23 @@ def clear_screen():
 
 # --- Akhir fungsi clear screen ---
 
-# --- MENU HELP
-def tampilkan_bantuan():
-    print(f"""
-{C.HEADER}================ COMMAND GUIDE ================
-{C.MENU} Help command:
-  help				: Displaying the manual
-  show options			: View the variables that have been set (IP, PORT, ETC.)
-  show modules			: Displaying module categories
-  show <name_categories>	: Displays the complete contents
-  search <filename>		: To search for files
-  about				: Information Development
-  back				: Back from current position
-  exit				: Exit the application
 
-{C.MENU} Command Workflow:
-  use <nama_modul>		: Selecting a module
-  set <key> <val>		: Filling in the parameters
-  run / exploit			: Run the selected module
-{C.HEADER}===============================================
-    """)
-
-
-# --- Cek update ---
-
-# 1. Tentukan versi lokal tools saat ini
-CURRENT_VERSION = "3.4.2"
-
-def check_update():
-    # URL mentah ke file version.txt di GitHub
-    url = "https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/version.txt"
-    try:
-        response = requests.get(url, timeout=5)
-        latest_version = response.text.strip()
-
-        # Jika versi di GitHub lebih tinggi dari versi lokal
-        if latest_version > CURRENT_VERSION:
-            print(f"{C.HEADER}\n######################################")
-            print(f"{C.SUCCESS}\n[!] Update available: v{latest_version} (Current version: v{CURRENT_VERSION})")
-            print(f"{C.SUCCESS}\n[-] Type: update")
-            print(f"{C.HEADER}\n######################################")
-    except:
-        pass
-
-# --- Akhir fungsi cek update ---
 
 # --- Fungsi Menu ---
 
-def banner():
-    """Menampilkan pilihan menu utama dengan warna."""
-    print(f"{C.HEADER}######################################")
-    print(f"{C.HEADER}######################################")
-    print(f"{C.HEADER}       Welcome to Cyber-Pentest  ")
-    print(f"{C.HEADER}######################################")
-    print(f"{C.HEADER}######################################")
-
 def main():
     clear_screen()
-    banner()
     print(get_random_banner())
-    check_update()
 
-    total_mod = count_modules()
-    print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
+    total = utils.count_modules()
+    stats = utils.count_by_category()
+    clean_stats = " | ".join([f"{cat.upper()}: {val}" for cat, val in stats.items()])
+    full_text = f"[!] MODULE: {total} | {clean_stats}"
+    wrapped_text = textwrap.fill(full_text, width=50, subsequent_indent="        ")
+    print(f"{C.HEADER}\n+-- --=[ {C.INPUT}{wrapped_text} {C.HEADER}]=--")
+    print("")
+    print("The Cyber Pentest is a Proot9 Open Source Project")
+    print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
     print("")
 
     current_module = None
@@ -117,7 +75,7 @@ def main():
         # 1. PERINTAH: use <module>
         if cmd == "use":
             module_name = args[0].lower() if args else ""
-            mod = load_module_dynamically(module_name) # Panggil fungsi dari utils
+            mod = utils.load_module_dynamically(module_name) # Panggil fungsi dari utils
             if mod:
                 current_module = mod
                 current_module_name = module_name
@@ -132,7 +90,7 @@ def main():
 
                 # Logika otomatis jika yang di-set adalah path file
                 if "PATH" in var_name:
-                    found_path = resolve_path(var_value)
+                    found_path = utils.resolve_path(var_value)
                     if found_path:
                         options[var_name] = found_path
                         print(f"{var_name} => {found_path}")
@@ -150,12 +108,11 @@ def main():
 
             # 1. Menampilkan Kategori (show modules)
             if target_show == "modules":
+                categories = utils.get_categories()
                 print(f"\n{C.HEADER}--- Categories ---")
-                # List folder di dalam app/modules secara dinamis
-                categories = [d for d in os.listdir("app/modules") if os.path.isdir(os.path.join("app/modules", d)) and d != "__pycache__"]
                 for cat in categories:
                     print(f"  - {cat}")
-                print(f"\n{C.INPUT}Use 'show <nama_kategori>' to see the contents.")
+                print(f"\n{C.INPUT}Use 'show <category_name>' to see modules.")
 
             # 2. Menampilkan Opsi (show options)
             elif target_show == "options":
@@ -165,83 +122,37 @@ def main():
                 print(f"{'-'*12} {'-'*25} {'-'*15}")
 
                 if current_module:
-                    # Ambil REQUIRED_OPTIONS dari modul yang aktif
                     req = getattr(current_module, 'REQUIRED_OPTIONS', {})
                     for var_name, desc in req.items():
                         val = options.get(var_name, "unset")
                         print(f"{var_name:<12} {val:<25} {desc}")
                 else:
-                    # Tampilkan semua global options jika belum 'use' modul
                     for k, v in options.items():
                         val = v if v else "unset"
                         print(f"{k:<12} {val:<25} Global Variable")
-                print("")
 
-            # 3. Menampilkan Isi Kategori secara Dinamis (misal: show exploit)
+            # 3. Menampilkan Isi Kategori (misal: show exploit)
             else:
-                potential_path = os.path.join("app/modules", target_show)
-
-                if os.path.isdir(potential_path) and target_show != "":
+                module_files = utils.get_modules_in_category(target_show)
+                if module_files:
                     print(f"\n{C.HEADER}Modules in '{target_show}':")
                     print(f"{'-'*45}")
-                    for root, dirs, files in os.walk(potential_path):
-                        for file in files:
-                            if file.endswith(".py") and file != "__init__.py":
-                                # Menghasilkan path rapi (misal: scanner/portscan)
-                                rel_path = os.path.relpath(os.path.join(root, file), "app/modules")
-                                print(f"  - {rel_path.replace('.py', '')}")
+                    for mod in module_files:
+                        print(f"  - {mod}")
                     print("")
                 else:
-                    print(f"{C.ERROR}[-] Not found 'show {target_show}'")
+                    print(f"{C.ERROR}[-] Category or option '{target_show}' not found.")
+
 
         # PERINTAH: searching modules
         elif cmd == "search":
-            query = args[0].lower() if args else ""
+            query = args[0] if args else ""
             if not query:
                 print("[-] Enter file name!")
                 continue
 
-            print(f"\n[*] Searching for file name: '{query}'")
-            print(f"{'Module Path':<35} {'Category'}")
-            print(f"{'-'*35} {'-'*15}")
+            search_modules(query)
 
-            count = 0
-            for root, dirs, files in os.walk("app/modules"):
-                for file in files:
-                    if file.endswith(".py") and file != "__init__.py":
-                        # 1. Ambil nama file saja untuk difilter
-                        file_name_only = file.replace(".py", "").lower()
-
-                        # 2. Filter: Hanya jika kata kunci ada di NAMA FILE
-                        if query in file_name_only:
-                            count += 1
-                            # 3. Ambil path lengkap (misal: exploit/firebase/db)
-                            rel_path = os.path.relpath(os.path.join(root, file), "app/modules")
-                            clean_path = rel_path.replace(".py", "")
-
-                            # 4. Ambil kategori (nama folder paling atas)
-                            category = rel_path.split(os.sep)[0]
-
-                            # 5. Tampilkan sesuai ekspektasi kamu
-                            print(f"{clean_path:<35} {category}")
-
-            if count == 0:
-                print(f"[-] '{query}' Not found.")
-            else:
-                print(f"\n[*] Found {count} module.")
-            print("")
-
-        # PERINTAH: Information Dev
-        elif cmd == "about":
-            print(f"\n{C.HEADER}======================================")
-            print(f"{C.SUCCESS}       EL-CYBER PENTEST FRAMEWORK")
-            print(f"{C.HEADER}======================================")
-            print(f"{C.INPUT}  Developed by : Elzy")
-            print(f"{C.INPUT}  Contributor  : There isn't any yet")
-            print(f"{C.INPUT}  Purpose      : All-in-One Pentest Tools")
-            print(f"{C.INPUT}  Version      : {CURRENT_VERSION}")
-            print(f"{C.INPUT}  GitHub       : github.com/Proot9")
-            print(f"{C.HEADER}======================================\n")
 
         # 5. PERINTAH: run / exploit
         elif cmd in ["run", "exploit"]:
@@ -274,23 +185,28 @@ def main():
             current_module = None
 
         elif cmd == "help":
-            tampilkan_bantuan()
+            config_ui.show_help()
+
+        elif cmd == "about":
+            config_ui.show_about()
 
         elif cmd == "update":
             run_update()
 
         elif cmd == "clear":
             clear_screen()
-            banner()
             print(get_random_banner())
-            print(f"{C.HEADER}	--=[ {C.INPUT}[!] MODULE = {total_mod}+ {C.HEADER}]=--")
+            print(f"{C.HEADER}\n+-- --=[ {C.INPUT}{wrapped_text} {C.HEADER}]=--")
+            print("")
+            print("The Cyber Pentest is a Proot9 Open Source Project")
+            print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
             print("")
 
         elif cmd in ["exit"]:
             break
 
         else:
-            print(f"[-] Command not recognized: {cmd}")
+            print(f"[-] Unknown Command: {cmd}. Run the {C.SUCCESS}help{C.RESET} {C.INPUT}command for more details.")
 
 if __name__ == "__main__":
     main()

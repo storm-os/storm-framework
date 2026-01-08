@@ -6,7 +6,7 @@
 
 ---
 
-## 🛡️ El-Cyber_Pentest 
+## 🛡️ Cyber-Pentest 
 
 Tool Suite untuk Pengumpulan Informasi dan Analisis Kerentanan Awal.
 
@@ -14,7 +14,7 @@ Tool Suite untuk Pengumpulan Informasi dan Analisis Kerentanan Awal.
 
 ### 🚀 Pendahuluan
 
-**El-Cyber_Pentest** adalah suite tool siber yang dirancang khusus untuk membantu profesional keamanan siber, bug bounty hunter, dan peneliti dalam fase **pengumpulan informasi (reconnaissance)** dan **analisis kerentanan awal**. Tool ini bertujuan untuk menyederhanakan langkah-langkah awal dalam proses penetration testing (pentest).
+**Cyber-Pentest** adalah suite tool siber yang dirancang khusus untuk membantu profesional keamanan siber, bug bounty hunter, dan peneliti dalam fase **pengumpulan informasi (reconnaissance)** dan **analisis kerentanan awal**. Tool ini bertujuan untuk menyederhanakan langkah-langkah awal dalam proses penetration testing (pentest).
 
 ---
 
@@ -49,7 +49,7 @@ Pastikan Anda memiliki **Python 3.12.x** terinstal pada sistem Anda. Tool ini di
 Gunakan perintah `curl` berikut untuk mengkloning repositori dan menjalankan skrip instalasi yang diperlukan:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Proot9/El-Cyber_Pentest/main/install.sh | bash 
+curl -fsSL https://raw.githubusercontent.com/Proot9/Cyber-Pentest/main/install.sh | bash 
 ```
 
 ### 2. Jalankan
