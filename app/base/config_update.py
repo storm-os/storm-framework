@@ -1,5 +1,5 @@
 import requests
-import versi as v
+from versi import VERSION
 from app.utility.colors import C
 
 
@@ -11,9 +11,9 @@ def check_update():
         latest_version = response.text.strip()
 
         # Jika versi di GitHub lebih tinggi dari versi lokal
-        if latest_version > v.VERSION:
+        if latest_version > VERSION:
             print(f"{C.HEADER}\n######################################")
-            print(f"{C.SUCCESS}\n[!] Update available: v{latest_version} | Current version: v{v.VERSION}")
+            print(f"{C.SUCCESS}\n[!] Update available: v{latest_version} | Current version: v{VERSION}")
             print(f"{C.SUCCESS}\n[-] Type: update")
             print(f"{C.HEADER}\n######################################")
     except:
