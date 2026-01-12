@@ -5,15 +5,16 @@ import requests
 import readline
 import textwrap
 
-import app.utility.utils as utils
 import app.base.config_ui as config_ui
+import app.utility.utils as utils
 import versi as v
 
+from app.base.config_update import check_update
 from app.utility.update import run_update
 from app.utility.colors import C
 from app.utility.search import search_modules
 from app.banners.banner import get_random_banner
-from app.base.config_update import check_update
+
 # --- Fungsi Clear Screen ---
 
 def clear_screen():
