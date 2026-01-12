@@ -1,4 +1,5 @@
 # main.py
+# All import
 import os
 import requests
 import readline
@@ -57,6 +58,7 @@ def main():
         "EMAIL": "",
         "HASH": "",
         "MESSAGE": "",
+        "USERNAME": "",
         "ID": "",
         "COUNT": "",
         "PATH": ""
