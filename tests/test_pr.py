@@ -4,8 +4,8 @@ import importlib
 def test_core_files_existence():
     # Memastikan file vital tidak dihapus atau dipindah sembarangan
     vital_files = ["main.py", "requirements.txt", "app/__init__.py", "install.sh",
-                   "utils.py", "colors.py", "update.py", "search.py", "config_path.py", "banner.py",
-                   "test_pr.py"]
+                   "app/utility/utils.py", "app/utility/colors.py", "app/base/update.py", "search.py", "config_path.py", "banner.py",
+                   "tests/test_pr.py"]
     for f in vital_files:
         assert os.path.exists(f), f"File vital {f} HILANG! Jangan dihapus."
 
