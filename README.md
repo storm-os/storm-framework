@@ -3,7 +3,8 @@
 ![Kali Linux](https://img.shields.io/badge/Kali%20Linux-supported-blue?logo=kalilinux)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-supported-orange?logo=ubuntu)
 ![Debian](https://img.shields.io/badge/Debian-supported-red?logo=debian)
-![Termux](https://img.shields.io/badge/Termux-supported-black?logo=android)
+![Termux](https://img.shields.io/badge/Termux-supported-black?logo=android) 
+
 *[Indonesia 🇮🇩](README_ID.md) Documentation*
 
 Tool Suite for Information Gathering and Initial Vulnerability Analysis.
