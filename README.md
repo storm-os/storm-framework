@@ -1,3 +1,7 @@
+## 🛡️ Cyber-Pentest 
+
+Tool Suite for Information Gathering and Initial Vulnerability Analysis.
+
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 ![Kali Linux](https://img.shields.io/badge/Kali%20Linux-supported-blue?logo=kalilinux)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-supported-orange?logo=ubuntu)
@@ -6,19 +10,10 @@
 
 *[Indonesia 🇮🇩](README_ID.md) Documentation*
 
----
-
-## 🛡️ Cyber-Pentest 
-
-Tool Suite for Information Gathering and Initial Vulnerability Analysis.
-
----
-
 ### 🚀 Introduction
 
 **Cyber-Pentest** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
 
----
 
 ### ⚠️ Important Warning & Legal Disclaimer
 
@@ -40,7 +35,6 @@ Developer **NO** responsible for any damage, loss, or illegal actions arising fr
 
 > **UNAUTHORIZED USE IS ILLEGAL. Use with caution and at your own risk.**
 
----
 
 ### 🛠️ Installation
 
