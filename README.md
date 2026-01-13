@@ -77,10 +77,8 @@ Thank you for your interest in contributing! 💙
 
 ### 📜 License 
 
-This tool is distributed under the MIT License.
+This tool is distributed under the [MIT License](LISENSE).
 
 License Summary 
-
 You are free to use, modify, and distribute this code for personal or commercial use, provided you include the original copyright notice and license permissions. 
-
 DISCLAIMER: AS STATED IN THE MIT LICENSE, THIS CODE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY.
