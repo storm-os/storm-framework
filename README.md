@@ -62,6 +62,9 @@ Use this command to run it.
 pentest
 ```
 
+### 📖 Wiki
+If you need further explanation about Cyber-Pentest, don't forget to read at [wiki](https://github.com/Proot9/Cyber-Pentest/wiki)
+
 ### 🤝 Contributing 
 
 This open source Cyber Pentest Framework project is open to anyone. 
