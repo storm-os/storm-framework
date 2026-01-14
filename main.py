@@ -155,33 +155,37 @@ def main():
 
             search_modules(query)
 
-
         # 5. PERINTAH: run / exploit
         elif cmd in ["run", "exploit"]:
             if not current_module:
                 print(f"{C.ERROR}[!] No modules selected.")
                 continue
 
+            # --- VALIDASI ---
+            valid_vars = getattr(current_module, 'REQUIRED_OPTIONS', {})
+            missing_options = [key for key in valid_vars.keys() if not str(options.get(key, "")).strip()]
+
+            if missing_options:
+                print(f"{C.ERROR}[!] Failed to run. Variabel null.")
+                print("")
+                continue
+
             try:
-                # --- PROSES OTOMATIS SEBELUM RUN ---
-                # Kita ambil input PASS yang mungkin masih berupa nama singkat
+                # Proses auto-path PASS
                 user_pass_input = options.get("PASS")
-
                 if user_pass_input:
-                    # Kita cari path aslinya di folder assets
                     full_path = utils.resolve_path(user_pass_input)
-
                     if full_path:
-                        # Kita "timpa" nilai PASS dengan path yang sudah lengkap
                         options["PASS"] = full_path
 
-                # Jalankan modul dengan options yang sudah 'matang'
+                # Eksekusi
                 current_module.execute(options)
 
             except AttributeError:
-                print(f"{C.ERROR}[-] Error: Module {current_module_name} tidak punya fungsi 'execute(options)'")
+                print(f"{C.ERROR}[-] Error: Module has no function 'execute(options)'")
             except Exception as e:
-                print(f"{C.ERROR}[-] An error occurred during execution: {e}")
+                print(f"{C.ERROR}[-] Error during execution: {e}")
+
 
         elif cmd == "back":
             current_module = None
