@@ -2,15 +2,15 @@ import versi as v
 from app.utility.colors import C
 
 def show_about():
-    print(f"\n{C.HEADER}================================================================")
-    print(f"{C.SUCCESS}                   CYBER PENTEST FRAMEWORK")
-    print(f"{C.HEADER}================================================================")
+    print(f"\n{C.HEADER}=====================================================================")
+    print(f"{C.SUCCESS}                    CYBER PENTEST FRAMEWORK")
+    print(f"{C.HEADER}=====================================================================")
     print(f"{C.INPUT}      owner                  : Elzy")
     print(f"{C.INPUT}      Contributor            : There isn't any yet")
     print(f"{C.INPUT}      Purpose                : All-in-One Pentest Tools")
     print(f"{C.INPUT}      Version                : {v.VERSION}")
-    print(f"{C.INPUT}      GitHub                 : github.com/Proot9/Cyber-Pentest")
-    print(f"{C.HEADER}================================================================\n")
+    print(f"{C.INPUT}      GitHub                 : github.com/storm-os/Cyber-Pentest")
+    print(f"{C.HEADER}=====================================================================\n")
 
 def show_help():
     print(f"""
