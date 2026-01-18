@@ -5,7 +5,7 @@ from app.utility.colors import C
 
 def check_update():
     # URL mentah ke file version.txt di GitHub
-    url = "https://raw.githubusercontent.com/Proot9/Cyber-Pentest/main/version.txt"
+    url = "https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/version.txt"
     try:
         response = requests.get(url, timeout=5)
         latest_version = response.text.strip()
