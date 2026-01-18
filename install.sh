@@ -2,8 +2,8 @@
 # --- KONFIGURASI ---
 TOOL_NAME="pentest"
 REPO_NAME="Cyber-Pentest"
-GITHUB_REPO="https://github.com/Proot9/$REPO_NAME.git"
-VERSION=$(curl -s https://raw.githubusercontent.com/Proot9/Cyber-Pentest/main/version.txt)
+GITHUB_REPO="https://github.com/storm-os/$REPO_NAME.git"
+VERSION=$(curl -s https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/version.txt)
 
 # Warna
 GREEN='\033[92m'
