@@ -56,7 +56,7 @@ pentest
 ```
 
 ### 📖 Wiki
-If you need further explanation about Cyber-Pentest, don't forget to read at [wiki](https://github.com/Proot9/Cyber-Pentest/wiki)
+If you need further explanation about Cyber-Pentest, don't forget to read at [wiki](https://github.com/storm-os/Cyber-Pentest/wiki)
 
 ### 🤝 Contributing 
 
