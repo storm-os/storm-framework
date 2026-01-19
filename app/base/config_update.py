@@ -14,5 +14,6 @@ def check_update():
         if latest_version > VERSION:
             print(f"{C.SUCCESS}[!] Update available: v{latest_version} | Current version: v{VERSION}")
             print(f"{C.SUCCESS}\n[-] Type: update")
+            print("")
     except:
         pass
