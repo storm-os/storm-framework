@@ -1,0 +1,38 @@
+from app.utility.colors import C
+import app.utility.utils as utils
+
+def execute(args, context):
+    current_module = context["current_module"]
+    options = context["options"]
+
+    if not current_module:
+        print(f"{C.ERROR}[!] No modules selected. Use 'use <module>' first.")
+        return context
+
+    # --- TAHAP VALIDASI (SATPAM) ---
+    # Ambil daftar variabel yang wajib diisi dari modul yang dipilih
+    required_vars = getattr(current_module, 'REQUIRED_OPTIONS', {})
+    missing = [key for key in required_vars.keys() if not str(options.get(key, "")).strip()]
+
+    if missing:
+        print(f"{C.ERROR}[!] Failed to run. Variabel null.")
+        print("")
+        return context
+
+    # --- TAHAP EKSEKUSI ---
+    try:
+        # Cek otomatis jika ada PASS (Wordlist) agar path-nya benar
+        if options.get("PASS"):
+            full_path = utils.resolve_path(options["PASS"])
+            if full_path:
+                options["PASS"] = full_path
+
+        # Jalankan fungsi utama modul
+        current_module.execute(options)
+
+    except AttributeError:
+        print(f"{C.ERROR}[-] Error: Module has no function 'execute(options)'")
+    except Exception as e:
+        print(f"{C.ERROR}[-] Error during execution: {e}")
+
+    return context

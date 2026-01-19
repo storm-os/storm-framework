@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 # --- KONFIGURASI ---
 TOOL_NAME="pentest"
 REPO_NAME="Cyber-Pentest"
@@ -106,7 +106,7 @@ CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
 cd \"\$PROJECT_DIR\" || { echo \"Error: Failed to access project directory.\"; exit 1; }
-$PYTHON_CMD main.py \"\$@\"
+$PYTHON_CMD storm \"\$@\"
 EOF"
 
 # Eksekusi pembuatan file berdasarkan hak akses (Sudo vs User)

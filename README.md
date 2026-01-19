@@ -44,7 +44,7 @@ Make sure you have **Python 3.12.x** installed on your system. This tool is opti
 Use the command `curl` following to clone the repository and run the necessary installation scripts:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/install.sh | bash 
+curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/install | bash 
 ```
 
 ### 2. Run

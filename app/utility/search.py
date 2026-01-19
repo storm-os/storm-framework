@@ -32,4 +32,5 @@ def search_modules(query):
     if count == 0:
         print(f"[-] '{query}' Not found.")
     else:
-        print(f"\n[*] Found {count} module(s).")
+        print(f"\n[*] Found {count} module.")
+        print("")

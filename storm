@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+
+# All import
+import os
+import app.base.config_ui as config_ui
+
+from lib.core import handler
+from app.base.config_update import check_update
+from app.utility.colors import C
+from app.banners.banner import get_random_banner
+
+
+def clear_screen():
+    """Membersihkan layar terminal"""
+    # Fungsi Win
+    if os.name == 'nt':
+       os.system('cls')
+    # Fungsi Linux
+    else:
+       os.system('clear')
+
+# --- Fungsi Menu ---
+
+def main():
+    clear_screen()
+    print(get_random_banner())
+    config_ui.stormUI()
+    check_update()
+
+    current_module = None
+    current_module_name = ""
+
+    options = {
+        "IP": "",
+        "PORT": "",
+        "PASS": "",
+        "URL": "",
+        "EMAIL": "",
+        "HASH": "",
+        "MESSAGE": "",
+        "USER": "",
+        "ID": "",
+        "COUNT": "",
+        "PATH": ""
+    }
+
+    while True:
+        p_mod = f"({C.ERROR}{current_module_name}{C.INPUT})" if current_module else ""
+        try:
+            user_input = input(f"{C.INPUT}[~]{p_mod}==> ").strip().split()
+        except EOFError: break
+
+        if not user_input: continue
+
+        cmd = user_input[0].lower()
+        args = user_input[1:]
+
+        # Bungkus semua data ke dalam Context
+        context = {
+            "current_module": current_module,
+            "current_module_name": current_module_name,
+            "options": options,
+            "exit": False
+        }
+
+        # SERAHKAN KE MANDOR (HANDLER)
+        new_context = handler.execute(cmd, args, context)
+
+        if new_context:
+            # Update variabel lokal dari hasil kerja para 'pekerja'
+            current_module = new_context["current_module"]
+            current_module_name = new_context["current_module_name"]
+            options = new_context["options"]
+
+            if new_context.get("exit"): break
+        else:
+            print(f"[-] Unknown Command: {cmd}. Run the {C.SUCCESS}help{C.RESET} {C.INPUT}command for more details.")
+
+if __name__ == "__main__":
+    main()
