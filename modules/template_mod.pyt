@@ -12,6 +12,7 @@ REQUIRED_OPTIONS = {
         "EMAIL": "",
         "HASH": "",
         "MESSAGE": "",
+        "USER": "",
         "ID": "",
         "COUNT": "",
         "PATH": ""
@@ -19,7 +20,6 @@ REQUIRED_OPTIONS = {
 
 """
 For REQUIRED_OPTIONS select what you need.
-
 Make sure the method name for the main function to be executed matches the template's. If it's different, the module won't execute.
 
 """
