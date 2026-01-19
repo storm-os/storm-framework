@@ -30,19 +30,19 @@ In order for the code merging process (*Merge*) to run smoothly, please follow t
 | **3. Branch** | `git checkout -b your new features` |
 | **4. Commit** | `git commit -m "Add scanner module X"` |
 | **5. Push** | `git push origin your new features` |
-| **6. Test** | Please test your changes before committing to `PR` |
+| **6. Test** | Please test your changes before committing to PR |
 | **7. PR** | Open **Pull Request** to our `main` branch. |
 
 ---
 
 ## 🏆 Award
 We really appreciate your hard work. The name of each contributor whose code was successfully-*merge* will be permanently displayed at:
-* **File README.md** (Part Hall of Fame).
+* **File CONTRIBUTE.md** (Part Hall of Fame).
 * **Menu About** in the Cyber-Pentest tools.
 
 ---
 
-### 💡 Check Tips
+### 💡 Testing
 If you want to make sure your code passes the censorship before it is-*push*, run this in terminal:
 ```bash
 pip install flake8
