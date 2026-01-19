@@ -30,7 +30,8 @@ In order for the code merging process (*Merge*) to run smoothly, please follow t
 | **3. Branch** | `git checkout -b your new features` |
 | **4. Commit** | `git commit -m "Add scanner module X"` |
 | **5. Push** | `git push origin your new features` |
-| **6. PR** | Open **Pull Request** to our `main` branch. |
+| **6. Test** | Make sure you test first before going to `PR` |
+| **7. PR** | Open **Pull Request** to our `main` branch. |
 
 ---
 
@@ -41,7 +42,7 @@ We really appreciate your hard work. The name of each contributor whose code was
 
 ---
 
-### 💡 Mandiri Check Tips
+### 💡 Check Tips
 If you want to make sure your code passes the censorship before it is-*push*, run this in terminal:
 ```bash
 pip install flake8
