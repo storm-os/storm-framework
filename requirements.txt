@@ -1,5 +1,6 @@
 # Isi file requirement.txt:
 requests
+urllib3
 colorama
 python-nmap
 python-whois
