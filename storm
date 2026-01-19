@@ -2,13 +2,13 @@
 
 # All import
 import os
+import readline
 import app.base.config_ui as config_ui
 
 from lib.core import handler
 from app.base.config_update import check_update
 from app.utility.colors import C
 from app.banners.banner import get_random_banner
-
 
 def clear_screen():
     """Membersihkan layar terminal"""

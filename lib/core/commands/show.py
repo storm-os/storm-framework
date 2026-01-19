@@ -7,6 +7,10 @@ def execute(args, context):
     current_module_name = context["current_module_name"]
     options = context["options"]
 
+    if not target_show:
+        print(f"{C.ERROR}[!] No modules selected.")
+        return context
+
     # 1. show modules
     if target_show == "modules":
         categories = utils.get_categories()
@@ -38,7 +42,7 @@ def execute(args, context):
     else:
         module_files = utils.get_modules_in_category(target_show)
         if module_files:
-            print(f"\n{C.HEADER}Modules in '{target_show}':")
+            print(f"\n{C.HEADER}Modules in {target_show}:")
             for mod in module_files:
                 print(f"  - {mod}")
             print("")

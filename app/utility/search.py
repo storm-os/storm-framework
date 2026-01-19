@@ -6,7 +6,7 @@ def search_modules(query):
     # Langsung gunakan ROOT_DIR, tidak perlu os.path.dirname lagi di sini
     modules_path = os.path.join(ROOT_DIR, "modules")
 
-    print(f"\n[*] Searching for: '{query}'")
+    print(f"\n[*] Searching for: {query}")
     print(f"{'Module Path':<35} {'Category'}")
     print(f"{'-'*35} {'-'*15}")
 
@@ -31,6 +31,7 @@ def search_modules(query):
 
     if count == 0:
         print(f"[-] '{query}' Not found.")
+        print("")
     else:
         print(f"\n[*] Found {count} module.")
         print("")
