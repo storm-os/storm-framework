@@ -59,7 +59,7 @@ def main():
         "EMAIL": "",
         "HASH": "",
         "MESSAGE": "",
-        "USERNAME": "",
+        "USER": "",
         "ID": "",
         "COUNT": "",
         "PATH": ""
