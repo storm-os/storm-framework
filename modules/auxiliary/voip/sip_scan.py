@@ -2,13 +2,14 @@ import socket
 
 
 REQUIRED_OPTIONS = {
-        "IP": ""
+        "IP": "",
+        "PORT": "standar port 5060"
 }
 
 def execute(options):
 
     target_ip = options.get("IP")
-    port = 5060
+    port = options.get("PORT")
     # Payload OPTIONS untuk menanyakan status server tanpa perlu login
     payload = (
         f"OPTIONS sip:{target_ip} SIP/2.0\r\n"
