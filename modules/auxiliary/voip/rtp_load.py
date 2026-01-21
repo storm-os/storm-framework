@@ -3,7 +3,7 @@ import subprocess
 import shutil
 
 REQUIRED_OPTIONS = {
-    "INTERFACE": "eth0"
+    "INTERFACE": "example: eth0"
 }
 
 def execute(options):
