@@ -6,3 +6,4 @@ python-nmap
 python-whois
 dnspython
 paramiko
+scapy

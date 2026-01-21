@@ -41,7 +41,8 @@ def main():
         "USER": "",
         "ID": "",
         "COUNT": "",
-        "PATH": ""
+        "PATH": "",
+        "INTERFACE": ""
     }
 
     while True:

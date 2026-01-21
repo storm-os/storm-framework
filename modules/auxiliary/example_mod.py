@@ -27,8 +27,8 @@ Make sure the method name for the main function to be executed matches the templ
 # --- Main function ---
 def execute(options):
 
-    1 = options.get("IP")
-    2 = options.get("PORT")
-    3 = options.get("PASS")
-    4 = options.get("URL")
+    example = options.get("IP")
+    example = options.get("PORT")
+    example = options.get("PASS")
+    example = options.get("URL")
 
