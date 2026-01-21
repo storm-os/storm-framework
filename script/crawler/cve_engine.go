@@ -3,50 +3,37 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"strconv"
 )
 
-type CVEData struct {
-	CVE         string   `json:"cve"`
-	Name        string   `json:"name"`
-	Severity    string   `json:"severity"`
-	Description string   `json:"description"`
-	Remediation []string `json:"remediation"`
-	URL         []string `json:"URL"`
-	Scanner     string   `json:"scanner"`
-}
-
 func main() {
-	// 1. Ambil argumen dari Python (os.Args[1])
-	if len(os.Args) < 2 {
-		return // Keluar jika tidak ada input
-	}
+	if len(os.Args) < 2 { return }
+	limit, _ := strconv.Atoi(os.Args[1])
 
-	limitStr := os.Args[1]
-	limit, err := strconv.Atoi(limitStr) // Ubah string ke integer
-	if err != nil {
-		return
-	}
+	// Kita ambil data dari GitHub Security Advisories (Contoh API publik)
+	resp, err := http.Get("https://api.github.com/advisories?per_page=" + os.Args[1])
+	if err != nil { return }
+	defer resp.Body.Close()
 
-	var results []CVEData
+	var rawData []map[string]interface{}
+	json.NewDecoder(resp.Body).Decode(&rawData)
 
-	// 2. Loop sebanyak angka yang diminta
-	for i := 1; i <= limit; i++ {
-		// Di sini nantinya proses Scraping/API Fetching
-		item := CVEData{
-			CVE:         fmt.Sprintf("CVE-2026-%d", 1000+i), // Simulasi ID
-			Name:        "Vulnerability Sample " + strconv.Itoa(i),
-			Severity:    "HIGH",
-			Description: "Deskripsi otomatis untuk CVE ke-" + strconv.Itoa(i),
-			Remediation: []string{"Update firmware", "Patch system"},
-			URL:         []string{"https://nvd.nist.gov"},
-			Scanner:     "scanner_sample.py",
+	var results []map[string]interface{}
+	for i := 0; i < len(rawData) && i < limit; i++ {
+		item := map[string]interface{}{
+			"cve":         rawData[i]["cve_id"],
+			"name":        rawData[i]["summary"],
+			"severity":    rawData[i]["severity"],
+			"description": rawData[i]["description"],
+			"remediation": []string{"Check official advisory for patch details"},
+			"URL":         []string{fmt.Sprintf("https://github.com/advisories/%s", rawData[i]["ghsa_id"])},
+			"scanner":     "generic_check.py",
 		}
 		results = append(results, item)
 	}
 
-	// 3. Kirim balik semua data dalam satu paket JSON
 	output, _ := json.Marshal(results)
 	fmt.Println(string(output))
 }

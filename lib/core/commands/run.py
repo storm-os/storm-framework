@@ -30,8 +30,8 @@ def execute(args, context):
         # Jalankan fungsi utama modul
         current_module.execute(options)
 
-    except AttributeError:
-        print(f"{C.ERROR}[-] Error: Module has no function 'execute(options)'")
+    except AttributeError as d:
+        print(f"{C.ERROR}[-] Error: {d}")
     except Exception as e:
         print(f"{C.ERROR}[-] Error during execution: {e}")
 

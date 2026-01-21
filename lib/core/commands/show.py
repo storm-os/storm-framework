@@ -39,40 +39,25 @@ def execute(args, context):
                 print(f"{k:<12} {val:<25} Global Variable")
         print("")
 
-    # 4. show db (Gudang Data)
-    elif target_show == "db" or target_show == "storage":
+    # 3. show db (Gudang Data)
+    elif target_show == "db":
+        # Cek apakah ada argumen setelah 'db'
+        # Contoh: 'show db CVE-2017-0144' -> args[0] adalah CVE-ID nya
+        if len(args) > 1:
+            target_id = args[1]
 
-        try:
-            db = StormDatabase()
-
-            # Sub-argumen, misal: show db targets
-            sub_target = args[1].lower() if len(args) > 1 else "summary"
-
-            if sub_target == "target":
-                data = db.fetch_all_targets()
-                print(f"\n{C.HEADER}--- Target Warehouse ---")
-                print(f"{'Address':<20} | {'Port':<6} | {'Service':<12}")
-                for row in data:
-                    print(f"{row[0]:<20} | {row[1]:<6} | {row[2]:<12}")
-
-            elif sub_target == "cve":
-                data = db.fetch_all_cve()
-                print(f"\n{C.HEADER}--- CVE Library ---")
-                for row in data:
-                    print(f"  [{row[2]}] {row[0]}: {row[1][:40]}...")
-
+            # Jika argumennya adalah 'cve', tampilkan katalog (semua)
+            if target_id.lower() == "cve":
+                utils.cve_summary()
             else:
-                # Ringkasan gudang jika cuma ketik 'show db'
-                print(f"\n{C.HEADER}--- Storage Summary ---")
-                print(f"  Target : {len(db.fetch_all_targets())} entries")
-                print(f"  CVEs   : {len(db.fetch_all_cve())} entries")
-                print(f"\n{C.INPUT}Use 'show db target' or 'show db cve' for details.")
+                # Jika argumennya adalah ID CVE (misal: CVE-2017-0144)
+                # Tampilkan detail satu per satu
+                utils.detail_cve(target_id)
+        else:
+            # Jika cuma ketik 'show db' tanpa argumen
+            print(f"{C.INPUT}[*] Penggunaan: show db cve (untuk list) atau show db <CVE-ID> (untuk detail)")
 
-        except Exception as e:
-            print(f"{C.ERROR}[-] Database Error: {e}")
-        print("")
-
-    # 3. show <category_name>
+    # 4. show <category_name>
     else:
         module_files = utils.get_modules_in_category(target_show)
         if module_files:

@@ -24,7 +24,10 @@ class StormDatabase:
                 cve_id TEXT UNIQUE,
                 title TEXT,
                 description TEXT,
+                remediation TEXT,
                 severity TEXT,
+                url TEXT,
+                scanner TEXT,
                 added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
@@ -60,7 +63,15 @@ class StormDatabase:
         return cursor.fetchall()
 
     def fetch_all_cve(self):
-        """Mengambil semua info CVE dari gudang"""
+        """Mengambil info CVE untuk katalog (Ringkas)"""
         cursor = self.conn.cursor()
-        cursor.execute("SELECT cve_id, title, severity FROM cve_library")
+        # Tambahkan 'id' untuk penomoran di tabel katalog
+        cursor.execute("SELECT id, cve_id, title, severity FROM cve_library ORDER BY id ASC")
         return cursor.fetchall()
+
+    def fetch_cve_detail(self, cve_id):
+        """Mengambil data lengkap satu CVE berdasarkan ID-nya"""
+        cursor = self.conn.cursor()
+        # Menggunakan parameter ? untuk keamanan (SQL Injection protection)
+        cursor.execute("SELECT * FROM cve_library WHERE cve_id = ?", (cve_id,))
+        return cursor.fetchone() # Pakai fetchone karena kita cuma mau ambil 1 data
