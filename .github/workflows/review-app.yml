@@ -39,8 +39,16 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
 
     - name: Commit and Push Changes
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "style: auto cleanup unused imports by storm-bot 🧹"
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"       
+        CHANGED_FILES=$(git status --porcelain | sed 's/^M //g' | tr '\n' ', ')       
+        git add .
+        
+        if ! git diff --cached --quiet; then
+          git commit -m "style: auto-cleanup imports in: ${CHANGED_FILES%, }"
+          git push
+        fi
+
         
 
