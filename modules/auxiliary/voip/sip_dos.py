@@ -7,9 +7,10 @@ REQUIRED_OPTIONS = {
 }
 
 def execute(options):
-    print(options.get("PORT"), type(options.get("PORT")))
+    
     ip = options.get("IP")
-    port = options.get("PORT")
+    port = int(options.get("PORT"))
+    print(options.get(port), type(options.get(port)))
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     print(f"[*] Starting Invite Flood on {ip}...")
