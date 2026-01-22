@@ -32,7 +32,8 @@ def execute(options):
             print(f"[!] Sent {count} packets...", end="\r")
                 
     except KeyboardInterrupt:
-            
+        pass
+        
     finally:
         sock.close()
     
