@@ -32,20 +32,32 @@ def resolve_path(kata_kunci):
     return None
 
 
-# LOGIC SEARCHING
+# LOGIC SEARCHING & USE
 def load_module_dynamically(module_name):
     base_path = os.path.join(ROOT_DIR, "modules")
 
     for root, dirs, files in os.walk(base_path):
         for file in files:
-            if file == f"{module_name}.py":
-                # Ganti root_path menjadi ROOT_DIR di sini
-                relative_path = os.path.relpath(os.path.join(root, file), ROOT_DIR)
-                module_path = relative_path.replace(os.sep, ".").rstrip(".py")
+            name_without_ext, ext = os.path.splitext(file)
 
-                return importlib.import_module(module_path)
+            if name_without_ext == module_name and ext == ".py":
+                full_file_path = os.path.join(root, file)
+                relative_path = os.path.relpath(full_file_path, ROOT_DIR)
+
+                if relative_path.endswith(".py"):
+                    clean_path = relative_path[:-3]
+                else:
+                    clean_path = relative_path
+
+                module_dots = clean_path.replace(os.sep, ".")
+
+                try:
+                    return importlib.import_module(module_dots)
+                except Exception as e:
+                    print(f"[-] Error: {e}")
+                    return None
+
     return None
-
 
 
 # UI MODULES
