@@ -8,11 +8,11 @@ REQUIRED_OPTIONS = {
 
 def execute(options):
 
-    target_ip = options.get("IP")
-    port = options.get("PORT")
-    # Payload OPTIONS untuk menanyakan status server tanpa perlu login
+    ip = options.get("IP")
+    port = int(options.get("PORT"))
+    
     payload = (
-        f"OPTIONS sip:{target_ip} SIP/2.0\r\n"
+        f"OPTIONS sip:{ip} SIP/2.0\r\n"
         "Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-storm\r\n"
         "From: <sip:storm@storm-os>;tag=666\r\n"
         "To: <sip:target@target-ip>\r\n"
@@ -26,7 +26,7 @@ def execute(options):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.settimeout(3)
     try:
-        sock.sendto(payload.encode(), (target_ip, port))
+        sock.sendto(payload.encode(), (ip, port))
         data, addr = sock.recvfrom(2048)
         print(f"[+] Response from {addr}:\n{data.decode()}")
     except Exception as e:
