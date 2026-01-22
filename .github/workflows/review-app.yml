@@ -43,5 +43,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "style: auto cleanup unused imports by storm-bot 🧹"
-        # Bot hanya akan push kalau memang ada file yang berubah (dibersihkan)
+        token: ${{ secrets.STORM_TOKEN }}
 
