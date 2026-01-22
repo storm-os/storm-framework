@@ -1,4 +1,3 @@
-from app.utility.colors import C
 
 def execute(args, context):
     if context["current_module"]:

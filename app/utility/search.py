@@ -1,5 +1,4 @@
 import os
-from app.utility.colors import C
 from app.utility.config_path import ROOT_DIR
 
 def search_modules(query):

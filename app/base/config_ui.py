@@ -1,4 +1,3 @@
-import textwrap
 import versi as v
 import app.utility.utils as utils
 from app.utility.colors import C

@@ -1,6 +1,5 @@
 # scanner.py
 import socket
-import time
 
 from app.utility.colors import C
 

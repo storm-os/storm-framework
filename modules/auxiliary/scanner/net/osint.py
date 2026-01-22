@@ -1,5 +1,4 @@
 import requests
-import time
 import json
 
 from app.utility.colors import C

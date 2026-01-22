@@ -1,7 +1,6 @@
 import os
 import sys
 
-from app.utility.colors import C
 
 def run_update():
     os.chdir(os.path.expanduser("~"))

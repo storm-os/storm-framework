@@ -2,7 +2,6 @@
 
 # All import
 import os
-import readline
 import app.base.config_ui as config_ui
 
 from lib.core import handler
