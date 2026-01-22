@@ -7,25 +7,41 @@ on:
   push:
     branches: [ "main" ]
 
+# Tambahkan izin write supaya bot bisa push hasil bersih-bersihnya
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8
+        pip install flake8 autoflake  # Tambahkan autoflake di sini
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Auto Cleanup (Remove Unused Imports)
+      run: |
+        # Menghapus unused imports secara otomatis sebelum dicek flake8
+        autoflake --in-place --remove-all-unused-imports --recursive .
+
     - name: Lint with flake8
       run: |
+        # Sekarang linting seharusnya aman karena sudah dibersihkan autoflake
         flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
+
+    - name: Commit and Push Changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "style: auto cleanup unused imports by storm-bot 🧹"
+        # Bot hanya akan push kalau memang ada file yang berubah (dibersihkan)
+
