@@ -17,6 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.STORM_TOKEN }}
     
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
@@ -43,5 +45,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "style: auto cleanup unused imports by storm-bot 🧹"
-        token: ${{ secrets.STORM_TOKEN }}
+        
 
