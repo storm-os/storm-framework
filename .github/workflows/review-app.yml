@@ -7,7 +7,6 @@ on:
   push:
     branches: [ "main" ]
 
-# Tambahkan izin write supaya bot bisa push hasil bersih-bersihnya
 permissions:
   contents: write
 
@@ -33,12 +32,10 @@ jobs:
 
     - name: Auto Cleanup (Remove Unused Imports)
       run: |
-        # Menghapus unused imports secara otomatis sebelum dicek flake8
         autoflake --in-place --remove-all-unused-imports --recursive .
 
     - name: Lint with flake8
       run: |
-        # Sekarang linting seharusnya aman karena sudah dibersihkan autoflake
         flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
 
     - name: Commit and Push Changes
