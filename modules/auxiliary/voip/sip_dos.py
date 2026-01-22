@@ -7,7 +7,7 @@ REQUIRED_OPTIONS = {
 }
 
 def execute(options):
-
+    print(options.get("PORT"), type(options.get("PORT")))
     ip = options.get("IP")
     port = options.get("PORT")
 
