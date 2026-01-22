@@ -24,7 +24,7 @@ def execute(options):
     )
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.settimeout(10)
+    sock.settimeout(3)
     try:
         sock.sendto(payload.encode(), (ip, port))
         data, addr = sock.recvfrom(2048)
