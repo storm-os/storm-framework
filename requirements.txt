@@ -7,3 +7,4 @@ python-whois
 dnspython
 paramiko
 scapy
+pytest
