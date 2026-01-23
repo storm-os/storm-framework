@@ -7,14 +7,14 @@ def test_core_files_existence():
                    "app/utility/search.py", "app/utility/config_path.py", "app/banners/banner.py",
                    "tests/test_pr.py"]
     for f in vital_files:
-        assert os.path.exists(f), f"File vital {f} HILANG! Jangan dihapus."
+        assert os.path.exists(f), f"Vital files {f} LOST! Don't delete it."
 
 def test_recursive_import():
-    # Mencoba import seluruh folder app untuk cek apakah ada bug di logic inti
+    # Try importing the entire app folder to check if there is a bug in the core logic.
     try:
         pass
         
-        # Tambahkan folder inti lainnya di sini
+        # Add another core folder here
         assert True
     except Exception as e:
-        assert False, f"Logic inti Cyber-Pentest rusak di perubahan ini: {e}"
+        assert False, f"Cyber-Pentest core logic is broken in this change: {e}"
