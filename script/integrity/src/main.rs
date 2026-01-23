@@ -25,14 +25,15 @@ fn main() {
         ".pytest_cache", 
         ".github", 
         "storm.db", 
-        "tests/database"
+        "tests", 
+        "script/integrity"
     ];
 
     // 1. Load Database JSON
     let data = match fs::read_to_string(db_path) {
         Ok(content) => content,
         Err(_) => {
-            println!("[-] Error: File manifest tidak ditemukan di {}", db_path);
+            println!("[-] ERROR: Manifest file not found in {}", db_path);
             return;
         }
     };
@@ -40,7 +41,7 @@ fn main() {
     let database: HashMap<String, String> = match serde_json::from_str(&data) {
         Ok(map) => map,
         Err(_) => {
-            println!("[-] Error: Format JSON di {} rusak!", db_path);
+            println!("[-] ERROR: JSON format in {} damaged!", db_path);
             return;
         }
     };
@@ -109,8 +110,8 @@ fn main() {
         for f in &missing_files { println!("    -> {}", f); }
     }
 
-    println!("\n[*] Audit Selesai.");
-    println!("[*] Sinkron: {} file | Modifikasi: {} | Ilegal: {}", 
+    println!("\n[*] Audit Completed.");
+    println!("[*] Synchronous: {} file | Modification: {} | Illegal: {}", 
              verified_count, 
              database.len() as i32 - verified_count as i32, 
              untracked_files.len());
