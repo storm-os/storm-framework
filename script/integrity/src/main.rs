@@ -25,7 +25,7 @@ fn main() {
         ".pytest_cache", 
         ".github", 
         "storm.db", 
-        "tests", 
+        "signed_manifest.json", 
         "script/integrity"
     ];
 
