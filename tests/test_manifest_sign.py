@@ -29,9 +29,14 @@ def test_generate_folder_manifest():
                 "size_bytes": path.stat().st_size
             }
 
+    # Validating folder to store json
+    output_dir = root_dir / "tests" / "database"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    manifest_path = output_dir / "signed_manifest.json"
+    
     # Save to JSON file
-    with open("signed_manifest.json", "w", encoding="utf-8") as f:
+    with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=4)
     
-    assert os.path.exists("signed_manifest.json")
+    assert manifest_path.exists()
   
