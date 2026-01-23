@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import pytest
 
+@pytest.mark.core
 def calculate_sha256(file_path):
     sha256_hash = hashlib.sha256()
     with open(file_path, "rb") as f:
@@ -10,6 +11,7 @@ def calculate_sha256(file_path):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest()
 
+@pytest.mark.security
 def test_verify_repo_integrity():
     # Setup Path
     root_dir = Path(__file__).resolve().parent.parent
