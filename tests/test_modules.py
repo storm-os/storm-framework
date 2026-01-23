@@ -2,11 +2,12 @@ import os
 import importlib.util
 import pytest
 
-# Path ke folder modules kamu
+# Path to your modules folder
 MODULES_DIR = "modules"
 
+@modules.mark.core
 def get_all_modules():
-    """Mencari semua file .py di folder modules secara otomatis."""
+    """Searches for all .py files in the modules folder automatically.."""
     modules = []
     if os.path.exists(MODULES_DIR):
         for filename in os.listdir(MODULES_DIR):
@@ -14,21 +15,21 @@ def get_all_modules():
                 modules.append(filename)
     return modules
 
-@pytest.mark.parametrize("module_file", get_all_modules())
+@pytest.mark.security("module_file", get_all_modules())
 def test_module_load(module_file):
     """
-    Tes ini akan mencoba me-load setiap module. 
-    Jika ada kontributor yang kodenya typo/error, tes ini akan MERAH.
+    This test will try to load each module. 
+    If there is a contributor whose code has typos/errors, this test will be RED.
     """
     module_path = os.path.join(MODULES_DIR, module_file)
-    module_name = module_file[:-3] # Hapus .py
+    module_name = module_file[:-3]
     
     try:
         spec = importlib.util.spec_from_file_location(module_name, module_path)
         foo = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(foo)
-        # Jika sampai sini tanpa error, berarti kode 'sehat' (bisa di-import)
+        # If you get here without any errors, it means the code is 'healthy' (can be imported)
         assert True
     except Exception as e:
-        pytest.fail(f"Module {module_file} RUSAK/ERROR: {e}")
+        pytest.fail(f"Module {module_file} ERROR: {e}")
       
