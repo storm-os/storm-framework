@@ -5,7 +5,7 @@ import pytest
 # Path to your modules folder
 MODULES_DIR = "modules"
 
-@modules.mark.core
+@pytest.mark.core
 def get_all_modules():
     """Searches for all .py files in the modules folder automatically.."""
     modules = []
