@@ -51,18 +51,6 @@
         "sha256": "2ad04e611446ded54fbfdec5ff40c1a1d51a940cc4571a95a76719af94e572c1",
         "size_bytes": 663
     },
-    "rockyou/README.md": {
-        "sha256": "7e16fb0fb1d92b2d61c813d8b1d7051d5e7472e58ca72e9fe94f07b4120fc1c2",
-        "size_bytes": 299
-    },
-    "rockyou/rockyou.txt": {
-        "sha256": "6dfa76aa0e02303994fd1062d0ac983f0b69ece5474d85a5bba36362e19c1076",
-        "size_bytes": 139921497
-    },
-    "rockyou/rockyou.txt.tar": {
-        "sha256": "327325bf24da16973d5ef919e68ecf5692acefb361d8040360ec4377fe48550f",
-        "size_bytes": 139923456
-    },
     "app/__init__.py": {
         "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
         "size_bytes": 1
@@ -83,13 +71,13 @@
         "sha256": "c70d44414c90657d8403df76c0c31c8bf230216e6441e22cce9b6823a2e111d9",
         "size_bytes": 1166
     },
-    "tests/test_manifest_sign.py": {
-        "sha256": "181bcbff17e8f8991444e3027b7b7ce7d36d727ba8273b627adc0d59d8aceabd",
-        "size_bytes": 1419
-    },
     "tests/test_verify_integrity.py": {
         "sha256": "45d53b67c05166c9cd4c09fb6671eaa720c7cae8ebe80456e2010468b488a249",
         "size_bytes": 1905
+    },
+    "scripts/README.md": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
     },
     "modules/exploit/README.md": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -447,10 +435,6 @@
         "sha256": "d78614b420a9b9c5dfc1501b2d00a62d2edb168f2f7a109f98cb3ccae2c77a14",
         "size_bytes": 1255
     },
-    "lib/sqlite/storage/storm.db": {
-        "sha256": "9b8164e6af032e004fe43a95c72d17fd7626b3d9453e1e2a6343e0ace3596989",
-        "size_bytes": 24576
-    },
     "script/crawler/cve_engine.go": {
         "sha256": "929aad34ea09296110d4b8cbcc86dccebb423befc1d89c41c6e97f57c94a34a3",
         "size_bytes": 1019
@@ -458,5 +442,9 @@
     "script/crawler/cve_engine": {
         "sha256": "d749e2078c8f2ceb20c9ce20737406c4fdf78c3278f2072e77c10c447be0cdfd",
         "size_bytes": 8571656
+    },
+    "scripts/security/generate_sign.py": {
+        "sha256": "e3bf4df29e714ed49f971cd8b47706baa474bf1e03db4c751ade77620db7435e",
+        "size_bytes": 1509
     }
 }
