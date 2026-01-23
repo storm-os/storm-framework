@@ -34,6 +34,8 @@ def show_help():
   set <key> <val>               : Filling in the parameters
   run / exploit                 : Run the selected module
 
+{C.INPUT}
+  use integrity_check           : Used to check the signature of all files
 {C.HEADER}==========================================================================
     """)
 
