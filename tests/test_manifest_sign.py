@@ -2,7 +2,6 @@ import os
 import json
 import hashlib
 from pathlib import Path
-import pytest
 
 def calculate_sha256(file_path):
     """Menghitung hash SHA-256 dari sebuah file."""
