@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 # Wordlist besar (Agar tidak terkena limit GitHub 100MB)
-rockyou
 *.save
 
 # File log dan temporer

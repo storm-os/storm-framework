@@ -17,7 +17,8 @@ def generate_folder_manifest():
     ignored_dirs = {
                     '.git', '__pycache__',
                     '.pytest_cache', '.github',
-                    'database', 'storm.db'
+                    'database', 'storm.db',
+                    '.gitignore'
     }
 
     for path in root_dir.rglob('*'):
@@ -29,7 +30,7 @@ def generate_folder_manifest():
                     "size_bytes": path.stat().st_size
                 }
 
-    output_dir = root_dir / "tests" / "database"
+    output_dir = root_dir / "lib" / "core" / "database"
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest_path = output_dir / "signed_manifest.json"
 
