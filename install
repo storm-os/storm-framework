@@ -39,7 +39,7 @@ fi
 
 # -----------------------------------------------------------------------------
 
-echo -e "${GREEN}[!] Start Installation${REPO_NAME}[!] ${NC}"
+echo -e "${GREEN}[!] Start Installation ${REPO_NAME}[!] ${NC}"
 
 # 1. Check Python and Git
 if ! command -v git &> /dev/null; then
