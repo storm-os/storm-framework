@@ -15,16 +15,16 @@
         "sha256": "29200a85d201cecd225fde980d4c0b72d3c9860ddf1d85c0c3b9d3de3109f1b4",
         "size_bytes": 3113
     },
+    "versi.py": {
+        "sha256": "c48fd284d1c9b4354f02de3e36b57efbb59dba6c20a9de43419725ded703d44e",
+        "size_bytes": 18
+    },
     "LICENSE": {
         "sha256": "6c73f17b60615c1fad76c98cde0057cf163ffd63be7e496d893a4403a20cbe8d",
         "size_bytes": 1066
     },
-    "versi.py": {
-        "sha256": "154c7ae5a92206435179887524fab1c1982cf233f8d6d05122efc23965b5a2e0",
-        "size_bytes": 18
-    },
     "version.txt": {
-        "sha256": "36e68867ce939b2464649670eb1b3f9759d1a99e7326dac3c79d0942e01f5d65",
+        "sha256": "50060b8e79abd0beaf59e6309e519a73cba73a94b97defd0f8b68e1c8f6447b2",
         "size_bytes": 6
     },
     "__init__.py": {
@@ -118,6 +118,10 @@
     "modules/security/integrity/src/integrity": {
         "sha256": "2083dad4b5280c1983388e50d93156095bdd85b6f237034799eb14b2ce05833c",
         "size_bytes": 708352
+    },
+    "modules/security/integrity/src/main.rs": {
+        "sha256": "c0e0a2103670eb662a5dc9e1d51483547897fb53597e81acfcacf5d4f823fece",
+        "size_bytes": 3930
     },
     "modules/exploit/web/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -312,8 +316,8 @@
         "size_bytes": 635
     },
     "app/base/config_ui.py": {
-        "sha256": "57095f5091dd70928647317adecd0dce1aedbbc4ba7ae48225409801de043049",
-        "size_bytes": 2988
+        "sha256": "b4ab9bb094c7d88134bd13f967281367191db46ea471ec79249a8886623a6200",
+        "size_bytes": 3073
     },
     "app/base/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
