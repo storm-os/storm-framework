@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# --- KONFIGURASI ---
+# --- CONFIGURATION ---
 TOOL_NAME="pentest"
 REPO_NAME="Cyber-Pentest"
 GITHUB_REPO="https://github.com/storm-os/$REPO_NAME.git"
@@ -11,10 +11,10 @@ RED='\033[91m'
 NC='\033[0m'
 
 # -----------------------------------------------------------------------------
-# --- DETEKSI LINGKUNGAN OTOMATIS & KONFIGURASI PATH ---
+# --- AUTOMATIC ENVIRONMENT DETECTION & PATH CONFIGURATION ---
 # -----------------------------------------------------------------------------
 if [ -d "/data/data/com.termux" ]; then
-    # Lingkungan Termux
+    # Termux Environment
     echo -e "${GREEN}[!] Environment detected: Termux${NC}"
 
     BIN_DIR="$PREFIX/bin"
@@ -25,7 +25,7 @@ if [ -d "/data/data/com.termux" ]; then
     NEEDS_SUDO=false
     pkg install -y python git golang build-essential libpcap clang ffmpeg
 else
-    # Lingkungan Linux Standar
+    # Standard Linux Environment
     echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
 
     BIN_DIR="/usr/local/bin"
@@ -41,26 +41,26 @@ fi
 
 echo -e "${GREEN}[!] Start Installation ${REPO_NAME} [!] ${NC}"
 
-# 1. Cek Python dan Git
+# 1. Check Python and Git
 if ! command -v git &> /dev/null; then
-    echo -e "${RED}[x] Error: Git not found. Install Git first.${NC}"
+    echo -e "${RED}[x] ERROR: Git not found. Install Git first.${NC}"
     exit 1
 fi
 if ! command -v "$PYTHON_CMD" &> /dev/null; then
-    echo -e "${RED}[x] Error: Python not found. Make sure $PYTHON_CMD installed.${NC}"
+    echo -e "${RED}[x] ERROR: Python not found. Make sure $PYTHON_CMD installed.${NC}"
     exit 1
 fi
 
-# 2. Persiapan Direktori Instalasi
+# 2. Installation Directory Preparation
 if [ -d "$INSTALL_DIR" ]; then
-    echo -e "${GREEN}[-] Remove old installations...${NC}"
+    echo -e "${GREEN}[-] Remove old installations.${NC}"
     cd ~
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
 
 echo -e "${GREEN}[+] Create installation directory"
 
-# Membuat direktori dan kloning repositori (menggunakan sudo jika perlu)
+# Creating a directory and cloning a repository (use sudo if necessary)
 if $NEEDS_SUDO; then
     sudo mkdir -p "$INSTALL_DIR"
     sudo git clone "$GITHUB_REPO" "$INSTALL_DIR"
@@ -71,59 +71,58 @@ fi
 
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}[x] Error: Failed to clone repository. Check URL GitHub.${NC}"
+    echo -e "${RED}[x] ERROR: Failed to clone repository. Check URL GitHub.${NC}"
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
     exit 1
 fi
 
-# 3. Instal Dependensi Python
+# 3. Install Python Dependencies
 if [ -f "$INSTALL_DIR/requirements.txt" ]; then
-    echo -e "${GREEN}[+] Installing Python dependencies...${NC}"
+    echo -e "${GREEN}[+] Installing Python dependencies."
 
     if $NEEDS_SUDO; then
-        # Di Ubuntu/Kali, kita tambahkan flag --break-system-packages
+        # In Ubuntu/Kali, we add the flag --break-system-packages
         sudo "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt" --break-system-packages
     else
-        # Di Termux, pip biasanya tidak butuh flag tambahan
+        # In Termux, pip usually doesn't need additional flags.
         "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt"
     fi
 
     if [ $? -ne 0 ]; then
-        echo -e "${RED}Error: Failed to install Python dependencies.${NC}"
-        # Opsional: Jangan langsung exit jika gagal, beri peringatan saja
-        # exit 1
+        echo -e "${RED}[x] ERROR: Failed to install Python dependencies.${NC}"
+        # Optional: Don't immediately exit if it fails, just give a warning.
     fi
 fi
 
-# 4. Membuat Script Wrapper Dinamis
+# 4. Creating a Dynamic Wrapper Script
 WRAPPER_SRC="$INSTALL_DIR/$TOOL_NAME"
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
-echo -e "${GREEN}[+] Creating a wrapper script ${TOOL_NAME}...${NC}"
+echo -e "${GREEN}[+] Creating a wrapper script ${TOOL_NAME}${NC}"
 
-# Membuat konten wrapper dalam variabel agar mudah dikelola
+# Create wrapper content in variables for easy management
 CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"Error: Failed to access project directory.\"; exit 1; }
+cd \"\$PROJECT_DIR\" || { echo \"${RED}[x] ERROR: Failed to access project directory.${NC}\"; exit 1; }
 $PYTHON_CMD storm \"\$@\"
 EOF"
 
-# Eksekusi pembuatan file berdasarkan hak akses (Sudo vs User)
+# Execute file creation based on access rights (Sudo vs User)
 if $NEEDS_SUDO; then
     sudo bash -c "$CREATE_WRAPPER"
     sudo chmod +x "$WRAPPER_SRC"
     sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
     sudo chmod +x "$WRAPPER_DST"
 else
-    # Untuk Termux (Tanpa Sudo)
+    # For Termux (Without Sudo)
     bash -c "$CREATE_WRAPPER"
     chmod +x "$WRAPPER_SRC"
     cp "$WRAPPER_SRC" "$WRAPPER_DST"
     chmod +x "$WRAPPER_DST"
 fi
 
-echo -e "${GREEN}####################################################${NC}"
+echo -e "${GREEN}\n####################################################${NC}"
 echo -e "${GREEN}[✓] Tools installed on: $INSTALL_DIR${NC}"
 echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
 echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
