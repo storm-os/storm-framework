@@ -95,13 +95,12 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
 fi
 
 # 4. Creating a Dynamic Wrapper Script
-WRAPPER_SRC="$INSTALL_DIR/$TOOL_NAME"
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
 echo -e "${GREEN}\n[+] Creating a wrapper script ${TOOL_NAME}${NC}"
 
 # Create wrapper content in variables for easy management
-CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
+CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_DST
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
 cd \"\$PROJECT_DIR\" || { echo \"$[x] ERROR: Failed to access project directory.\"; exit 1; }
@@ -111,19 +110,15 @@ EOF"
 # Execute file creation based on access rights (Sudo vs User)
 if $NEEDS_SUDO; then
     sudo bash -c "$CREATE_WRAPPER"
-    sudo chmod +x "$WRAPPER_SRC"
-    sudo cp "$WRAPPER_SRC" "$WRAPPER_DST"
     sudo chmod +x "$WRAPPER_DST"
 else
     # For Termux (Without Sudo)
     bash -c "$CREATE_WRAPPER"
-    chmod +x "$WRAPPER_SRC"
-    cp "$WRAPPER_SRC" "$WRAPPER_DST"
     chmod +x "$WRAPPER_DST"
 fi
 
 echo -e "${GREEN}####################################################${NC}"
-echo -e "${GREEN}[✓] Tools installed on: $INSTALL_DIR${NC}"
+echo -e "${GREEN}[✓] Tools installed on: ${INSTALL_DIR}${NC}"
 echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
 echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"

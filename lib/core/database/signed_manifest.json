@@ -1,7 +1,7 @@
 {
     "install": {
-        "sha256": "f875ef5f6273d48a93a4f4652431542bc0b98c7320ee1786b2d6681e84255f71",
-        "size_bytes": 4266
+        "sha256": "f996e704a2ad830bd0b53d2ff3700d20eabf2a51c6cbf79fad7b6cc79ab5fc81",
+        "size_bytes": 4095
     },
     "requirements.txt": {
         "sha256": "6e6449d74f9bb857ec8890cc36f91a9321469508e9a88100a0f194ea9aaeb65f",
@@ -16,7 +16,7 @@
         "size_bytes": 3113
     },
     "versi.py": {
-        "sha256": "c48fd284d1c9b4354f02de3e36b57efbb59dba6c20a9de43419725ded703d44e",
+        "sha256": "34332ca5abf249719e6510abc1fdf2ee0c96bee501aa1f3b984039050f95e06c",
         "size_bytes": 18
     },
     "LICENSE": {
@@ -24,7 +24,7 @@
         "size_bytes": 1066
     },
     "version.txt": {
-        "sha256": "50060b8e79abd0beaf59e6309e519a73cba73a94b97defd0f8b68e1c8f6447b2",
+        "sha256": "3836a816a26c3d2e2de4eebb69b8b835fdfea55524df1cd31c4768857f7f60dd",
         "size_bytes": 6
     },
     "__init__.py": {
