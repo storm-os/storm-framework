@@ -104,8 +104,8 @@ echo -e "${GREEN}\n[+] Creating a wrapper script ${TOOL_NAME}${NC}"
 CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"${RED}[x] ERROR: Failed to access project directory.\"; exit 1; }
-exec storm \"\$@\"
+cd \"\$PROJECT_DIR\" || { echo \"$[x] ERROR: Failed to access project directory.\"; exit 1; }
+exec ./storm \"\$@\"
 EOF"
 
 # Execute file creation based on access rights (Sudo vs User)
