@@ -98,14 +98,14 @@ fi
 WRAPPER_SRC="$INSTALL_DIR/$TOOL_NAME"
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
-echo -e "${GREEN}[+] Creating a wrapper script ${TOOL_NAME}${NC}"
+echo -e "${GREEN}\n[+] Creating a wrapper script ${TOOL_NAME}${NC}"
 
 # Create wrapper content in variables for easy management
 CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_SRC
 $SHEBANG_PATH
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"${RED}[x] ERROR: Failed to access project directory.${NC}\"; exit 1; }
-$PYTHON_CMD storm \"\$@\"
+cd \"\$PROJECT_DIR\" || { echo \"${RED}[x] ERROR: Failed to access project directory.\"; exit 1; }
+exec storm \"\$@\"
 EOF"
 
 # Execute file creation based on access rights (Sudo vs User)
@@ -122,7 +122,7 @@ else
     chmod +x "$WRAPPER_DST"
 fi
 
-echo -e "${GREEN}\n####################################################${NC}"
+echo -e "${GREEN}####################################################${NC}"
 echo -e "${GREEN}[✓] Tools installed on: $INSTALL_DIR${NC}"
 echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
 echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
