@@ -39,7 +39,7 @@ fi
 
 # -----------------------------------------------------------------------------
 
-echo -e "${GREEN}[!] Start Installation ${REPO_NAME} [!] ${NC}"
+echo -e "${GREEN}[!] Start Installation${REPO_NAME}[!] ${NC}"
 
 # 1. Check Python and Git
 if ! command -v git &> /dev/null; then
@@ -78,7 +78,7 @@ fi
 
 # 3. Install Python Dependencies
 if [ -f "$INSTALL_DIR/requirements.txt" ]; then
-    echo -e "${GREEN}[+] Installing Python dependencies."
+    echo -e "${GREEN}[+] Installing Python dependencies.${NC}"
 
     if $NEEDS_SUDO; then
         # In Ubuntu/Kali, we add the flag --break-system-packages
