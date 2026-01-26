@@ -1,5 +1,4 @@
 import subprocess
-import os
 
 REQUIRED_OPTIONS = {
         "IP": "",
