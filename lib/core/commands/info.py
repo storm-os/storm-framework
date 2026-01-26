@@ -44,8 +44,6 @@ def execute(args, context):
             print(desc)
 
             print(f"{C.HEADER}{'-'*width}")
-
-            print(f"{C.HEADER}{'-'*width}")
             print(f"{C.SUCCESS}REFERENCES    :")
             for link in info['URL']:
                 print(f" - {link}")
