@@ -36,8 +36,8 @@
         "size_bytes": 2227
     },
     "storm": {
-        "sha256": "54bda85a717b96bced6d554cea168115bcb49b3393a88cd48703857df51f2e1f",
-        "size_bytes": 2053
+        "sha256": "8397f7d90b48a706cfb3dac5202d7f29d316f936ba2e3b5bd86a28f51953f6ee",
+        "size_bytes": 2075
     },
     "modules/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -100,8 +100,8 @@
         "size_bytes": 0
     },
     "modules/vulnerability/example_cve.py": {
-        "sha256": "ba50f8605a0d38b6fd16a523fd5d3870dcd78fde551cf329b4bf7efe235ec2c8",
-        "size_bytes": 488
+        "sha256": "195e1096257b155e1389e126b7cd211ea0b7b43411967776fd9cc465e23a0c31",
+        "size_bytes": 435
     },
     "modules/vulnerability/README.md": {
         "sha256": "05432d9ebe60958bc230e1ddbc34e1f4a3baf0c3e1ab07eb0d9fea6e899e01db",
@@ -148,6 +148,10 @@
         "size_bytes": 0
     },
     "modules/auxiliary/scanner/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+    },
+    "modules/auxiliary/dos/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "size_bytes": 0
     },
@@ -263,6 +267,22 @@
         "sha256": "69c8b9bb145a1e945581cfeaae0838c1335b7c7f4a0badf6e91912cc5e008889",
         "size_bytes": 1571
     },
+    "modules/auxiliary/dos/ftp/ftp_dos.py": {
+        "sha256": "ff2ce42ecdc39bee19bdd3881df84133fdd2f029adbc579c22c152d3d19ca8f8",
+        "size_bytes": 895
+    },
+    "modules/auxiliary/dos/ftp/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+    },
+    "modules/auxiliary/dos/ftp/src/ftp_flood.go": {
+        "sha256": "cf4a6cae6cfd8313c0386254a8452d406eecafd6d32ae10bcac58437151aa1bf",
+        "size_bytes": 1147
+    },
+    "modules/auxiliary/dos/ftp/src/ftp_flood": {
+        "sha256": "b1aaada1e35ba5be114ef345e7610d5fac40b199811b728c3a518fb115f204f3",
+        "size_bytes": 3438544
+    },
     "modules/auxiliary/voip/bin/rtp_sniff": {
         "sha256": "b5742b81d1c880c37a5bf054b1d0102f504009a9042ce07c667a2ee58563a6fd",
         "size_bytes": 7904
@@ -292,12 +312,12 @@
         "size_bytes": 0
     },
     "modules/vulnerability/smb/cve_2017_0144.py": {
-        "sha256": "d967a1eb853440f4d8e3cb82bdbab4cb00646429dd5121915be344342432edb4",
-        "size_bytes": 422
+        "sha256": "d55552fb3ea78610f9583f5f7297a74b5770f6fa7606ece8c1ef17581810385c",
+        "size_bytes": 806
     },
     "modules/vulnerability/zte/cve_2014_2321.py": {
-        "sha256": "725e4701569b87f4482b0718fac9154b095f7fa055a37405f6624c1972bd93a1",
-        "size_bytes": 650
+        "sha256": "76491da131c6d6bebed404cc001d18b0814debf7fb453942cd284ed7578b1720",
+        "size_bytes": 577
     },
     "modules/vulnerability/zte/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -308,8 +328,24 @@
         "size_bytes": 0
     },
     "modules/vulnerability/fortinet/cve_2024_55591.py": {
-        "sha256": "867d0f429da86bfb1fea7e33955a42f14912155a25d1b58df2e8265a34668fef",
-        "size_bytes": 644
+        "sha256": "4faa7da86c50de6746bae377f65241eb43d803734b294ce78f5628cd30b1d195",
+        "size_bytes": 716
+    },
+    "modules/vulnerability/oracle/cve_2026_21975.py": {
+        "sha256": "9f5adc3a23c730d152edd87b7aa79a63532d0fe125096d002915cb2b7095fbc4",
+        "size_bytes": 883
+    },
+    "modules/vulnerability/oracle/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+    },
+    "modules/vulnerability/asn/cve_2026_23490.py": {
+        "sha256": "1716dc80e00a6cb0a8313277ba463f38117e3618581fe18ad1414806369b3c16",
+        "size_bytes": 569
+    },
+    "modules/vulnerability/asn/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
     },
     "app/base/config_update.py": {
         "sha256": "58e7ecff76515ffcd020fa76ec41a9581649728a464f8f06b503b5a3d6ce139b",
@@ -403,6 +439,10 @@
         "sha256": "095b09b67193974f3f2597ba4979af27bc29a7bd166374f2b02ab02065ed7e2d",
         "size_bytes": 782
     },
+    "lib/core/commands/info.py": {
+        "sha256": "38169c084cbcedca5a699bb01e75771fd37f0e690e556d2059fbfb6e857b2f28",
+        "size_bytes": 2035
+    },
     "lib/core/commands/exit.py": {
         "sha256": "1dd151197852f51cf736d11cb2e418933738ecb0c7e8aa91dfbaf65af503b0e0",
         "size_bytes": 74
@@ -418,10 +458,6 @@
     "lib/core/commands/show.py": {
         "sha256": "b7e1d3b24051595745274cfee3d9817ed4d7e100b5c25eb6feed7c3f4e200925",
         "size_bytes": 2570
-    },
-    "lib/core/commands/info.py": {
-        "sha256": "5ec5b0bff27a0953f74a915439ac4aa775bf066baa377f5eebdc2f241455b112",
-        "size_bytes": 2205
     },
     "lib/core/commands/update.py": {
         "sha256": "7fdc7636617ecd2204a93b5f31d3af48e3921b9e1535ae7020cab97d7acad098",

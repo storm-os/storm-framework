@@ -42,7 +42,8 @@ def main():
         "ID": "",
         "COUNT": "",
         "PATH": "",
-        "INTERFACE": ""
+        "INTERFACE": "",
+        "THREAD": ""
     }
 
     while True:
