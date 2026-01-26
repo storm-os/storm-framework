@@ -80,8 +80,8 @@
         "size_bytes": 0
     },
     "modules/exploit/example_mod.py": {
-        "sha256": "b8ec5928097d414106516035ec99c9cdc7bb59d9bb162bdfad1e5fb003bc202b",
-        "size_bytes": 754
+        "sha256": "8743f0a4c92ab2beea6c3cc42e64b67ef2670391e35c1fa0100bfe4d92074471",
+        "size_bytes": 801
     },
     "modules/exploit/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -92,8 +92,8 @@
         "size_bytes": 0
     },
     "modules/auxiliary/example_mod.py": {
-        "sha256": "b8ec5928097d414106516035ec99c9cdc7bb59d9bb162bdfad1e5fb003bc202b",
-        "size_bytes": 754
+        "sha256": "8743f0a4c92ab2beea6c3cc42e64b67ef2670391e35c1fa0100bfe4d92074471",
+        "size_bytes": 801
     },
     "modules/vulnerability/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -268,8 +268,8 @@
         "size_bytes": 1571
     },
     "modules/auxiliary/dos/ftp/ftp_dos.py": {
-        "sha256": "ff2ce42ecdc39bee19bdd3881df84133fdd2f029adbc579c22c152d3d19ca8f8",
-        "size_bytes": 895
+        "sha256": "96088a21128a7b0b0eef0ae64130cac7e0ac019e8111c26cc11dd40d7febb9dd",
+        "size_bytes": 885
     },
     "modules/auxiliary/dos/ftp/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -352,8 +352,8 @@
         "size_bytes": 635
     },
     "app/base/config_ui.py": {
-        "sha256": "b4ab9bb094c7d88134bd13f967281367191db46ea471ec79249a8886623a6200",
-        "size_bytes": 3073
+        "sha256": "eb1c84588ed910fd40955e6b28bb6e268ddb2e4405e3ec0ff27ab98a1a3cd893",
+        "size_bytes": 2932
     },
     "app/base/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
