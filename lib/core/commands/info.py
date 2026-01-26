@@ -34,6 +34,8 @@ def execute(args, context):
             print(f"{C.SUCCESS}{'ID CVE':<13} : {info['cve']}")
             print(f"{C.SUCCESS}{'NAME':<13} : {info['name']}")
             print(f"{C.SUCCESS}{'LEVEL':<13} : {info['severity']}")
+            print(f"{C.SUCCESS}{'PUBLISHED':<13} : {info['published']}")
+            print(f"{C.SUCCESS}{'UPDATED':<13} : {info['updated']}")
             print(f"{C.HEADER}{'-'*width}")
 
             # Rapikan Deskripsi
@@ -42,12 +44,6 @@ def execute(args, context):
             print(desc)
 
             print(f"{C.HEADER}{'-'*width}")
-
-            # --- LOGIKA LIST REMEDIATION (POIN-POIN) ---
-            print(f"{C.SUCCESS}METHOD        :")
-            for i, step in enumerate(info['remediation'], 1):
-                # Menampilkan list dengan nomor otomatis
-                print(f"  {i}. {step}")
 
             print(f"{C.HEADER}{'-'*width}")
             print(f"{C.SUCCESS}REFERENCES    :")
