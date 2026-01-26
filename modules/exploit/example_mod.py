@@ -15,7 +15,9 @@ REQUIRED_OPTIONS = {
         "USER": "",
         "ID": "",
         "COUNT": "",
-        "PATH": ""
+        "PATH": "",
+        "INTERFACE": "",
+        "THREAD": ""
     }
 
 """
