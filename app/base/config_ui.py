@@ -23,6 +23,7 @@ def show_help():
   show options                  : View the variables that have been set
   show modules                  : Displaying module categories
   show <name_categories>        : Displays the complete contents
+  
   search <filename>             : To search for files
   about                         : Information Development
   info <cve_name>               : Complete CVE information
@@ -44,20 +45,19 @@ def stormUI():
     total = utils.count_modules()
     stats = utils.count_by_category()
 
-    # 1. Buat list berisi string tiap kategori
-    # Contoh: ["MODULE: 15", "EXPLOIT: 2", "AUXILIARY: 11", "VULNERABILITY: 2"]
+    # 1. Create a list containing strings for each category.
+    # Example: ["MODULE: 15", "EXPLOIT: 2", "AUXILIARY: 11", "VULNERABILITY: 2"]
     items = [f"MODULE: {total}"] + [f"{k.upper()}: {v}" for k, v in stats.items()]
 
-    # 2. Kelompokkan item agar tidak terlalu panjang per baris (misal max 3 item per baris)
+    # 2. Group items max 3
     max_items_per_row = 3
     for i in range(0, len(items), max_items_per_row):
         row_items = items[i:i + max_items_per_row]
 
-        # 3. Gabungkan hanya item di baris tersebut dengan " | "
-        # Dengan begini, " | " tidak akan pernah ada di awal atau akhir baris
+        # 3. Combine only the items in that row with " | "
         line_text = " | ".join(row_items)
 
-        # 4. Print dengan dekorasi kamu
+        # 4. Decorative print
         print(f"{C.HEADER}+-- --=[ {C.INPUT}{line_text} {C.HEADER}]=--")
 
     print("")
