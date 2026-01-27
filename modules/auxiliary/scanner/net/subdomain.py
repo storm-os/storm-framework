@@ -31,30 +31,30 @@ def execute(options):
     # Jumlah subdomain ditemukan
     found_count = 0
 
+    PROTOCOLS = ["http", "https"]
+    
     for subdomain in SUBDOMAINS:
-        url = f"http://{subdomain}.{target_domain}"
+        # Loop kedua untuk mengecek setiap protokol pada satu subdomain
+        for proto in PROTOCOLS:
+            url = f"{proto}://{subdomain}.{target_domain}"
 
-        try:
-            # Mengirim permintaan HEAD (lebih cepat karena tidak mengunduh konten)
-            response = requests.head(url, timeout=3, allow_redirects=True)
-            status_code = response.status_code
+            try:
+                # Mengirim permintaan HEAD
+                response = requests.head(url, timeout=3, allow_redirects=True)
+                status_code = response.status_code
 
-            # Status 200 (OK), 301/302 (Redirect), 403 (Forbidden) seringkali berarti host aktif
-            if status_code < 400 or status_code == 403:
-                # Menggunakan warna SUCCESS untuk subdomain yang ditemukan
-                print(f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}")
-                found_count += 1
-            # Tidak perlu menampilkan status 404/5xx
-
-        except KeyboardInterrupt:
-            print(f"{C.SUCCESS} CTRL + C to stop.")
-        
-        except requests.exceptions.RequestException:
-            # Timeout, DNS error, atau Connection refused
-            # Kita tidak menampilkan error, tapi kita bisa menampilkan status NOT FOUND
-            pass
+                # Logika pengecekan status aktif
+                if status_code < 400 or status_code == 403:
+                    print(f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}")
+                    found_count += 1
+                
+            except KeyboardInterrupt:
+                return
+            except requests.exceptions.RequestException:
+                pass
 
     if found_count == 0:
         print(f"{C.ERROR} No active subdomains found with list.\n")
+
 
     print(f"{C.HEADER} -------------------------------------------------\n")
