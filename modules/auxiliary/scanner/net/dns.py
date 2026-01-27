@@ -103,6 +103,7 @@ def execute(options):
                 pass
             except dns.exception.Timeout:
                 print(f"{C.ERROR}[!] Timeout {record_type} Records.\n")
+                pass # Next
             except Exception as e:
                 print(f"{C.ERROR}[!] ERROR {record_type}: {e}\n")
                 continue
