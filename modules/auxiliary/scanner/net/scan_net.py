@@ -8,7 +8,7 @@ STATUS_CLOSED = "❌"
 
 def get_service_banner(target_ip, port, timeout=1.0):
     """
-    Mengecek status port dan mencoba mendapatkan banner/informasi versi.
+    Checking port status and trying to get banner/version information.
     """
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(timeout)
@@ -20,7 +20,7 @@ def get_service_banner(target_ip, port, timeout=1.0):
     # ---------------------------------------------
     if result == 0:
         status_color = f"{C.SUCCESS} OPEN " + STATUS_OPEN
-        banner_info = "Tidak ada informasi versi."
+        banner_info = "No version information."
 
         try:
             # Khusus untuk layanan web (HTTP/HTTPS), kirim request minimal
@@ -45,8 +45,10 @@ def get_service_banner(target_ip, port, timeout=1.0):
                     if server_header:
                         banner_info = server_header.strip()
                     else:
-                        banner_info = "HTTP Response diterima."
+                        banner_info = "HTTP Response received."
 
+        except KeyboardInterrupt:
+            return
         except socket.timeout:
             banner_info = "OPEN. Timeout."
         except Exception as e:
@@ -71,26 +73,82 @@ REQUIRED_OPTIONS = {
     }
 
 def execute(options):
-    """Fungsi utama untuk menjalankan scan dengan deteksi versi/banner."""
+    """The main function is to run a scan with version/banner detection.."""
 
     target_ip = options.get("IP")
 
     port_names = {
+        # === Remote & legacy ===
         21: "FTP",
         22: "SSH",
         23: "Telnet",
         25: "SMTP",
+        110: "POP3",
+        143: "IMAP",
+
+        # === DNS & Network ===
         53: "DNS",
+        67: "DHCP",
+        68: "DHCP",
+        123: "NTP",
         161: "SNMP",
+        389: "LDAP",
+
+        # === Web standard ===
         80: "HTTP",
         443: "HTTPS",
-        8080: "HTTP Alt",
-        5000: "FLASK",
-        8000: "Django"
+        3000: "NodeJS / React Dev",
+        5000: "Flask",
+        5173: "Vite Dev",
+        8000: "Django / SimpleHTTP",
+        8008: "HTTP Alt",
+        8080: "HTTP Alt / Proxy",
+        8443: "HTTPS Alt",
+        8888: "Dev Panel / Jupyter",
+
+        # === Admin / panel vibes (🔥 sering juicy) ===
+        81: "HTTP Alt",
+        2082: "cPanel",
+        2083: "cPanel SSL",
+        2086: "WHM",
+        2087: "WHM SSL",
+        2095: "Webmail",
+        2096: "Webmail SSL",
+
+        # === Database ===
+        1433: "MSSQL",
+        1521: "Oracle",
+        3306: "MySQL",
+        5432: "PostgreSQL",
+        6379: "Redis",
+        27017: "MongoDB",
+
+        # === File & storage ===
+        139: "NetBIOS",
+        445: "SMB",
+        2049: "NFS",
+
+        # === Java / Enterprise ===
+        7001: "WebLogic",
+        7002: "WebLogic SSL",
+        8081: "HTTP Alt",
+        9000: "PHP-FPM / SonarQube",
+        9043: "WebSphere",
+
+        # === Containers / DevOps ===
+        2375: "Docker API",
+        2376: "Docker API SSL",
+        6443: "Kubernetes API",
+
+        # === Monitoring ===
+        9090: "Prometheus",
+        9091: "Supervisor",
+        9200: "Elasticsearch",
+        5601: "Kibana"
     }
     ports_to_check = port_names.keys()
 
-    print(f"{C.HEADER} \n--- SCANNING: PORT & VERSION di {target_ip} ---")
+    print(f"{C.HEADER}\n SCANNING: PORT & VERSION in {target_ip}")
 
     # Tentukan lebar kolom total untuk bagian Port dan Nama Layanan
     # Disesuaikan agar titik dua selalu sejajar
@@ -117,12 +175,12 @@ def execute(options):
         # 2. Menambahkan Banner/Versi (Hanya jika port terbuka)
         if "OPEN" in status_line:
 
-            if banner and "Tidak ada informasi" not in banner and "Error saat mengambil banner" not in banner:
+            if banner and "No information" not in banner and "Error while retrieving banner" not in banner:
 
                 clean_banner = banner.replace('\n', ' ').strip()
 
                 # Menambahkan pemisah dan Versi/Banner, konsisten dengan titik dua di Versi/Banner
-                output_line += f" {C.MENU} | {C.SUCCESS}Versi: {clean_banner}"
+                output_line += f" {C.MENU} | {C.SUCCESS}Version: {clean_banner}"
 
             else:
                  # Pesan info jika gagal mengambil banner
@@ -134,4 +192,4 @@ def execute(options):
         # 3. Cetak Baris Tunggal Penuh
         print(output_line)
 
-    print(f"{C.HEADER} --- SCAN SELESAI ---")
+    print(f"{C.HEADER} \n--- SCAN COMPLETE ---")
