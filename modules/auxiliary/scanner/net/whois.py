@@ -4,9 +4,6 @@ import socket
 
 from app.utility.colors import C
 
-# Definisikan simbol status
-SYM_INFO = "💡"
-SYM_ERROR = "❌"
 
 REQUIRED_OPTIONS = {
         "URL"           : "",
@@ -14,7 +11,7 @@ REQUIRED_OPTIONS = {
     }
 
 def execute(options):
-    """Mengambil informasi Whois dari Domain/IP."""
+    """Retrieving Whois information from Domain/IP"""
 
     target_url = options.get("URL")
     target_ip = options.get("IP")
@@ -32,30 +29,31 @@ def execute(options):
     except socket.error:
         target_type = "Domain"
 
-    print(f"{C.HEADER} \n--- WHOIS LOOKUP untuk {target} ({target_type}) ---")
-
+    print(f"{C.HEADER}\n WHOIS LOOKUP For {target} ({target_type})")
+ 
     try:
         # Panggil fungsi Whois
         w = whois.whois(target)
 
         # 2. Tampilkan Informasi Penting
-        print(f"{C.MENU}{SYM_INFO} Domain Name: {C.RESET}{w.domain_name}")
-        print(f"{C.MENU}{SYM_INFO} Registrar:   {C.RESET}{w.registrar}")
+        print(f"{C.MENU} Domain Name:            {C.RESET}{w.domain_name}")
+        print(f"{C.MENU} Registrar:              {C.RESET}{w.registrar}")
 
         # Tanggal adalah informasi sensitif
-        print(f"{C.MENU}{SYM_INFO} Created Date:{C.RESET}{w.creation_date}")
-        print(f"{C.MENU}{SYM_INFO} Expiry Date: {C.RESET}{w.expiration_date}")
+        print(f"{C.MENU} Created Date:           {C.RESET}{w.creation_date}")
+        print(f"{C.MENU} Expiry Date:            {C.RESET}{w.expiration_date}")
 
         # Informasi kontak (seringkali target Social Engineering)
-        print(f"{C.MENU} \n[ Kontak & Server Info ]")
-        print(f"{C.MENU} {SYM_INFO} Registrant Org:{C.RESET}{w.org}")
-        print(f"{C.MENU} {SYM_INFO} Admin Email:   {C.RESET}{w.emails}")
-        print(f"{C.MENU} {SYM_INFO} Name Servers:  {C.RESET}{w.name_servers}")
+        print(f"{C.MENU} \n[ Contact & Server Info ]")
+        print(f"{C.MENU} Registrant Organization:{C.RESET}{w.org}")
+        print(f"{C.MENU} Email Admin:            {C.RESET}{w.emails}")
+        print(f"{C.MENU} Name Servers:           {C.RESET}{w.name_servers}")
 
-
+    except KeyboardInterrupt:
+        print(f"{C.SUCCESS} CTRL + C to stop.")
     except Exception as e:
         # Menangani kesalahan jika domain tidak ditemukan atau ada masalah koneksi
-        print(f"{C.ERROR} {SYM_ERROR} Error: Tidak dapat mengambil data Whois.")
-        print(f"{C.ERROR} {SYM_ERROR} Detail: {e}")
+        print(f"{C.ERROR} ERROR: Unable to retrieve Whois data.")
+        print(f"{C.ERROR} Detail: {e}")
 
-    print(f"{C.HEADER} ---------------------------------------------")
+    print(f"{C.HEADER} ---------------------------------------------\n")
