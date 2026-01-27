@@ -15,13 +15,13 @@ SUBDOMAINS = [
 
 
 REQUIRED_OPTIONS = {
-        "URL"           : ""
+        "DOMAIN"           : ""
     }
 
 def execute(options):
     """Searching for active subdomains"""
 
-    target_domain = options.get("URL")
+    target_domain = options.get("DOMAIN")
 
     # Menghapus 'http://' atau 'https://' jika ada
     target_domain = target_domain.replace('http://', '').replace('https://', '').strip('/')
