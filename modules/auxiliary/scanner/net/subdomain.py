@@ -10,7 +10,8 @@ SUBDOMAINS = [
     "admin", "ftp", "vpn", "server", "cms", "cdn", "static",
     "app", "auth", "assets", "img", "images", "media", "beta",
     "demo", "panel", "dashboard", "internal", "intranet", "ssh",
-    "git", "gitlab", "repo", "status"
+    "git", "gitlab", "repo", "status", "cpanel", "webmail",
+    "cpcalendars"
 ]
 
 
