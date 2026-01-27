@@ -89,7 +89,10 @@ def execute(options):
             if 'SameSite' not in set_cookie:
                 print(f"{C.ERROR}[!] Cookie MISSING 'SameSite' flag. Potential CSRF risk.\n{C.RESET}")
                                                                                      
-        
+
+    except KeyboardInterrupt:
+        print(f"{C.SUCCESS} CTRL + C to stop.")
+            
     except requests.exceptions.RequestException as e:
         # Menggunakan warna ERROR untuk pesan kegagalan
         print(f"{C.ERROR}[x] ERROR WHILE CONNECTING TO {target_url}: {e}{C.RESET}\n")
