@@ -97,14 +97,14 @@ def execute(options):
         # === Web standard ===
         80: "HTTP",
         443: "HTTPS",
-        3000: "NodeJS / React Dev",
+        3000: "NodeJS",
         5000: "Flask",
         5173: "Vite Dev",
-        8000: "Django / SimpleHTTP",
+        8000: "Django",
         8008: "HTTP Alt",
-        8080: "HTTP Alt / Proxy",
+        8080: "HTTP Alt Proxy",
         8443: "HTTPS Alt",
-        8888: "Dev Panel / Jupyter",
+        8888: "Dev Panel",
 
         # === Admin / panel vibes (🔥 sering juicy) ===
         81: "HTTP Alt",
@@ -129,10 +129,10 @@ def execute(options):
         2049: "NFS",
 
         # === Java / Enterprise ===
-        7001: "WebLogic",
-        7002: "WebLogic SSL",
+        7001: "WebL",
+        7002: "WebL SSL",
         8081: "HTTP Alt",
-        9000: "PHP-FPM / SonarQube",
+        9000: "PHP-FPM",
         9043: "WebSphere",
 
         # === Containers / DevOps ===
@@ -152,7 +152,7 @@ def execute(options):
 
     # Tentukan lebar kolom total untuk bagian Port dan Nama Layanan
     # Disesuaikan agar titik dua selalu sejajar
-    MAX_TOTAL_WIDTH = 25
+    MAX_TOTAL_WIDTH = 65
 
     for port in ports_to_check:
         # Panggil fungsi yang mengembalikan status dan banner
