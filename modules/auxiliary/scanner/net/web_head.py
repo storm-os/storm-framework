@@ -8,7 +8,7 @@ REQUIRED_OPTIONS = {
     }
 
 def execute(options):
-    """Memeriksa header keamanan sebuah URL."""
+    """Checking the security header of a URL."""
 
     target_url = options.get("URL")
 
@@ -76,7 +76,7 @@ def execute(options):
 
         # 3. Cek Referrer-Policy (Pencegahan Kebocoran Data URL)
         if 'Referrer-Policy' not in response.headers:
-             print(f"{C.WARNING}[!] Referrer-Policy header MISSING. Potential data leakage via Referrer header.{C.RESET}")
+             print(f"{C.ERROR}[!] Referrer-Policy header MISSING. Potential data leakage via Referrer header.{C.RESET}")
         else:
              print(f"{C.SUCCESS}[✓] Referrer-Policy: {response.headers.get('Referrer-Policy')}.{C.RESET}")
 
@@ -87,11 +87,11 @@ def execute(options):
             if 'Secure' not in set_cookie and target_url.startswith('https://'):
                 print(f"{C.ERROR}[!] Cookie MISSING 'Secure' flag. Can be captured via MITM.{C.RESET}")
             if 'SameSite' not in set_cookie:
-                print(f"{C.WARNING}[!] Cookie MISSING 'SameSite' flag. Potential CSRF risk.{C.RESET}")
+                print(f"{C.ERROR}[!] Cookie MISSING 'SameSite' flag. Potential CSRF risk.\n{C.RESET}")
                                                                                      
         
     except requests.exceptions.RequestException as e:
         # Menggunakan warna ERROR untuk pesan kegagalan
-        print(f"{C.ERROR}[x] ERROR WHILE CONNECTING TO {target_url}: {e}{C.RESET}")
+        print(f"{C.ERROR}[x] ERROR WHILE CONNECTING TO {target_url}: {e}{C.RESET}\n")
 
     print(f"{C.HEADER} ---------------------------------------")
