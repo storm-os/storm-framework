@@ -7,20 +7,51 @@ from app.utility.colors import C
 
 # Definisikan simbol status
 SYM_INFO = "💡"
-SYM_ERROR = "❌"
 SYM_SECURITY = "🔒"
 
 # List tipe record DNS yang ingin kita cari
-DNS_RECORDS = ['A', 'MX', 'NS', 'TXT', 'AAAA', 'SOA']
+DNS_RECORDS = [
+    # === Core addressing ===
+    'A',        # IPv4
+    'AAAA',     # IPv6
+    'CNAME',    # Alias / takeover risk 🔥
+
+    # === Mail ===
+    'MX',       # Mail server
+    'TXT',      # SPF, DKIM, DMARC, verification
+
+    # === Authority & zone ===
+    'NS',       # Nameserver
+    'SOA',      # Zone info (serial, refresh)
+
+    # === Service discovery ===
+    'SRV',      # _sip, _ldap, _xmpp, internal services 👀
+    'NAPTR',    # VoIP / telecom (rare tapi kadang bocor info)
+
+    # === Security / SSL ===
+    'CAA',      # Allowed CA (fingerprinting infra)
+    'TLSA',     # DANE (jarang tapi worth check)
+
+    # === Reverse / legacy ===
+    'PTR',
+
+    # === DNSSEC (info only, bukan vuln langsung)
+    'DNSKEY',
+    'DS',
+    'RRSIG',
+
+    # === Microsoft / enterprise vibes ===
+    'LOC'
+]
 
 REQUIRED_OPTIONS = {
-        "URL"           : ""
+        "DOMAIN"           : ""
     }
 
 def execute(options):
-    """Mengambil berbagai tipe record DNS dari sebuah domain."""
+    """Retrieving various types of DNS records from a domain."""
 
-    target_domain = options.get("URL")
+    target_domain = options.get("DOMAIN")
 
     # Custom NameServer
     custom_resolver = dns.resolver.Resolver(configure=False)
@@ -31,19 +62,19 @@ def execute(options):
 
     # 1. Pastikan target adalah domain yang valid, bukan IP Address
     if target_domain.replace('.', '').isdigit():
-        print(f"{C.ERROR} {SYM_ERROR} Error: Masukkan DOMAIN (ex: google.com), bukan IP Address.")
+        print(f"{C.ERROR}[!] ERROR: ENTER DOMAIN (ex: google.com).")
         print(f"{C.HEADER} ---------------------------------------------")
         return
 
-    print(f"{C.HEADER} \n--- DNS ENUMERATION untuk {target_domain} ---")
+    print(f"{C.HEADER}\n DNS ENUMERATION For {target_domain}\n")
 
     try:
         # 1. Pastikan domain bisa di-resolve ke IP (valid) - Cek awal
         try:
             socket.gethostbyname(target_domain)
         except socket.error:
-            print(f"{C.ERROR} {SYM_ERROR} Error: Domain tidak dapat di-resolve (mungkin tidak ada/offline).")
-            print(f"{C.HEADER} ---------------------------------------------")
+            print(f"{C.ERROR}[!] ERROR: Domain cannot be resolved.")
+            print(f"{C.HEADER} ---------------------------------------------\n")
             return
 
         # 2. Iterasi melalui setiap tipe record yang diinginkan
@@ -72,13 +103,16 @@ def execute(options):
                 # Domain tidak ada (sudah dicek di awal, tapi jaga-jaga)
                 pass
             except dns.resolver.Timeout:
-                 print(f"{C.ERROR}  {SYM_ERROR} Timeout saat mencoba mengambil {record_type} Records.")
+                 print(f"{C.ERROR}[!] Timeout {record_type} Records.\n")
                  # Jangan break loop, coba record_type berikutnya
             except Exception as e:
                 # Kesalahan tak terduga (misalnya koneksi terputus)
-                print(f"{C.ERROR}  {SYM_ERROR} Error tak terduga pada {record_type}: {e}")
+                print(f"{C.ERROR}[!] ERROR {record_type}: {e}\n")
 
+
+    except KeyboardInterrupt:
+        return
     except Exception as e:
-        print(f"{C.ERROR} {SYM_ERROR} Terjadi error umum: {e}")
+        print(f"{C.ERROR}[!] ERROR: {e}\n")
 
-    print(f"{C.HEADER} ---------------------------------------------")
+    print(f"{C.HEADER} ---------------------------------------------\n")
