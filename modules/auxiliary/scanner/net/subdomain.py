@@ -49,12 +49,9 @@ def execute(options):
                     found_count += 1
                 
             except KeyboardInterrupt:
-                print(f"\n{C.WARNING}[!] Scanning interrupted by user.{C.RESET}")
-                return # Kalau ini baru boleh return untuk stop total
-            
+                return
             except (requests.exceptions.RequestException, dns.exception.Timeout):
-                pass 
-                
+                pass  
             except Exception as e:
                 print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
                 continue
