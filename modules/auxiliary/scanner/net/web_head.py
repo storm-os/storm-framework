@@ -91,8 +91,7 @@ def execute(options):
                                                                                      
 
     except KeyboardInterrupt:
-        print(f"{C.SUCCESS} CTRL + C to stop.")
-            
+        return          
     except requests.exceptions.RequestException as e:
         # Menggunakan warna ERROR untuk pesan kegagalan
         print(f"{C.ERROR}[x] ERROR WHILE CONNECTING TO {target_url}: {e}{C.RESET}\n")
