@@ -82,12 +82,12 @@ def execute(options):
 
         set_cookie = response.headers.get('Set-Cookie')
         if set_cookie:
-        if 'HttpOnly' not in set_cookie:
-             print(f"{C.ERROR}[!] Cookie MISSING 'HttpOnly' flag. Vulnerable to XSS cookie theft.{C.RESET}")
-        if 'Secure' not in set_cookie and target_url.startswith('https://'):
-             print(f"{C.ERROR}[!] Cookie MISSING 'Secure' flag. Can be captured via MITM.{C.RESET}")
-        if 'SameSite' not in set_cookie:
-             print(f"{C.WARNING}[!] Cookie MISSING 'SameSite' flag. Potential CSRF risk.{C.RESET}")
+            if 'HttpOnly' not in set_cookie:
+                print(f"{C.ERROR}[!] Cookie MISSING 'HttpOnly' flag. Vulnerable to XSS cookie theft.{C.RESET}")
+            if 'Secure' not in set_cookie and target_url.startswith('https://'):
+                print(f"{C.ERROR}[!] Cookie MISSING 'Secure' flag. Can be captured via MITM.{C.RESET}")
+            if 'SameSite' not in set_cookie:
+                print(f"{C.WARNING}[!] Cookie MISSING 'SameSite' flag. Potential CSRF risk.{C.RESET}")
                                                                                      
         
     except requests.exceptions.RequestException as e:
