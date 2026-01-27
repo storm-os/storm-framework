@@ -1,7 +1,5 @@
 # subdomain.py
 import requests
-import dns.resolver
-import dns.exception
 
 from app.utility.colors import C
 
@@ -52,8 +50,8 @@ def execute(options):
                 
             except KeyboardInterrupt:
                 return
-            except (requests.exceptions.RequestException, dns.exception.Timeout):
-                pass  
+            except requests.exceptions.RequestException:
+                pass
             except Exception as e:
                 print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
                 continue
