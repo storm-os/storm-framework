@@ -6,14 +6,14 @@ from app.utility.colors import C
 
 
 REQUIRED_OPTIONS = {
-        "URL"           : "",
+        "DOMAIN"           : "",
         "IP"            : ""
     }
 
 def execute(options):
     """Retrieving Whois information from Domain/IP"""
 
-    target_url = options.get("URL")
+    target_url = options.get("DOMAIN")
     target_ip = options.get("IP")
 
     target = target_url if target_url else target_ip
