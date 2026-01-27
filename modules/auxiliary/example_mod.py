@@ -17,7 +17,8 @@ REQUIRED_OPTIONS = {
         "COUNT": "",
         "PATH": "",
         "INTERFACE": "",
-        "THREAD": ""
+        "THREAD": "",
+        "DOMAIN": ""
     }
 
 """
