@@ -1,5 +1,7 @@
 # subdomain.py
 import requests
+import dns.resolver
+import dns.exception
 
 from app.utility.colors import C
 
