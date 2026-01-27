@@ -1,6 +1,7 @@
 # dns.py
 
 import dns.resolver
+import dns.exception
 import socket
 
 from app.utility.colors import C
@@ -97,17 +98,15 @@ def execute(options):
                         print(f"{C.MENU}  {SYM_INFO} {output_line}")
 
             except dns.resolver.NoAnswer:
-                # Tidak ada record tipe ini (normal)
                 pass
             except dns.resolver.NXDOMAIN:
-                # Domain tidak ada (sudah dicek di awal, tapi jaga-jaga)
                 pass
-            except dns.resolver.Timeout:
-                 print(f"{C.ERROR}[!] Timeout {record_type} Records.\n")
-                 # Jangan break loop, coba record_type berikutnya
+            except dns.exception.Timeout:
+                print(f"{C.ERROR}[!] Timeout {record_type} Records.\n")
+                pass
             except Exception as e:
-                # Kesalahan tak terduga (misalnya koneksi terputus)
                 print(f"{C.ERROR}[!] ERROR {record_type}: {e}\n")
+                continue
 
 
     except KeyboardInterrupt:
