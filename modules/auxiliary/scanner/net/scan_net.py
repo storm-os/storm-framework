@@ -49,10 +49,10 @@ def get_service_banner(target_ip, port, timeout=1.0):
 
         except KeyboardInterrupt:
             return
-        except socket.timeout:
-            banner_info = "OPEN. Timeout."
+        except socket.timeout as e:
+            banner_info = f"Timeout: {e}"
         except Exception as e:
-            banner_info = f"OPEN. Error."
+            banner_info = f"ERROR: {e}"
 
         finally:
             s.close()
