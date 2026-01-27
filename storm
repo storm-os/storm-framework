@@ -43,7 +43,8 @@ def main():
         "COUNT": "",
         "PATH": "",
         "INTERFACE": "",
-        "THREAD": ""
+        "THREAD": "",
+        "DOMAIN": ""
     }
 
     while True:
