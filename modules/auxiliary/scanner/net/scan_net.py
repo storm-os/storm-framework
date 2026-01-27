@@ -152,7 +152,7 @@ def execute(options):
 
     # Tentukan lebar kolom total untuk bagian Port dan Nama Layanan
     # Disesuaikan agar titik dua selalu sejajar
-    MAX_TOTAL_WIDTH = 35
+    MAX_TOTAL_WIDTH = 30
 
     for port in ports_to_check:
         # Panggil fungsi yang mengembalikan status dan banner
@@ -180,7 +180,7 @@ def execute(options):
                 clean_banner = banner.replace('\n', ' ').strip()
 
                 # Menambahkan pemisah dan Versi/Banner, konsisten dengan titik dua di Versi/Banner
-                output_line += f" {C.MENU} | {C.SUCCESS}Version: {clean_banner}"
+                output_line += f" {C.MENU} | {C.SUCCESS}{clean_banner}"
 
             else:
                  # Pesan info jika gagal mengambil banner
