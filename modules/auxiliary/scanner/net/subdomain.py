@@ -44,15 +44,21 @@ def execute(options):
                 response = requests.head(url, timeout=3, allow_redirects=True)
                 status_code = response.status_code
 
-                # Logika pengecekan status aktif
                 if status_code < 400 or status_code == 403:
                     print(f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}")
                     found_count += 1
                 
             except KeyboardInterrupt:
-                return
-            except requests.exceptions.RequestException:
-                pass
+                print(f"\n{C.WARNING}[!] Scanning interrupted by user.{C.RESET}")
+                return # Kalau ini baru boleh return untuk stop total
+            
+            except (requests.exceptions.RequestException, dns.exception.Timeout):
+                pass 
+                
+            except Exception as e:
+                print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
+                continue
+                    
 
     if found_count == 0:
         print(f"{C.ERROR} No active subdomains found with list.\n")
