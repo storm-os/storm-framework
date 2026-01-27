@@ -50,7 +50,7 @@ def execute(options):
         print(f"{C.MENU} Name Servers:           {C.RESET}{w.name_servers}")
 
     except KeyboardInterrupt:
-        print(f"{C.SUCCESS} CTRL + C to stop.")
+        return
     except Exception as e:
         # Menangani kesalahan jika domain tidak ditemukan atau ada masalah koneksi
         print(f"{C.ERROR} ERROR: Unable to retrieve Whois data.")
