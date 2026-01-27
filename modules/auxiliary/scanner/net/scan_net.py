@@ -152,7 +152,7 @@ def execute(options):
 
     # Tentukan lebar kolom total untuk bagian Port dan Nama Layanan
     # Disesuaikan agar titik dua selalu sejajar
-    MAX_TOTAL_WIDTH = 65
+    MAX_TOTAL_WIDTH = 40
 
     for port in ports_to_check:
         # Panggil fungsi yang mengembalikan status dan banner
