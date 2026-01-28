@@ -1,7 +1,7 @@
 {
     "install": {
-        "sha256": "f996e704a2ad830bd0b53d2ff3700d20eabf2a51c6cbf79fad7b6cc79ab5fc81",
-        "size_bytes": 4095
+        "sha256": "aa95841b69824d870723cfae63b6a40e0ac8e0f86e21f88e92bbcb689799c4f8",
+        "size_bytes": 4096
     },
     "requirements.txt": {
         "sha256": "6e6449d74f9bb857ec8890cc36f91a9321469508e9a88100a0f194ea9aaeb65f",
@@ -16,7 +16,7 @@
         "size_bytes": 3113
     },
     "versi.py": {
-        "sha256": "072299376042261fb1b80a16fe6777f3c171585ae31971a1dc83a71e3d043d15",
+        "sha256": "74e6958905b2beaa8d9982fef8492be0f5475afaa615afe8f94a1a00cd774b92",
         "size_bytes": 18
     },
     "LICENSE": {
@@ -24,8 +24,12 @@
         "size_bytes": 1066
     },
     "version.txt": {
-        "sha256": "8ec82964f3c2d35b593360c9ca94418e4079e96d1522e4fd5f9b95c1d7ba6716",
+        "sha256": "1e95443457b8ea47a23241b12e7e6a593869a619b770e6b4fbff836851f2a3cf",
         "size_bytes": 6
+    },
+    "storm": {
+        "sha256": "d265f0e90820a9be29a9c4ac2757acf19493fbfcc345659752b0f668fd179f02",
+        "size_bytes": 2121
     },
     "__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -34,10 +38,6 @@
     "CONTRIBUTING.md": {
         "sha256": "cc5dd58e7e5ebff1034e0c6939d5495524ba8c7c2b75bddd0e9b11e2b2fe5e42",
         "size_bytes": 2227
-    },
-    "storm": {
-        "sha256": "8397f7d90b48a706cfb3dac5202d7f29d316f936ba2e3b5bd86a28f51953f6ee",
-        "size_bytes": 2075
     },
     "modules/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -80,8 +80,8 @@
         "size_bytes": 0
     },
     "modules/exploit/example_mod.py": {
-        "sha256": "8743f0a4c92ab2beea6c3cc42e64b67ef2670391e35c1fa0100bfe4d92074471",
-        "size_bytes": 801
+        "sha256": "ad8a1f847dcb4830662f93f8f0289da0320005786f37b3aaa0e424c48afaad29",
+        "size_bytes": 823
     },
     "modules/exploit/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -92,8 +92,8 @@
         "size_bytes": 0
     },
     "modules/auxiliary/example_mod.py": {
-        "sha256": "8743f0a4c92ab2beea6c3cc42e64b67ef2670391e35c1fa0100bfe4d92074471",
-        "size_bytes": 801
+        "sha256": "ad8a1f847dcb4830662f93f8f0289da0320005786f37b3aaa0e424c48afaad29",
+        "size_bytes": 823
     },
     "modules/vulnerability/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -136,8 +136,8 @@
         "size_bytes": 2584
     },
     "modules/exploit/web/bac/firebase/db.py": {
-        "sha256": "f416a971e22ec2c3f15ba7f6f20a3d18b5e4932d26a0a10c4a236da826c2c4b3",
-        "size_bytes": 2566
+        "sha256": "6123656bc5853a6a45592b78749b00b44fc72b889336d98f1122851cd37e98b9",
+        "size_bytes": 2572
     },
     "modules/exploit/web/bac/firebase/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -236,28 +236,28 @@
         "size_bytes": 0
     },
     "modules/auxiliary/scanner/net/dns.py": {
-        "sha256": "a207a64114fa8ed36c58a0d8ce95e3438a5b43f7f35c2b0446ba8908b76725b9",
-        "size_bytes": 3124
+        "sha256": "8c76206cb6951e16bb4c93e3f7114efdbb94587a7f3d6c3e3d450967e1ab37e2",
+        "size_bytes": 3585
     },
     "modules/auxiliary/scanner/net/osint.py": {
         "sha256": "a7888de7201cb29cb88974e23a193d4a69a753e86d82fe41896d3075b7d38ac8",
         "size_bytes": 4749
     },
     "modules/auxiliary/scanner/net/scan_net.py": {
-        "sha256": "0ded106f760d964f1d4c4d1c1dbe4bdce1a1e22c3fb765b6cd937cfcb48ce437",
-        "size_bytes": 4555
+        "sha256": "15794beaed702d4746c1d82d7b268a4b0d1ea2ca1ffa62791e7f4249f716c71d",
+        "size_bytes": 5884
     },
     "modules/auxiliary/scanner/net/subdomain.py": {
-        "sha256": "25e539352f7757f2ce5d73ab92b93ccc419ffc6e019307d3796cce91b8bc43e7",
-        "size_bytes": 1936
+        "sha256": "a4c00c88dce69671e528b2e55304e8bb5f1fc980075a845216e9b15b1fe65bbd",
+        "size_bytes": 2043
     },
     "modules/auxiliary/scanner/net/web_head.py": {
-        "sha256": "4c08858af34498250f759cfecfa9cfe892a92761a2d9509bdca35f9e0eb79c97",
-        "size_bytes": 2825
+        "sha256": "2be3623b3582bf0fddb78d723a398f59dbb974a6238008b1d4b6c1d174c76bb3",
+        "size_bytes": 4605
     },
     "modules/auxiliary/scanner/net/whois.py": {
-        "sha256": "2c8202fa878bb5a6800a06805e26f5618523828f42de49597d3ca85f3706442d",
-        "size_bytes": 2012
+        "sha256": "bd929c6231f53c3476cb6449a2b2770303ee7027d9b8562c6ebc8664f8703423",
+        "size_bytes": 1965
     },
     "modules/auxiliary/scanner/fortinet/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -275,6 +275,14 @@
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "size_bytes": 0
     },
+    "modules/auxiliary/dos/smtp/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+    },
+    "modules/auxiliary/dos/smtp/smtp_dos.py": {
+        "sha256": "97879a4cbc5ff1973b2d8650a71f4b23e8a44d0f3998c967a4962bc4fa3ae868",
+        "size_bytes": 1034
+    },
     "modules/auxiliary/dos/ftp/src/ftp_flood.go": {
         "sha256": "cf4a6cae6cfd8313c0386254a8452d406eecafd6d32ae10bcac58437151aa1bf",
         "size_bytes": 1147
@@ -282,6 +290,14 @@
     "modules/auxiliary/dos/ftp/src/ftp_flood": {
         "sha256": "b1aaada1e35ba5be114ef345e7610d5fac40b199811b728c3a518fb115f204f3",
         "size_bytes": 3438544
+    },
+    "modules/auxiliary/dos/smtp/src/smtp_flood.go": {
+        "sha256": "d8a1da87db5b34f3b8ed473420c92f260dcf0173717430a786e58a3cb9206092",
+        "size_bytes": 1803
+    },
+    "modules/auxiliary/dos/smtp/src/smtp_flood": {
+        "sha256": "d791ed19bd13d3c876acc714389e03083c10b7879f54d6aa04c9f5eb5afd710d",
+        "size_bytes": 2703352
     },
     "modules/auxiliary/voip/bin/rtp_sniff": {
         "sha256": "b5742b81d1c880c37a5bf054b1d0102f504009a9042ce07c667a2ee58563a6fd",
