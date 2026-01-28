@@ -122,3 +122,4 @@ echo -e "${GREEN}[✓] Tools installed on: ${INSTALL_DIR}${NC}"
 echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
 echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"
+
