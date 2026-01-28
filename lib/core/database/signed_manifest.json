@@ -80,8 +80,8 @@
         "size_bytes": 0
     },
     "modules/exploit/example_mod.py": {
-        "sha256": "ad8a1f847dcb4830662f93f8f0289da0320005786f37b3aaa0e424c48afaad29",
-        "size_bytes": 823
+        "sha256": "3e2081345f8b45243de65599c3d6f8c3ac38adda11c6af4a574b31445be6bc06",
+        "size_bytes": 847
     },
     "modules/exploit/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -92,8 +92,8 @@
         "size_bytes": 0
     },
     "modules/auxiliary/example_mod.py": {
-        "sha256": "ad8a1f847dcb4830662f93f8f0289da0320005786f37b3aaa0e424c48afaad29",
-        "size_bytes": 823
+        "sha256": "3e2081345f8b45243de65599c3d6f8c3ac38adda11c6af4a574b31445be6bc06",
+        "size_bytes": 847
     },
     "modules/vulnerability/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
