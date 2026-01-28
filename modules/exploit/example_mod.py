@@ -18,7 +18,8 @@ REQUIRED_OPTIONS = {
         "PATH": "",
         "INTERFACE": "",
         "THREAD": "",
-        "DOMAIN": ""
+        "DOMAIN": "",
+        "HOSTNAME": ""
     }
 
 """
