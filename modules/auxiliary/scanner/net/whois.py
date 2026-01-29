@@ -1,6 +1,7 @@
 # whois.py
 import whois
 import socket
+import ipaddress
 
 from app.utility.colors import C
 
@@ -23,10 +24,9 @@ def execute(options):
 
     # 1. Tentukan apakah target adalah IP atau Domain
     try:
-        # Coba ubah target menjadi IP (jika berhasil, itu IP)
-        socket.gethostbyname(target)
+        ipaddress.ip_address(target)
         target_type = "IP Address"
-    except socket.error:
+    except ValueError:
         target_type = "Domain"
 
     print(f"{C.HEADER}\n WHOIS LOOKUP For {target} ({target_type})")
