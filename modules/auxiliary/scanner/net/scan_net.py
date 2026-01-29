@@ -192,4 +192,4 @@ def execute(options):
         # 3. Cetak Baris Tunggal Penuh
         print(output_line)
 
-    print(f"{C.HEADER} \n--- SCAN COMPLETE ---")
+    print(f"{C.HEADER} --- SCAN COMPLETE ---\n")
