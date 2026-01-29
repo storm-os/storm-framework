@@ -27,7 +27,7 @@ def test_verify_repo_integrity():
 
     # 3. Scan folder now
     current_manifest = {}
-    ignored = {'.git', '__pycache__', '.pytest_cache', '.github', 'database'}
+    ignored = {'.git', '__pycache__', '.pytest_cache', '.github', 'database', 'gitignore'}
     
     for path in root_dir.rglob('*'):
         if path.is_file() and not any(p in path.parts for p in ignored):
