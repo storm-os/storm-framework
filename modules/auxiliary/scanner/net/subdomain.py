@@ -47,7 +47,8 @@ def execute(options):
                 if status_code < 400 or status_code == 403:
                     print(f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}")
                     found_count += 1
-                
+
+                print(f"{C.SUCCESS}\n[✓] Subdomain active: {found_count}")
             except KeyboardInterrupt:
                 return
             except requests.exceptions.RequestException:
@@ -56,7 +57,7 @@ def execute(options):
                 print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
                 continue
                     
-
+        
     if found_count == 0:
         print(f"{C.ERROR} No active subdomains found with list.\n")
 
