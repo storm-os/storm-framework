@@ -1,6 +1,5 @@
 # whois.py
 import whois
-import socket
 import ipaddress
 
 from app.utility.colors import C
