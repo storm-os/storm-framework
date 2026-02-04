@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+
+# Color
+GREEN='\033[92m'
+RED='\033[91m'
+BLUE='\033[94m'
+NC='\033[0m'
+
+#Logic core compiler
+compile_modules() {
+    echo -e "${GREEN}[*] Scanning and Compiling core modules.${NC}"
+
+    # 1. Cari dan Compile Golang (.go)
+    if command -v go > /dev/null; then
+        find modules/ -name "*.go" | while read -r src; do
+            # Ambil path tanpa ekstensi (misal: modules/aux/dos.go -> modules/aux/dos)
+            output="${src%.go}"
+            echo -e "${BLUE}[+] Compiling Go: $src${NC}"
+            go build -o "$output" "$src" && chmod +x "$output"
+        done
+    else
+        echo -e "${RED}[!] Go compiler not found! Skipping .go files.${NC}"
+    fi
+
+    # 2. Cari dan Compile C (.c)
+    if command -v gcc > /dev/null; then
+        find modules/ -name "*.c" | while read -r src; do
+            output="${src%.c}"
+            echo -e "${BLUE}[+] Compiling C: $src${NC}"
+            gcc "$src" -o "$output" && chmod +x "$output"
+        done
+    else
+        echo -e "${RED}[!] GCC not found! Skipping .c files.${NC}"
+    fi
+
+    # 3. Cari dan Compile C++ (.cpp)
+    if command -v g++ > /dev/null; then
+        find modules/ -name "*.cpp" | while read -r src; do
+            output="${src%.cpp}"
+            echo -e "${BLUE}[+] Compiling C++: $src${NC}"
+            g++ "$src" -o "$output" && chmod +x "$output"
+        done
+    else
+        echo -e "${RED}[!] G++ not found! Skipping .cpp files.${NC}"
+    fi
+}

@@ -13,3 +13,21 @@ __pycache__/
 # Folder virtual environment (Jika ada)
 venv/
 env/
+
+# ignore everything by default
+*
+
+# allow directories
+!*/
+
+# allow files with extension
+!*.*
+
+# allow specific no-extension files
+!install
+!compiler
+!storm
+!LICENSE
+
+# always allow gitignore itself
+!.gitignore
