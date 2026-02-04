@@ -59,7 +59,7 @@ if [ -d "$INSTALL_DIR" ]; then
     if $NEEDS_SUDO; then sudo rm -rf "$INSTALL_DIR"; else rm -rf "$INSTALL_DIR"; fi
 fi
 
-echo -e "${BLUE}[+] Create installation directory"
+echo -e "${GREEN}[+] Create installation directory"
 
 # Creating a directory and cloning a repository (use sudo if necessary)
 if $NEEDS_SUDO; then
@@ -79,7 +79,7 @@ fi
 
 # 3. Install Python Dependencies
 if [ -f "$INSTALL_DIR/requirements.txt" ]; then
-    echo -e "${BLUE}[+] Installing Python dependencies.${NC}"
+    echo -e "${GREEN}[+] Installing Python dependencies.${NC}"
 
     if $NEEDS_SUDO; then
         # In Ubuntu/Kali, we add the flag --break-system-packages
@@ -99,11 +99,11 @@ fi
 COMPILER_SRC="./compiler"
 
 if [ -f "$COMPILER_SRC" ]; then
-    echo -e "${BLUE}[*] Run binary compilation.${NC}"
+    echo -e "${GREEN}[*] Run binary compilation.${NC}"
     source "$COMPILER_SRC"
     compile_modules
 else
-    echo -e "${RED}[x] ERROR: File compiler not found!"
+    echo -e "${GREEN}[x] ERROR: File compiler not found!"
 fi
 
 # 5. Creating a Dynamic Wrapper Script
@@ -130,8 +130,8 @@ else
 fi
 
 echo -e "${GREEN}####################################################${NC}"
-echo -e "${BLUE}[✓] Tools installed on: ${INSTALL_DIR}${NC}"
-echo -e "${BLUE}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
-echo -e "${BLUE}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
+echo -e "${GREEN}[✓] Tools installed on: ${INSTALL_DIR}${NC}"
+echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
+echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"
 
