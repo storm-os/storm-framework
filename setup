@@ -96,14 +96,19 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
 fi
 
 # 4. Run binary compilation
+if [ -d "$INSTALL_DIR" ]; then
+    cd "$INSTALL_DIR" || { echo -e "${RED}[x] ERROR: Cannot access $INSTALL_DIR${NC}"; }
+fi
+
 COMPILER_SRC="./compiler"
 
 if [ -f "$COMPILER_SRC" ]; then
     echo -e "${BLUE}[*] Run binary compilation.${NC}"
-    source "$COMPILER_SRC"
+    . "$COMPILER_SRC"
     compile_modules
 else
-    echo -e "${RED}[x] ERROR: File compiler not found!"
+    echo -e "${RED}[x] ERROR: File compiler not found in $(pwd)!"
+    echo -e "${RED}[!] Make sure the file exists in the project directory."
 fi
 
 # 5. Creating a Dynamic Wrapper Script
