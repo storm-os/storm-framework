@@ -15,7 +15,7 @@ def execute(options):
 
     # Path internal untuk jeroan Storm-OS
     src_dir = os.path.join(module_dir, "src")
-    binary = os.path.join(bin_dir, "rtp_sniff")
+    binary = os.path.join(src_dir, "rtp_sniff")
 
     # Path output untuk User (Current Working Directory)
     output_pcm = os.path.join(os.getcwd(), "storm_capture.pcm")
