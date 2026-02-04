@@ -49,7 +49,7 @@ Pastikan Anda memiliki **Python 3.12.x** terinstal pada sistem Anda. Tool ini di
 Gunakan perintah `curl` berikut untuk mengkloning repositori dan menjalankan skrip instalasi yang diperlukan:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/install | bash 
+curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/setup | bash 
 ```
 
 ### 2. Jalankan
