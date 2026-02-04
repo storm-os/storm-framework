@@ -15,40 +15,20 @@ def execute(options):
 
     # Path internal untuk jeroan Storm-OS
     src_dir = os.path.join(module_dir, "src")
-    bin_dir = os.path.join(module_dir, "bin")
-    source_c = os.path.join(src_dir, "rtp_sniff.c")
-    binary_out = os.path.join(bin_dir, "rtp_sniff")
+    binary = os.path.join(bin_dir, "rtp_sniff")
 
     # Path output untuk User (Current Working Directory)
     output_pcm = os.path.join(os.getcwd(), "storm_capture.pcm")
     output_wav = os.path.join(os.getcwd(), "storm_capture.wav")
 
-    # 1. Pastikan folder bin ada
-    if not os.path.exists(bin_dir):
-        os.makedirs(bin_dir)
-
-    # 2. Cek dependencies
-    if not shutil.which("gcc"):
-        print("[!] Error: GCC not found. Install it with 'pkg install clang' or 'apt install gcc'")
-        return
-
-    # 3. Compile otomatis jika binary belum ada
-    if not os.path.exists(binary_out):
-        print(f"[*] Compiling C Sniffer engine...")
-        compile_cmd = ["gcc", source_c, "-lpcap", "-o", binary_out]
-        result = subprocess.run(compile_cmd, capture_output=True)
-        if result.returncode != 0:
-            print(f"[!] Compilation failed:\n{result.stderr.decode()}")
-            return
-
-    # 4. Jalankan Sniffer
-    print(f"[*] Sniffing on {interface}...")
+    # Jalankan Sniffer
+    print(f"[*] Sniffing on {interface}")
     print(f"[*] Output will be saved at: {os.getcwd()}")
     print("[*] Press Ctrl+C to stop.")
 
     try:
         # Menjalankan binary dengan argumen: interface dan output_path
-        subprocess.run(["sudo", binary_out, interface, output_pcm])
+        subprocess.run(["sudo", binary, interface, output_pcm])
     except KeyboardInterrupt:
         print("\n[*] Sniffing stopped by user.")
 
