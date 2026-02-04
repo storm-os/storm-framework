@@ -8,7 +8,9 @@ def execute(args, context):
         print(f"{C.ERROR}[!] ERROR: Not module selected")
         return context
         
-    def cmd == "update":
+    if cmd == "update":
         run_update()
+    else:
+        print(f"{C.ERROR}[!] ERROR: {cmd} > Not found.")
     
     return context
