@@ -1,24 +1,13 @@
-# Python Cache (Sangat penting!)
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Wordlist besar (Agar tidak terkena limit GitHub 100MB)
-*.save
-
-# File log dan temporer
-*.log
-.DS_Store
-
-# Folder virtual environment (Jika ada)
-venv/
-env/
-
 # ignore everything by default
 *
 
 # allow directories
 !*/
+
+# re-ignore unwanted directories
+venv/
+env/
+__pycache__/
 
 # allow files with extension
 !*.*
@@ -28,6 +17,17 @@ env/
 !compiler
 !storm
 !LICENSE
+
+# logs & temp
+*.log
+.DS_Store
+
+# python cache
+*.py[cod]
+*$py.class
+
+# wordlists besar
+*.save
 
 # always allow gitignore itself
 !.gitignore
