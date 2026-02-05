@@ -15,6 +15,7 @@ sign_file() {
     local HASH=$(sha256sum "$TARGET_FILE" | awk '{print $1}')
     local SIZE=$(stat -c%s "$TARGET_FILE")
 
+    echo -e "${RED}DEBUG: $MANIFEST${NC}"
     python3 -c "
 import json, os
 MANIFEST_PATH = '$MANIFEST'
