@@ -8,38 +8,41 @@ NC='\033[0m'
 
 #Logic core compiler
 compile_modules() {
-    echo -e "${GREEN}[*] Scanning and Compiling core modules.${NC}"
+    local BASE_PATH
+    BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-    # --- BAGIAN GOLANG ---
+    if [ -d "$BASE_PATH" ]; then
+        cd "$BASE_PATH" || return 1
+    fi
+
+    echo -e "${GREEN}[*] Auto-detected Path: $(pwd)${NC}"
+
+    # --- LOGIKA GOLANG ---
     if command -v go > /dev/null; then
         if [ ! -f "go.mod" ]; then
-            echo -e "${GREEN}[*] Initializing Go modules.${NC}"
             go mod init storm-os 2>/dev/null
         fi
 
-        echo -e "${GREEN}[*] Fetching remote dependencies (gopacket)${NC}"
-        go get github.com/google/gopacket > /dev/null 2>&1
-        go get github.com/google/gopacket/pcap > /dev/null 2>&1
-        go mod tidy > /dev/null 2>&1
+        echo -e "${GREEN}[*] Fetching dependencies...${NC}"
+        go get github.com/google/gopacket github.com/google/gopacket/pcap 2>/dev/null
+        go mod tidy 2>/dev/null
 
         find modules/ -name "*.go" | while read -r src; do
             output="${src%.go}"
             echo -e "${GREEN}[+] Compiling Go: $src${NC}"
-            go build -o "$output" "$src" && chmod +x "$output"
+            CGO_ENABLED=1 go build -o "$output" "$src"
         done
     fi
 
-    # --- C ---
+    # --- LOGIKA C ---
     if command -v gcc > /dev/null; then
         find modules/ -name "*.c" | while read -r src; do
             output="${src%.c}"
             echo -e "${GREEN}[+] Compiling C: $src${NC}"
-
-            # Cek apakah file C mengandung pcap (butuh link -lpcap)
             if grep -q "pcap.h" "$src"; then
-                gcc "$src" -o "$output" -lpcap && chmod +x "$output"
+                gcc "$src" -o "$output" -lpcap
             else
-                gcc "$src" -o "$output" && chmod +x "$output"
+                gcc "$src" -o "$output"
             fi
         done
     fi
