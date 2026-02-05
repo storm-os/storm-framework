@@ -1,6 +1,7 @@
 import os
 import sys
 import requests
+import subprocess
 
 from app.utility.colors import C
 
@@ -12,28 +13,41 @@ def run_update():
         latest_version = response.text.strip()
     except:
         pass
-        
-    print(f"{C.SUCCESS}[*] Storm-OS Update System{C.RESET}")
-    
-    # Masuk ke folder tempat script ini berada
-    project_dir = os.path.dirname(os.path.realpath(__file__))
-    os.chdir(project_dir)
 
-    print(f"{C.SUCCESS}[*] Synchronizing with GitHub.{C.RESET}")
     
-    # Karena dijalankan dengan sudo, git pull & compiler pasti punya izin tulis
-    # Kita gunakan --force untuk memastikan file lokal tertimpa jika ada konflik kecil
-    update_exit_code = os.system("git fetch --all && git reset --hard origin/main")
+    # 1. Tentukan Root dengan Presisi
+    # Mengasumsikan storm.py ada di dalam subfolder, kita naik ke root
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    project_root = os.path.abspath(os.path.join(base_dir, "..", ".."))
+    os.chdir(project_root)
 
-    if update_exit_code == 0:
-        if os.path.exists("./compiler"):
-            print(f"{C.SUCCESS}[*] Changes detected. Re-compiling modules.{C.RESET}")
-            # Langsung panggil compiler tanpa ragu
-            os.system('bash -c "source ./compiler && compile_modules"')
-            print(f"{C.SUCCESS}[✓] Cyber-Pentest v{latest_version} Updated Successfully!{C.RESET}")
+    print(f"{C.SUCCESS}[*] Attempting to update Storm Framework.{C.RESET}")
+
+    # 2. Cek Koneksi & Fetch (Cara MSF)
+    # Menggunakan rebase agar lebih bersih dan tidak membuat commit merge yang berantakan
+    print(f"[*] Checking for new versions at github.com/storm-os/Cyber-Pentest")
+    
+    # Kita gunakan subprocess agar bisa menangkap error dengan lebih elegan
+    process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
+                             capture_output=True, text=True)
+
+    if process.returncode == 0:
+        if "Already up to date" in process.stdout:
+            print(f"{C.SUCCESS}[*] Storm-OS is already at the latest version.{C.RESET}")
         else:
-            print(f"{C.ERROR}[x] ERROR: Compiler script missing!{C.RESET}")
+            print(f"{C.SUCCESS}[+] Successfully pulled updates from remote.{C.RESET}")
+            
+            # 3. Trigger Compiler (The Hook)
+            compiler_path = os.path.join(project_root, "compiler")
+            if os.path.exists(compiler_path):
+                print(f"{C.SUCCESS}[*] Triggering framework recompilation.{C.RESET}")
+                os.system(f'bash -c "source {compiler_path} && compile_modules"')
+                print(f"{C.SUCCESS}[✓] Framework updated to v{latest_version}{C.RESET}")
+            else:
+                print(f"{C.ERROR}[x] ERROR: Compiler hook not found at {compiler_path}{C.RESET}")
     else:
-        print(f"{C.ERROR}[x] Update failed: Check your internet connection.{C.RESET}")
-    
+        print(f"{C.ERROR}[x] Update failed!{C.RESET}")
+        print(f"{C.SUCCESS}[!] Logic: {process.stderr}{C.RESET}")
+        print(f"[*] Suggestion: Run 'git stash' if you have local changes.")
+
     sys.exit()
