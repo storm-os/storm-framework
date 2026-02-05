@@ -22,7 +22,7 @@ compile_modules() {
         [ -f "go.mod" ] && rm go.mod
 
         echo -e "${GREEN}[*] Initializing Go modules.${NC}"
-        go mod init storm-os
+        go mod init github.com/storm-os/Cyber-Pentest
 
         echo -e "${GREEN}[*] Downloading dependencies.${NC}"
         go get github.com/google/gopacket@latest
