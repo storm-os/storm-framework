@@ -11,7 +11,7 @@ sign_file() {
 
     local TARGET_FILE=$1
     local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
-    local FILENAME=$("$TARGET_FILE")
+    local RELATIVE_PATH="${TARGET_FILE#$BASE_PATH/}"
     local HASH=$(sha256sum "$TARGET_FILE" | awk '{print $1}')
     local SIZE=$(stat -c%s "$TARGET_FILE")
 
@@ -22,7 +22,7 @@ try:
     with open(MANIFEST_PATH, 'r') as f: data = json.load(f)
 except: data = {}
 
-data['$FILENAME'] = {'sha256': '$HASH', 'size_bytes': $SIZE}
+data['$RELATIVE_PATH'] = {'sha256': '$HASH', 'size_bytes': $SIZE}
 
 with open(MANIFEST_PATH, 'w') as f:
     json.dump(data, f, indent=4)

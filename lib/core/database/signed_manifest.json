@@ -40,8 +40,8 @@
         "size_bytes": 2227
     },
     "compiler": {
-        "sha256": "b5336f66e15dee838acf34fb84b329117507eaad42af9aab20c52a4dcd54e69f",
-        "size_bytes": 1990
+        "sha256": "8eb5c3e9cdb684cdd0cf6e214f423b0a5483c7723eda93a995a245e1dfa2fbee",
+        "size_bytes": 2011
     },
     "modules/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
