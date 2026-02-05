@@ -11,7 +11,7 @@ from app.utility.colors import C
 from app.banners.banner import get_random_banner
 
 def clear_screen():
-    """Membersihkan layar terminal"""
+    """Clearing the terminal screen"""
     # Fungsi Win
     if os.name == 'nt':
        os.system('cls')
@@ -19,7 +19,7 @@ def clear_screen():
     else:
        os.system('clear')
 
-# --- Fungsi Menu ---
+# --- Menu Functions ---
 
 def main():
     clear_screen()
@@ -59,7 +59,7 @@ def main():
         cmd = user_input[0].lower()
         args = user_input[1:]
 
-        # Bungkus semua data ke dalam Context
+        # Wrap all data into Context
         context = {
             "current_module": current_module,
             "current_module_name": current_module_name,
@@ -67,11 +67,10 @@ def main():
             "exit": False
         }
 
-        # SERAHKAN KE MANDOR (HANDLER)
+        # HAND IT OVER TO THE FOREMAN (HANDLER)
         new_context = handler.execute(cmd, args, context)
 
         if new_context:
-            # Update variabel lokal dari hasil kerja para 'pekerja'
             current_module = new_context["current_module"]
             current_module_name = new_context["current_module_name"]
             options = new_context["options"]
