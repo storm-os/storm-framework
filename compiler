@@ -29,6 +29,16 @@ with open(MANIFEST_PATH, 'w') as f:
 "
 }
 
+sign_binaries() {
+    # Gunakan logika find yang sudah kita bahas sebelumnya
+    # Scan modules/ mencari binary, lalu sign_file
+    find modules/ -type f -executable | while read -r bin; do
+        sign_file "$bin"
+    done
+    sign_file "go.mod"
+    sign_file "go.sum"
+}
+
 #Logic core compiler
 compile_modules() {
     local BASE_PATH
@@ -77,5 +87,7 @@ compile_modules() {
             sign_file "$output"
         done
     fi
+
+    sign_binaries
 }
 
