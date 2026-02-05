@@ -34,6 +34,7 @@ compile_modules() {
             echo -e "${GREEN}[+] Compiling Go: $src${NC}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
             chmod +x "$output"
+            echo -e "${GREEN}[✓] Success compiling $output${NC}"
         done
     fi
 
@@ -42,11 +43,14 @@ compile_modules() {
         find modules/ -name "*.c" | while read -r src; do
             output="${src%.c}"
             echo -e "${GREEN}[+] Compiling C: $src${NC}"
+
             if grep -q "pcap.h" "$src"; then
                 gcc "$src" -o "$output" -lpcap
+                echo -e "${GREEN}[✓] Success compiling $output${NC}"
             else
                 gcc "$src" -o "$output"
             fi
+
         done
     fi
 }
