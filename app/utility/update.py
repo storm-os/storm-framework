@@ -37,16 +37,16 @@ def run_update():
 
     if process.returncode == 0:
         if "Already up to date" in process.stdout:
-            print(f"{C.SUCCESS}[*] Storm-OS is already at the latest version.{C.RESET}")
+            print(f"{C.SUCCESS}\n[*] Storm-OS is already at the latest version.{C.RESET}")
         else:
-            print(f"{C.SUCCESS}[+] Successfully pulled updates from remote.{C.RESET}")
+            print(f"{C.SUCCESS}\n[+] Successfully pulled updates from remote.{C.RESET}")
             
             # 3. Trigger Compiler (The Hook)
             compiler_path = os.path.join(project_root, "compiler")
             if os.path.exists(compiler_path):
-                print(f"{C.SUCCESS}[*] Triggering framework recompilation.{C.RESET}")
+                print(f"{C.SUCCESS}\n[*] Triggering framework recompilation.{C.RESET}")
                 os.system(f'bash -c "source {compiler_path} && compile_modules"')
-                print(f"{C.SUCCESS}[✓] Framework updated to v{latest_version}{C.RESET}")
+                print(f"{C.SUCCESS}\n[✓] Framework updated to v{latest_version}{C.RESET}")
             else:
                 print(f"{C.ERROR}[x] ERROR: Compiler hook not found at {compiler_path}{C.RESET}")
     else:
