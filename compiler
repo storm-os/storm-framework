@@ -5,16 +5,10 @@ GREEN='\033[92m'
 RED='\033[91m'
 NC='\033[0m'
 
-BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null)"
+BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 # Handler logic signed binary
 sign_file() {
-    local BASE_PATH
-
-    if [ -d "$BASE_PATH" ]; then
-        cd "$BASE_PATH" || return 1
-    fi
-
     local TARGET_FILE=$1
     local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
     local FILENAME=$(basename "$TARGET_FILE")
@@ -43,7 +37,7 @@ compile_modules() {
     if [ -d "$BASE_PATH" ]; then
         cd "$BASE_PATH" || return 1
     fi
-
+    echo -e "${RED}DEBUG: $BASE_PATH${NC}"
     # --- BAGIAN GOLANG ---
     if command -v go > /dev/null; then
         [ -f "go.mod" ] && rm go.mod
