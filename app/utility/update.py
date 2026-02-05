@@ -54,6 +54,3 @@ def run_update():
             print(f"{C.SUCCESS}[*] No source code changes. Skipping compilation. 😴{C.RESET}")
             
         print(f"{C.SUCCESS}\n[✓] Storm is now v{latest_version}{C.RESET}")
-
-
-    sys.exit()
