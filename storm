@@ -12,10 +12,10 @@ from app.banners.banner import get_random_banner
 
 def clear_screen():
     """Clearing the terminal screen"""
-    # Fungsi Win
+    # Win Function
     if os.name == 'nt':
        os.system('cls')
-    # Fungsi Linux
+    # Linux Functions
     else:
        os.system('clear')
 
