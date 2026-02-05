@@ -31,6 +31,8 @@ def run_update():
                              stdout=None,
                              stderr=subprocess.PIPE,
                              text=True
+                            )
+    # Live process
     stdout, stderr = process.communicate()
 
     if process.returncode == 0:
