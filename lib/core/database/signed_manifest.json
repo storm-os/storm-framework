@@ -40,8 +40,8 @@
         "size_bytes": 2227
     },
     "compiler": {
-        "sha256": "9badb8e00e00a0195b06e910c07273bb529257f7ad46d85ef9f791b7eb9e7f66",
-        "size_bytes": 2066
+        "sha256": "7b3e14e9fdc0f5123754c8baf779ff0459cc74ed16ffc3559930d9838298af66",
+        "size_bytes": 2275
     },
     "modules/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -360,8 +360,8 @@
         "size_bytes": 311
     },
     "app/utility/update.py": {
-        "sha256": "4422be4fe991b6b58b62edd1ab3ae912df5a00b0f115eb67d6f46df5490b7ead",
-        "size_bytes": 2195
+        "sha256": "e081cf975ea846774593c9772e3f39a4528a6f7c230718b56ecac6a9608b5227",
+        "size_bytes": 2287
     },
     "app/utility/search.py": {
         "sha256": "ed7eb7ab27b1b8c08fd52ba2e00201cadc15675eb968e04f1f50a9a490df925b",
