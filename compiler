@@ -5,10 +5,10 @@ GREEN='\033[92m'
 RED='\033[91m'
 NC='\033[0m'
 
-BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-
 # Handler logic signed binary
 sign_file() {
+    BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
     local TARGET_FILE=$1
     local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
     local FILENAME=$(basename "$TARGET_FILE")
@@ -33,6 +33,7 @@ with open(MANIFEST_PATH, 'w') as f:
 #Logic core compiler
 compile_modules() {
     local BASE_PATH
+    BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
     if [ -d "$BASE_PATH" ]; then
         cd "$BASE_PATH" || return 1
