@@ -135,8 +135,8 @@ else
 fi
 
 echo -e "${GREEN}####################################################${NC}"
-echo -e "${GREEN}[✓] Tools installed on: ${INSTALL_DIR}${NC}"
-echo -e "${GREEN}[✓] Attaching the wrapper to: ${BIN_DIR}${NC}"
+echo -e "${GREEN}[✓] PATH STORM: ${INSTALL_DIR}${NC}"
+echo -e "${GREEN}[✓] PATH WRAPPER: ${BIN_DIR}${NC}"
 echo -e "${GREEN}[✓] INSTALLATION COMPLETE VERSION: ${VERSION}${NC}"
 echo -e "${GREEN}####################################################${NC}"
 
