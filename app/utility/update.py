@@ -15,19 +15,18 @@ def run_update():
         pass
 
     
-    # 1. Tentukan Root dengan Presisi
-    # Mengasumsikan storm.py ada di dalam subfolder, kita naik ke root
+    # 1. Determine Root with Precision
     base_dir = os.path.dirname(os.path.realpath(__file__))
     project_root = os.path.abspath(os.path.join(base_dir, "..", ".."))
     os.chdir(project_root)
 
     print(f"{C.SUCCESS}[*] Attempting to update Storm Framework.{C.RESET}")
 
-    # 2. Cek Koneksi & Fetch (Cara MSF)
-    # Menggunakan rebase agar lebih bersih dan tidak membuat commit merge yang berantakan
+    # 2. Check Connection & Fetch
+    # Use rebase to be cleaner and not create messy merge commits.
     print(f"[*] Checking for new versions at github.com/storm-os/Cyber-Pentest")
     
-    # Kita gunakan subprocess agar bisa menangkap error dengan lebih elegan
+    # We use subprocess to catch errors more elegantly.
     process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
                              capture_output=True, text=True)
 
