@@ -3,7 +3,6 @@
 # Color
 GREEN='\033[92m'
 RED='\033[91m'
-BLUE='\033[94m'
 NC='\033[0m'
 
 #Logic core compiler
@@ -15,7 +14,7 @@ compile_modules() {
         cd "$BASE_PATH" || return 1
     fi
 
-    echo -e "${GREEN}[*] Auto-detected Path: $(pwd)${NC}"
+    echo -e "${GREEN}[*] Detected Path: $(pwd)${NC}"
 
     # --- BAGIAN GOLANG ---
     if command -v go > /dev/null; then
@@ -31,10 +30,8 @@ compile_modules() {
 
         find modules/ -name "*.go" | while read -r src; do
             output="${src%.go}"
-            echo -e "${GREEN}[+] Compiling Go: $src${NC}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
-            chmod +x "$output"
-            echo -e "${GREEN}[✓] Success compiling: $output${NC}"
+            chmod +x "$output"       
         done
     fi
 
@@ -42,11 +39,9 @@ compile_modules() {
     if command -v gcc > /dev/null; then
         find modules/ -name "*.c" | while read -r src; do
             output="${src%.c}"
-            echo -e "${GREEN}[+] Compiling C: $src${NC}"
 
             if grep -q "pcap.h" "$src"; then
                 gcc "$src" -o "$output" -lpcap
-                echo -e "${GREEN}[✓] Success compiling: $output${NC}"
             else
                 gcc "$src" -o "$output"
             fi
