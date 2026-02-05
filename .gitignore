@@ -9,6 +9,10 @@ venv/
 env/
 __pycache__/
 
+# Go modules
+go.mod
+go.sum
+
 # allow files with extension
 !*.*
 
@@ -31,3 +35,4 @@ __pycache__/
 
 # always allow gitignore itself
 !.gitignore
+
