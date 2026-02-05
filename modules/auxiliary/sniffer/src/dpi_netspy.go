@@ -31,7 +31,7 @@ func main() {
 
 	for packet := range packetSource.Packets() {
 		if appLayer := packet.ApplicationLayer(); appLayer != nil {
-			payload := string(appLayer.Payloadd())
+			payload := string(appLayer.Payload())
 
 			// Simple payload analysis for credentials
 			keywords := []string{"user", "pass", "login", "pwd", "auth"}
