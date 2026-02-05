@@ -27,7 +27,7 @@ def run_update():
     print(f"[*] Checking for new versions at github.com/storm-os/Cyber-Pentest")
     
     # We use subprocess to catch errors more elegantly.
-    process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
+    process = subprocess.Popen(["git", "pull", "--rebase", "origin", "main"], 
                              stdout=None,
                              stderr=subprocess.PIPE,
                              text=True
