@@ -1,9 +1,18 @@
 import os
 import sys
+import requests
 
 from app.utility.colors import C
 
 def run_update():
+
+    url = "https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/version.txt"
+    try:
+        response = requests.get(url, timeout=5)
+        latest_version = response.text.strip()
+    except:
+        pass
+        
     print(f"{C.SUCCESS}[*] Storm-OS Update System{C.RESET}")
     
     # Masuk ke folder tempat script ini berada
@@ -21,7 +30,7 @@ def run_update():
             print(f"{C.SUCCESS}[*] Changes detected. Re-compiling modules.{C.RESET}")
             # Langsung panggil compiler tanpa ragu
             os.system('bash -c "source ./compiler && compile_modules"')
-            print(f"{C.SUCCESS}[✓] Storm-OS Version  Updated Successfully!{C.RESET}")
+            print(f"{C.SUCCESS}[✓] Cyber-Pentest v{latest_version} Updated Successfully!{C.RESET}")
         else:
             print(f"{C.ERROR}[x] ERROR: Compiler script missing!{C.RESET}")
     else:
