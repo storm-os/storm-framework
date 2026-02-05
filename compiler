@@ -17,20 +17,23 @@ compile_modules() {
 
     echo -e "${GREEN}[*] Auto-detected Path: $(pwd)${NC}"
 
-    # --- LOGIKA GOLANG ---
+    # --- BAGIAN GOLANG ---
     if command -v go > /dev/null; then
-        if [ ! -f "go.mod" ]; then
-            go mod init storm-os 2>/dev/null
-        fi
+        [ -f "go.mod" ] && rm go.mod
 
-        echo -e "${GREEN}[*] Fetching dependencies...${NC}"
-        go get github.com/google/gopacket github.com/google/gopacket/pcap 2>/dev/null
-        go mod tidy 2>/dev/null
+        echo -e "${GREEN}[*] Initializing Go modules.${NC}"
+        go mod init storm-os
+
+        echo -e "${GREEN}[*] Downloading dependencies.${NC}"
+        go get github.com/google/gopacket@latest
+        go get github.com/google/gopacket/pcap@latest
+        go mod tidy
 
         find modules/ -name "*.go" | while read -r src; do
             output="${src%.go}"
             echo -e "${GREEN}[+] Compiling Go: $src${NC}"
-            CGO_ENABLED=1 go build -o "$output" "$src"
+            CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
+            chmod +x "$output"
         done
     fi
 
