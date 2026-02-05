@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/setup |
 Gunakan perintah ini untuk menjalankannya.
 
 ```bash
-pentest
+sudo pentest
 ```
 
 ### 🤝 Contributing 
