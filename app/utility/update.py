@@ -27,10 +27,10 @@ def run_update():
     print(f"[*] Checking for new versions at github.com/storm-os/Cyber-Pentest")
     
     # We use subprocess to catch errors more elegantly.
-    process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
+    subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL)
+    process = subprocess.run(["git", "reset", "--hard", "origin/main"], 
                              stderr=subprocess.PIPE,
-                             text=True
-                            )
+                             text=True)
 
     if process.returncode == 0:
         print(f"{C.SUCCESS}\n[+] Git synchronization complete.{C.RESET}")
