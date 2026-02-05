@@ -47,9 +47,11 @@ def run_update():
         if needs_recompile:
             compiler_path = os.path.join(project_root, "compiler")
             if os.path.exists(compiler_path):
-                print(f"{C.SUCCESS}\n[*] Source code changes detected. Recompiling...{C.RESET}")
+                print(f"{C.SUCCESS}\n[*] Source code changes detected.{C.RESET}")
                 os.system(f'bash -c "source {compiler_path} && compile_modules"')
                 print(f"{C.SUCCESS}\n[✓] Framework recompiled successfully.{C.RESET}")
+            else:
+                os.system(f'bash -c "source {compiler_path} && sign_binaries"')
         else:
             print(f"{C.SUCCESS}[*] No source code changes. Skipping compilation. 😴{C.RESET}")
             
@@ -57,3 +59,4 @@ def run_update():
         
 
     sys.exit()
+        
