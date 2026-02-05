@@ -44,19 +44,15 @@ def run_update():
         print(f"{C.SUCCESS}\n[+] System updated to latest version.{C.RESET}")
         
         # 4. Trigger Compiler ONLY IF needed
+        compiler_path = os.path.join(project_root, "compiler")
         if needs_recompile:
-            compiler_path = os.path.join(project_root, "compiler")
-            if os.path.exists(compiler_path):
-                print(f"{C.SUCCESS}\n[*] Source code changes detected.{C.RESET}")
-                os.system(f'bash -c "source {compiler_path} && compile_modules"')
-                print(f"{C.SUCCESS}\n[✓] Framework recompiled successfully.{C.RESET}")
-            else:
-                os.system(f'bash -c "source {compiler_path} && sign_binaries"')
+            print(f"{C.SUCCESS}\n[*] Source code changes detected.{C.RESET}")
+            os.system(f'bash -c "source {compiler_path} && compile_modules"')
+            print(f"{C.SUCCESS}\n[✓] Framework recompiled successfully.{C.RESET}")    
         else:
-            print(f"{C.SUCCESS}[*] No source code changes. Skipping compilation. 😴{C.RESET}")
+            os.system(f'bash -c "source {compiler_path} && sign_binaries"')
             
         print(f"{C.SUCCESS}\n[✓] Storm is now v{latest_version}{C.RESET}")
         
 
     sys.exit()
-        
