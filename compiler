@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Color
 GREEN='\033[92m'
@@ -34,7 +34,7 @@ compile_modules() {
             echo -e "${GREEN}[+] Compiling Go: $src${NC}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
             chmod +x "$output"
-            echo -e "${GREEN}[✓] Success compiling $output${NC}"
+            echo -e "${GREEN}[✓] Success compiling: $output${NC}"
         done
     fi
 
@@ -46,7 +46,7 @@ compile_modules() {
 
             if grep -q "pcap.h" "$src"; then
                 gcc "$src" -o "$output" -lpcap
-                echo -e "${GREEN}[✓] Success compiling $output${NC}"
+                echo -e "${GREEN}[✓] Success compiling: $output${NC}"
             else
                 gcc "$src" -o "$output"
             fi

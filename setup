@@ -1,4 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
 # --- CONFIGURATION ---
 TOOL_NAME="pentest"
 REPO_NAME="Cyber-Pentest"
