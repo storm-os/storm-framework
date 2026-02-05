@@ -28,7 +28,10 @@ def run_update():
     
     # We use subprocess to catch errors more elegantly.
     process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
-                             capture_output=True, text=True)
+                             stdout=None,
+                             stderr=subprocess.PIPE,
+                             text=True
+    stdout, stderr = process.communicate()
 
     if process.returncode == 0:
         if "Already up to date" in process.stdout:
