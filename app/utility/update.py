@@ -2,7 +2,6 @@ import os
 import sys
 
 from app.utility.colors import C
-from app.utility.config_update import v
 
 def run_update():
     print(f"{C.SUCCESS}[*] Storm-OS Update System{C.RESET}")
