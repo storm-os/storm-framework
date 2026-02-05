@@ -9,6 +9,7 @@ BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null)"
 
 # Handler logic signed binary
 sign_file() {
+    local BASE_PATH
     local TARGET_FILE=$1
     local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
     local FILENAME=$(basename "$TARGET_FILE")
