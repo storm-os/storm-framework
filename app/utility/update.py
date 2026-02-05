@@ -27,30 +27,24 @@ def run_update():
     print(f"[*] Checking for new versions at github.com/storm-os/Cyber-Pentest")
     
     # We use subprocess to catch errors more elegantly.
-    process = subprocess.Popen(["git", "pull", "--rebase", "origin", "main"], 
-                             stdout=None,
+    process = subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
                              stderr=subprocess.PIPE,
                              text=True
                             )
-    # Live process
-    stdout, stderr = process.communicate()
 
     if process.returncode == 0:
-        if "Already up to date" in process.stdout:
-            print(f"{C.SUCCESS}\n[*] Storm-OS is already at the latest version.{C.RESET}")
-        else:
-            print(f"{C.SUCCESS}\n[+] Successfully pulled updates from remote.{C.RESET}")
+        print(f"{C.SUCCESS}\n[+] Git synchronization complete.{C.RESET}")
             
-            # 3. Trigger Compiler (The Hook)
-            compiler_path = os.path.join(project_root, "compiler")
-            if os.path.exists(compiler_path):
-                print(f"{C.SUCCESS}\n[*] Triggering framework recompilation.{C.RESET}")
-                os.system(f'bash -c "source {compiler_path} && compile_modules"')
-                print(f"{C.SUCCESS}\n[✓] Framework updated to v{latest_version}{C.RESET}")
-            else:
-                print(f"{C.ERROR}[x] ERROR: Compiler hook not found at {compiler_path}{C.RESET}")
+        # 3. Trigger Compiler (The Hook)
+        compiler_path = os.path.join(project_root, "compiler")
+        if os.path.exists(compiler_path):
+            print(f"{C.SUCCESS}\n[*] Triggering framework recompilation.{C.RESET}")
+            os.system(f'bash -c "source {compiler_path} && compile_modules"')
+            print(f"{C.SUCCESS}\n[✓] Framework updated to v{latest_version}{C.RESET}")
+        else:
+            print(f"{C.ERROR}\n[x] ERROR: Compiler hook not found at {compiler_path}{C.RESET}")
     else:
-        print(f"{C.ERROR}[x] Update failed!{C.RESET}")
+        print(f"{C.ERROR}\n[x] Update failed!{C.RESET}")
         print(f"{C.SUCCESS}[!] Logic: {process.stderr}{C.RESET}")
         print(f"[*] Suggestion: Run 'git stash' if you have local changes.")
 
