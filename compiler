@@ -11,11 +11,10 @@ sign_file() {
 
     local TARGET_FILE=$1
     local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
-    local FILENAME=$(basename "$TARGET_FILE")
+    local FILENAME=$("$TARGET_FILE")
     local HASH=$(sha256sum "$TARGET_FILE" | awk '{print $1}')
     local SIZE=$(stat -c%s "$TARGET_FILE")
 
-    echo -e "${RED}DEBUG: $MANIFEST${NC}"
     python3 -c "
 import json, os
 MANIFEST_PATH = '$MANIFEST'
@@ -38,7 +37,7 @@ compile_modules() {
     if [ -d "$BASE_PATH" ]; then
         cd "$BASE_PATH" || return 1
     fi
-    echo -e "${RED}DEBUG: $BASE_PATH${NC}"
+
     # --- BAGIAN GOLANG ---
     if command -v go > /dev/null; then
         [ -f "go.mod" ] && rm go.mod
