@@ -5,16 +5,36 @@ GREEN='\033[92m'
 RED='\033[91m'
 NC='\033[0m'
 
+# Handler logic signed binary
+sign_file() {
+    local TARGET_FILE=$1
+    local MANIFEST="$BASE_PATH/lib/core/database/signed_manifest.json"
+    local FILENAME=$(basename "$TARGET_FILE")
+    local HASH=$(sha256sum "$TARGET_FILE" | awk '{print $1}')
+    local SIZE=$(stat -c%s "$TARGET_FILE")
+
+    python3 -c "
+import json, os
+MANIFEST_PATH = '$MANIFEST'
+try:
+    with open(MANIFEST_PATH, 'r') as f: data = json.load(f)
+except: data = {}
+
+data['$FILENAME'] = {'sha256': '$HASH', 'size_bytes': $SIZE}
+
+with open(MANIFEST_PATH, 'w') as f:
+    json.dump(data, f, indent=4)
+"
+}
+
 #Logic core compiler
 compile_modules() {
     local BASE_PATH
-    BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+    BASE_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null)"
 
     if [ -d "$BASE_PATH" ]; then
         cd "$BASE_PATH" || return 1
     fi
-
-    echo -e "${GREEN}[*] Detected Path: $(pwd)${NC}"
 
     # --- BAGIAN GOLANG ---
     if command -v go > /dev/null; then
@@ -23,7 +43,7 @@ compile_modules() {
         echo -e "${GREEN}[*] Initializing Go modules.${NC}"
         go mod init github.com/storm-os/Cyber-Pentest
 
-        echo -e "${GREEN}[*] Downloading dependencies.${NC}"
+        echo -e "${GREEN}\n[*] Downloading dependencies.${NC}"
         go get github.com/google/gopacket@latest
         go get github.com/google/gopacket/pcap@latest
         go mod tidy
@@ -31,7 +51,9 @@ compile_modules() {
         find modules/ -name "*.go" | while read -r src; do
             output="${src%.go}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
-            chmod +x "$output"       
+            chmod +x "$output"
+
+            sign_file "$output"
         done
     fi
 
@@ -45,7 +67,10 @@ compile_modules() {
             else
                 gcc "$src" -o "$output"
             fi
+            chmod +x "$output"
 
+            sign_file "$output"
         done
     fi
 }
+
