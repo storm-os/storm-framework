@@ -11,7 +11,7 @@ def calculate_sha256(file_path):
 
 def generate_folder_manifest():
     root_dir = Path(__file__).resolve().parent.parent.parent
-    print(f"[*] Scanning dimulai dari Root: {root_dir}")
+    print(f"[*] Signature starts from: {root_dir}")
 
     manifest = {}
     ignored_dirs = {
@@ -38,7 +38,7 @@ def generate_folder_manifest():
         json.dump(manifest, f, indent=4)
 
     if manifest_path.exists():
-        print(f"[+] Success! Manifest saved in: {manifest_path}")
+        print(f"[+] Success! Manifest saved in:{manifest_path}")
         print(f"[+] Total registered files: {len(manifest)}")
 
 if __name__ == "__main__":

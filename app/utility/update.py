@@ -21,7 +21,6 @@ def run_update():
     subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL)
 
     # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
-    # Check if there are any different .go or .c files
     check_diff = subprocess.run(
         ["git", "diff", "--name-only", "HEAD", "origin/main"],
         capture_output=True, text=True
