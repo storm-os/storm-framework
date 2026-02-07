@@ -3,7 +3,7 @@ from app.utility.colors import C
 
 
 try:
-    from script.OSINT.storm import StormOSModuleRunner
+    from script.osint.handstorm import StormOSModuleRunner
 except ImportError as e:
     print(f"[*] Run {C.SUCCESS}down OSINT{C.RESET} before using it.")
     print(f"{C.ERROR}[x] ERROR: {e}{C.RESET}")
@@ -13,9 +13,6 @@ except ImportError as e:
 REQUIRED_OPTIONS = {
         "EMAIL": ""
 }
-
-
-
 def execute(options):
     target_email = options.get("EMAIL")
     runner = StormOSModuleRunner()
