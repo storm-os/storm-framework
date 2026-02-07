@@ -15,7 +15,7 @@ def calculate_sha256(file_path):
 def test_verify_repo_integrity():
     # Setup Path
     root_dir = Path(__file__).resolve().parent.parent
-    manifest_path = root_dir / "tests" / "database" / "signed_manifest.json"
+    manifest_path = root_dir / "lib" / "core" / "database" / "signed_manifest.json"
     
     # 1. Make sure the database manifest already exists
     if not manifest_path.exists():
