@@ -18,7 +18,7 @@ def execute(options):
     runner = StormOSModuleRunner()
 
     if mail:
-        runner.str(set_option(mail))
+        runner.set_option(mail)
         runner.run_module()
     else:
         print(f"{C.ERROR}[x] ERROR: EMAIL is not set. Use 'set EMAIL <target>'{C.RESET}")
