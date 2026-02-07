@@ -29,14 +29,6 @@ with open(MANIFEST_PATH, 'w') as f:
 "
 }
 
-# Logic signed all binary
-sign_binaries() {
-    find modules/ -type f -executable | while read -r bin; do
-        sign_file "$bin"
-    done
-    sign_file "go.mod"
-    sign_file "go.sum"
-}
 
 # Logic core compiler
 compile_modules() {
@@ -86,7 +78,5 @@ compile_modules() {
             sign_file "$output"
         done
     fi
-
-    sign_binaries
 }
 
