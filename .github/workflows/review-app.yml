@@ -38,6 +38,14 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
 
+    - name: Run sign integrity
+      run: |
+        python scripts/security/sign.py
+        
+    - name: Run pytest
+      run: |
+        pytest -m "security or core" -v --lf --tb=short
+        
     - name: Commit and Push Changes
       run: |
         git config --global user.name "github-actions[bot]"
@@ -49,10 +57,6 @@ jobs:
           git commit -m "style: auto-cleanup imports in: ${CHANGED_FILES%, }"
           git push
         fi
-
-    - name: Run pytest
-      run: |
-        pytest -m "security or core" -v --lf --tb=short
 
     
 
