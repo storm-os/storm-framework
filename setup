@@ -112,18 +112,20 @@ else
     echo -e "${RED}[!] Make sure the file exists in the project directory."
 fi
 
-# --- Security Identity Generation (Pure Bash + OpenSSL) ---
+# --- Security Identity Generation (Version: The 60-Char Fix) ---
 if [ ! -f .env ]; then
     echo -e "${GREEN}[+] Generating unique security keys via OpenSSL...${NC}"
 
-    # Generate Private Key (Ed25519) - Output ke DER baru ke Base64
+    # Generate Private Key
     PRIV_KEY=$(openssl genpkey -algorithm ed25519 2>/dev/null | openssl pkey -outform DER 2>/dev/null | base64 -w 0 | tr -d '[:space:]')
 
-    # Generate Public Key dari Private Key tadi
-    PUB_KEY=$(echo "$PRIV_KEY" | base64 -d | openssl pkey -inform DER -pubout -outform DER 2>/dev/null | base64 -w 0 | tr -d '[:space:]')
+    # Generate Public Key
+    # Tambahkan 'cat' di tengah untuk memastikan stream data tidak terputus
+    PUB_KEY=$(echo -n "$PRIV_KEY" | base64 -d | openssl pkey -inform DER -pubout -outform DER 2>/dev/null | base64 -w 0 | tr -d '[:space:]')
 
-    printf "STORM_PRIVKEY=%s\n" "$PRIV_KEY" > .env
-    printf "STORM_PUBKEY=%s\n" "$PUB_KEY" >> .env
+    # GUNAKAN INI: Pastikan tidak ada spasi sama sekali di sekitar variabel
+    echo "STORM_PRIVKEY=${PRIV_KEY}" > .env
+    echo "STORM_PUBKEY=${PUB_KEY}" >> .env
 
     echo -e "${GREEN}[✓] Security identity created successfully.${NC}"
 fi
