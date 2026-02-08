@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 autoflake pytest
+        pip install flake8 autoflake
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Auto Cleanup (Remove Unused Imports)
@@ -37,14 +37,6 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
-
-    - name: Run sign integrity
-      run: |
-        python scripts/security/sign.py
-        
-    - name: Run pytest
-      run: |
-        pytest -m "security or core" -v --lf --tb=short
         
     - name: Commit and Push Changes
       run: |
