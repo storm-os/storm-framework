@@ -48,22 +48,44 @@ fn main() {
 
     let pub_key_clean = pub_key_raw.trim_matches(|c: char| c.is_whitespace() || c == '"' || c == '\'');
 
-    let pub_key_bytes = general_purpose::STANDARD.decode(pub_key_clean)
+    let pub_key_full = general_purpose::STANDARD.decode(pub_key_clean)
         .expect("[-] Invalid Base64 Public Key");
-    
+
+    if pub_key_full.len() != 32 {
+        println!("[*] Info: Peeling the openssl header (Total: {} bytes)", pub_key_full.len());
+    }
     // Pastikan panjang key Ed25519 benar (32 bytes)
-    let key_bytes_fixed: [u8; 32] = pub_key_bytes.try_into().expect("[-] Invalid Public Key Length (must be 32 bytes)");
-    let public_key = VerifyingKey::from_bytes(&key_bytes_fixed).expect("[-] Failed to create VerifyingKey");
+    let pub_key_raw: [u8; 32] = pub_key_full.iter()
+        .rev()
+        .take(32)
+        .collect::<Vec<_>>()
+        .into_iter()
+        .rev()
+        .cloned()
+        .collect::<Vec<u8>>()
+        .try_into()
+        .map_err(|_| "[x] Invalid public key 32 bytes")
+        .expect("[-] Invalid Public Key Length (must be 32 bytes)");
+
+    let public_key = VerifyingKey::from_bytes(&pub_key_raw)
+        .expect("[-] Failed to create VerifyingKey");
 
     // 2. Load & Parse JSON
-    let content = fs::read_to_string(db_path).expect("[-] ERROR: Manifest file not found");
-    let manifest: Manifest = serde_json::from_str(&content).expect("[-] ERROR: JSON format broken");
+    let content = fs::read_to_string(db_path)
+        .expect("[-] ERROR: Manifest file not found");
+    let manifest: Manifest = serde_json::from_str(&content)
+        .expect("[-] ERROR: JSON format broken");
 
     // 3. Verifikasi Signature
     // Penting: serialize kembali ke JSON string yang rapat untuk diverifikasi
-    let files_json = serde_json::to_string(&manifest.files).expect("[-] Failed to reserialize");
-    let signature_bytes = general_purpose::STANDARD.decode(&manifest.metadata.signature).expect("[-] Invalid Signature Base64");
-    let signature = Signature::from_slice(&signature_bytes).expect("[-] Invalid Signature format");
+    let files_json = serde_json::to_string(&manifest.files)
+        .expect("[-] Failed to reserialize");
+
+    let signature_bytes = general_purpose::STANDARD.decode(&manifest.metadata.signature)
+        .expect("[-] Invalid Signature Base64");
+
+    let signature = Signature::from_slice(&signature_bytes)
+        .expect("[-] Invalid Signature format");
 
     if public_key.verify(files_json.as_bytes(), &signature).is_err() {
         println!("\n[!] FATAL ERROR: DIGITAL SIGNATURE MISMATCH!");
