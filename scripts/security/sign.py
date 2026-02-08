@@ -37,7 +37,7 @@ def generate_folder_manifest():
     manifest = {}
     ignored_dirs = {
         '.git', '__pycache__', '.pytest_cache', 
-        '.github', 'database', 'storm.db', '.gitignore', '.env'
+        '.github', 'storm.db', '.gitignore', '.env'
     }
 
     for path in root_dir.rglob('*'):
