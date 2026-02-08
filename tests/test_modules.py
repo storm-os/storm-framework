@@ -15,7 +15,8 @@ def get_all_modules():
                 modules.append(filename)
     return modules
 
-@pytest.mark.security("module_file", get_all_modules())
+@pytest.mark.security
+@pytest.mark.parametrize("module_file", get_all_modules())
 def test_module_load(module_file):
     """
     This test will try to load each module. 
