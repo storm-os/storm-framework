@@ -34,6 +34,7 @@ fn main() {
         "storm.db",
         "signed_manifest.json",
         "script/integrity",
+        ".gitignore",
         "target" // Tambahkan target agar tidak men-scan hasil compile sendiri
     ];
 
@@ -117,7 +118,7 @@ fn main() {
     }
 
     println!("\n[*] Audit Completed.");
-    println!("[*] Synchronous: {} | Modified: {} | Untracked: {}",
+    println!("[*] Verified: {} | Modified: {} | Untracked: {}",
              verified_count,
              modified_files.len(),
              untracked_files.len());
