@@ -38,3 +38,5 @@ go.sum
 # always allow gitignore itself
 !.gitignore
 
+# ignore
+lib/core/database/signed_manifest.json

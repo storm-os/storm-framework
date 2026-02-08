@@ -20,7 +20,7 @@ def generate_folder_manifest():
     # 1. Load Private Key dari .env
     priv_key_b64 = None
     env_path = root_dir / ".env"
-    
+
     if env_path.exists():
         with open(env_path, "r") as f:
             for line in f:
@@ -35,7 +35,7 @@ def generate_folder_manifest():
     # 2. Scanning Files (Logika lama kamu)
     manifest = {}
     ignored_dirs = {
-        '.git', '__pycache__', '.pytest_cache', 
+        '.git', '__pycache__', '.pytest_cache',
         '.github', 'storm.db', '.gitignore', '.env'
     }
 
@@ -45,7 +45,7 @@ def generate_folder_manifest():
                 relative_path = str(path.relative_to(root_dir))
                 # Gunakan fungsi hash sha256 kamu di sini
                 manifest[relative_path] = {
-                    "sha256": calculate_sha256(path), 
+                    "sha256": calculate_sha256(path),
                     "size_bytes": path.stat().st_size
                 }
 
@@ -55,12 +55,12 @@ def generate_folder_manifest():
     # 4. Proses Signing
     # Convert dict ke string JSON yang rapat (compact) untuk di-hash
     manifest_string = json.dumps(sorted_manifest, sort_keys=True).encode('utf-8')
-    
+
     # Load private key dari Base64 DER
     try:
         priv_bytes = base64.b64decode(priv_key_b64)
         private_key = ed25519.Ed25519PrivateKey.from_private_bytes(priv_bytes[-32:])
-        
+
         # Buat Signature
         signature = private_key.sign(manifest_string)
         signature_b64 = base64.b64encode(signature).decode('utf-8')
