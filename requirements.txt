@@ -8,3 +8,4 @@ dnspython
 paramiko
 scapy
 pytest
+ed25519
