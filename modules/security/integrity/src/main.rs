@@ -34,6 +34,7 @@ fn main() {
         "storm.db",
         "signed_manifest.json",
         "script/integrity",
+        ".gitignore",
         "target" // Tambahkan target agar tidak men-scan hasil compile sendiri
     ];
 
