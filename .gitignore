@@ -22,6 +22,7 @@ go.sum
 !compiler
 !storm
 !LICENSE
+!check
 
 # logs & temp
 *.log
