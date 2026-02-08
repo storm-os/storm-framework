@@ -72,8 +72,8 @@
         "size_bytes": 1166
     },
     "tests/test_verify_integrity.py": {
-        "sha256": "87974587acffd8807739371c8396495b76ab752f16fa14deae38ecabc5e01872",
-        "size_bytes": 1925
+        "sha256": "0b6e243af0938706990566c449fb47d6bf5cf573c6d2ca3f2429fa1e1d5e473e",
+        "size_bytes": 1968
     },
     "scripts/README.md": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -128,8 +128,8 @@
         "size_bytes": 708352
     },
     "modules/security/integrity/src/main.rs": {
-        "sha256": "c0e0a2103670eb662a5dc9e1d51483547897fb53597e81acfcacf5d4f823fece",
-        "size_bytes": 3930
+        "sha256": "7e8aa38e09ddc39dabe396c6bd86a1032c10752b491389a531b0a2d8e72411bb",
+        "size_bytes": 3949
     },
     "modules/exploit/web/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -292,8 +292,8 @@
         "size_bytes": 1803
     },
     "modules/auxiliary/osint/email/osint.py": {
-        "sha256": "fa374b592f625b1bdcaa195840fb404417f9a51d6f1784365b5ec7a654eaad6d",
-        "size_bytes": 551
+        "sha256": "b7fca9e5d51171147f663905f88b8e4bd2d36511d39d93a50d9eeb4b3aca1702",
+        "size_bytes": 552
     },
     "modules/auxiliary/osint/email/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
