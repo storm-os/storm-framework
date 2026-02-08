@@ -43,6 +43,10 @@
         "sha256": "c7750f6a166f8c31fb7a5365d03d8f7606a36244b4da0497000bb4c6ffa91a08",
         "size_bytes": 2068
     },
+    "pytest.ini": {
+        "sha256": "53e6c92d5a472262ebc566bc8dd90b442d490b2fa9042b83a6f3111cff843013",
+        "size_bytes": 124
+    },
     "modules/__init__.py": {
         "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "size_bytes": 0
@@ -68,8 +72,8 @@
         "size_bytes": 0
     },
     "tests/test_modules.py": {
-        "sha256": "c70d44414c90657d8403df76c0c31c8bf230216e6441e22cce9b6823a2e111d9",
-        "size_bytes": 1166
+        "sha256": "aaa842c5dc7946b57ee906874c82173cc76b182af9c1948916fe4d937c0a2267",
+        "size_bytes": 1191
     },
     "tests/test_verify_integrity.py": {
         "sha256": "0b6e243af0938706990566c449fb47d6bf5cf573c6d2ca3f2429fa1e1d5e473e",
