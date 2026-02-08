@@ -72,8 +72,8 @@
         "size_bytes": 0
     },
     "tests/test_modules.py": {
-        "sha256": "aaa842c5dc7946b57ee906874c82173cc76b182af9c1948916fe4d937c0a2267",
-        "size_bytes": 1191
+        "sha256": "5f973eca6be98ffdfd2ff9142f1587d05e703bf0d1775044c97a1460dd2b26df",
+        "size_bytes": 1248
     },
     "tests/test_verify_integrity.py": {
         "sha256": "0b6e243af0938706990566c449fb47d6bf5cf573c6d2ca3f2429fa1e1d5e473e",
