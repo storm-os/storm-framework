@@ -58,11 +58,11 @@ def generate_folder_manifest():
     
     # Load private key dari Base64 DER
     try:
-        priv_key_bytes = base64.b64decode(priv_key_b64)
-        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(priv_key_bytes)
+        priv_bytes = base64.b64decode(st_privkey_b64)
+        private_key = ed25519.Ed25519PrivateKey.from_private_bytes(priv_bytes[-32:])
         
         # Buat Signature
-        signature = private_key.sign(manifest_string)
+        signature = private_key.sign(manifest_data)
         signature_b64 = base64.b64encode(signature).decode('utf-8')
     except Exception as e:
         print(f"[!] Signing Error: {e}")
