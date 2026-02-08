@@ -27,9 +27,6 @@ compile_modules() {
         go get github.com/google/gopacket/pcap@latest
         go mod tidy
 
-        sign_file "go.mod"
-        sign_file "go.sum"
-
         find modules/ -name "*.go" | while read -r src; do
             output="${src%.go}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
