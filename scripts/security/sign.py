@@ -1,6 +1,5 @@
 import json
 import hashlib
-import os
 import base64
 from pathlib import Path
 from cryptography.hazmat.primitives.asymmetric import ed25519
