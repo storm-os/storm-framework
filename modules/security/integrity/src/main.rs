@@ -33,7 +33,6 @@ fn main() {
         ".github",
         "storm.db",
         "signed_manifest.json",
-        "script/integrity",
         ".gitignore",
         ".env",
         "target" // Tambahkan target agar tidak men-scan hasil compile sendiri
