@@ -114,17 +114,18 @@ fi
 
 # --- Security Identity Generation (Pure Bash + OpenSSL) ---
 if [ ! -f .env ]; then
-    echo "[+] Generating unique security keys via OpenSSL..."
+    echo -e "${GREEN}[+] Generating unique security keys via OpenSSL...${NC}"
 
     # Generate Private Key (Ed25519) - Output ke DER baru ke Base64
-    PRIV_KEY=$(openssl genpkey -algorithm ed25519 2>/dev/null | openssl pkey -outform DER 2>/dev/null | base64 -w 0)
+    PRIV_KEY=$(openssl genpkey -algorithm ed25519 2>/dev/null | openssl pkey -outform DER 2>/dev/null | base64 -w 0 | tr -d '[:space:]')
 
     # Generate Public Key dari Private Key tadi
-    PUB_KEY=$(echo "$PRIV_KEY" | base64 -d | openssl pkey -inform DER -pubout -outform DER 2>/dev/null | base64 -w 0)
+    PUB_KEY=$(echo "$PRIV_KEY" | base64 -d | openssl pkey -inform DER -pubout -outform DER 2>/dev/null | base64 -w 0 | tr -d '[:space:]')
 
-    echo "STORM_PRIVKEY=$PRIV_KEY" > .env
-    echo "STORM_PUBKEY=$PUB_KEY" >> .env
-    echo "[✓] Security identity created successfully."
+    printf "STORM_PRIVKEY=%s\n" "$PRIV_KEY" > .env
+    printf "STORM_PUBKEY=%s\n" "$PUB_KEY" >> .env
+
+    echo -e "${GREEN}[✓] Security identity created successfully.${NC}"
 fi
 
 # Logika Sudo Check kamu sudah pas
@@ -133,7 +134,7 @@ if $NEEDS_SUDO; then
     sudo python3 scripts/security/sign.py
 else
     chmod 600 .env
-    python3 scripts/security/sign.py
+    python scripts/security/sign.py
 fi
 
 # 5. Creating a Dynamic Wrapper Script

@@ -39,10 +39,12 @@ fn main() {
     let env_content = fs::read_to_string(env_path).expect("[-] ERROR: .env not found");
     let pub_key_b64 = env_content.lines()
         .find(|line| line.starts_with("STORM_PUBKEY="))
-        .map(|line| line.split('=').nth(1).unwrap_or("").trim())
+        .map(|line| line.split('=').nth(1).unwrap_or("").trim()) // .trim() sangat penting!
         .expect("[-] ERROR: STORM_PUBKEY not found in .env");
 
-    let pub_key_bytes = general_purpose::STANDARD.decode(pub_key_b64).expect("[-] Invalid Base64 Public Key");
+    let pub_key_clean = pub_key_b64.trim_matches(|c| c == '"' || c == '\'' || c == ' ');
+
+    let pub_key_bytes = general_purpose::STANDARD.decode(pub_key_clean).expect("[-] Invalid Base64 Public Key");
     
     // Pastikan panjang key Ed25519 benar (32 bytes)
     let key_bytes_fixed: [u8; 32] = pub_key_bytes.try_into().expect("[-] Invalid Public Key Length (must be 32 bytes)");
