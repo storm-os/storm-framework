@@ -117,7 +117,7 @@ fn main() {
     }
 
     println!("\n[*] Audit Completed.");
-    println!("[*] Synchronous: {} | Modified: {} | Untracked: {}",
+    println!("[*] Verified: {} | Modified: {} | Untracked: {}",
              verified_count,
              modified_files.len(),
              untracked_files.len());
