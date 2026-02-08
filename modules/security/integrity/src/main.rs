@@ -1,6 +1,6 @@
 use sha2::{Sha256, Digest};
 use std::fs;
-use std::io;
+use std::io::{self, Write};
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
 use walkdir::WalkDir;
@@ -35,6 +35,7 @@ fn main() {
         "signed_manifest.json",
         "script/integrity",
         ".gitignore",
+        ".env",
         "target" // Tambahkan target agar tidak men-scan hasil compile sendiri
     ];
 
@@ -91,6 +92,13 @@ fn main() {
                     untracked_files.push(clean_path.to_string());
                 }
             }
+            print!(
+                   "\r\x1b[K[*] Synchronous: {} | Modified: {} | Untracked: {}",
+                   verified_count,
+                   modified_files.len(),
+                   untracked_files.len()
+            );
+            std::io::stdout().flush().unwrap();
         }
     }
 
@@ -118,9 +126,5 @@ fn main() {
     }
 
     println!("\n[*] Audit Completed.");
-    println!("[*] Verified: {} | Modified: {} | Untracked: {}",
-             verified_count,
-             modified_files.len(),
-             untracked_files.len());
   }
 
