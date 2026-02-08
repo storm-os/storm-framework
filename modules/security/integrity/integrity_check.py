@@ -3,7 +3,7 @@ import os
 
 
 def execute(options):
-    bin_p = "modules/security/integrity/src/integrity"
+    bin_p = "modules/security/integrity/src/check"
 
     if not os.path.exists(bin_p):
         print(f"[-] ERROR: Rust binary not found in {bin_p}")

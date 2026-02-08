@@ -25,7 +25,7 @@ if [ -d "/data/data/com.termux" ]; then
     INSTALL_DIR="$PREFIX/share/$REPO_NAME"
 
     NEEDS_SUDO=false
-    pkg install -y python git golang build-essential libpcap clang ffmpeg
+    pkg install -y python git golang build-essential libpcap clang ffmpeg openssl
 else
     # Standard Linux Environment
     echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
@@ -36,7 +36,7 @@ else
     INSTALL_DIR="/opt/$REPO_NAME"
 
     NEEDS_SUDO=true
-    sudo apt install -y python3 python3-pip git golang build-essential libpcap-dev clang ffmpeg
+    sudo apt install -y python3 python3-pip git golang build-essential libpcap-dev clang ffmpeg openssl
 fi
 
 # -----------------------------------------------------------------------------
@@ -111,6 +111,32 @@ else
     echo -e "${RED}[x] ERROR: File compiler not found in $(pwd)!"
     echo -e "${RED}[!] Make sure the file exists in the project directory."
 fi
+
+# --- Security Identity Generation ---
+if [ ! -f .env ]; then
+    echo "Initializing security layers..."
+    echo "Generating unique security keys for your installation..."
+
+    # Generate Private Key (Ed25519) dalam format DER biner lalu encode ke Base64
+    PRIV_KEY=$(openssl genpkey -algorithm ed25519 2>/dev/null | openssl pkey -outform DER | base64 -w 0)
+
+    # Generate Public Key dari Private Key tadi
+    PUB_KEY=$(echo "$PRIV_KEY" | base64 -d | openssl pkey -inform DER -pubout -outform DER 2>/dev/null | base64 -w 0)
+
+    # Simpan ke .env
+    cat <<EOF > .env
+# Storm-OS Security Configuration
+STORM_PRIVKEY=$PRIV_KEY
+STORM_PUBKEY=$PUB_KEY
+EOF
+
+    # Set permission agar file .env hanya bisa dibaca pemilik
+    chmod 600 .env
+    echo "Security keys generated and saved to .env"
+else
+    echo "Security environment already exists. Skipping generation."
+fi
+
 
 # 5. Creating a Dynamic Wrapper Script
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
