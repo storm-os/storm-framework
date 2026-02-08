@@ -130,8 +130,10 @@ fi
 # Logika Sudo Check kamu sudah pas
 if $NEEDS_SUDO; then
     sudo chmod 600 .env
+    sudo python3 scripts/security/sign.py
 else
     chmod 600 .env
+    python3 scripts/security/sign.py
 fi
 
 # 5. Creating a Dynamic Wrapper Script
