@@ -1,17 +1,17 @@
 use sha2::{Sha256, Digest};
 use std::fs;
 use std::io::{self, Write};
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashSet};
 use std::path::Path;
 use walkdir::WalkDir;
 use serde::{Deserialize, Serialize}; // Tambahkan Serialize di sini
 use ed25519_dalek::{VerifyingKey, Signature, Verifier};
 use base64::{engine::general_purpose, Engine as _};
 
-#[derive(Deserialize, Serialize)] // Harus punya dua-duanya
+#[derive(Deserialize, Serialize)]
 struct Manifest {
     metadata: Metadata,
-    files: HashMap<String, FileInfo>,
+    files: BTreeMap<String, FileInfo>, // Pakai BTreeMap supaya urutannya konsisten!
 }
 
 #[derive(Deserialize, Serialize)]

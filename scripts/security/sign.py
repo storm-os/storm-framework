@@ -54,8 +54,7 @@ def generate_folder_manifest():
 
     # 4. Proses Signing
     # Convert dict ke string JSON yang rapat (compact) untuk di-hash
-    manifest_string = json.dumps(sorted_manifest, sort_keys=True).encode('utf-8')
-
+    manifest_string = json.dumps(sorted_manifest, sort_keys=True, separators=(',', ':')).encode('utf-8')
     # Load private key dari Base64 DER
     try:
         priv_bytes = base64.b64decode(priv_key_b64)
