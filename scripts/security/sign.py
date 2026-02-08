@@ -87,3 +87,6 @@ def generate_folder_manifest():
 
     print(f"[+] Success! Manifest signed and saved.")
     print(f"[+] Registered files: {len(sorted_manifest)}")
+
+if __name__ == "__main__":
+    generate_folder_manifest()
