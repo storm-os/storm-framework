@@ -4,24 +4,26 @@ use std::io::{self, Write};
 use std::collections::{BTreeMap, HashSet};
 use std::path::Path;
 use walkdir::WalkDir;
-use serde::{Deserialize, Serialize}; // Tambahkan Serialize di sini
+use serde::{Deserialize, Serialize};
 use ed25519_dalek::{VerifyingKey, Signature, Verifier};
 use base64::{engine::general_purpose, Engine as _};
 
-#[derive(Deserialize, Serialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Manifest {
     metadata: Metadata,
-    files: BTreeMap<String, FileInfo>, // Pakai BTreeMap supaya urutannya konsisten!
+    files: BTreeMap<String, FileInfo>,
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Metadata {
+    version: String,
     signature: String,
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct FileInfo {
     sha256: String,
+    size_bytes: u64,
 }
 
 fn calculate_hash(path: &Path) -> io::Result<String> {
@@ -35,75 +37,49 @@ fn main() {
     let db_path = "lib/core/database/signed_manifest.json";
     let env_path = ".env";
 
-    // 1. Ambil Public Key dari .env
+    // --- 1. Ambil Public Key dari .env ---
     let env_content = fs::read_to_string(env_path).expect("[-] ERROR: .env not found");
     let pub_key_raw = env_content.lines()
         .find(|line| line.starts_with("STORM_PUBKEY="))
         .map(|line| {
-            // Ambil setelah tanda '=' pertama saja
             let parts: Vec<&str> = line.splitn(2, '=').collect();
             parts[1].trim()
         })
         .expect("[-] ERROR: STORM_PUBKEY not found");
 
     let pub_key_clean = pub_key_raw.trim_matches(|c: char| c.is_whitespace() || c == '"' || c == '\'');
+    let pub_key_full = general_purpose::STANDARD.decode(pub_key_clean).expect("[-] Invalid Base64 Public Key");
 
-    let pub_key_full = general_purpose::STANDARD.decode(pub_key_clean)
-        .expect("[-] Invalid Base64 Public Key");
+    // Kupas header jika perlu
+    let mut key_bytes = [0u8; 32];
+    let start = if pub_key_full.len() > 32 { pub_key_full.len() - 32 } else { 0 };
+    key_bytes.copy_from_slice(&pub_key_full[start..]);
 
-    if pub_key_full.len() != 32 {
-        println!("[*] Info: Peeling the openssl header (Total: {} bytes)", pub_key_full.len());
-    }
-    // Pastikan panjang key Ed25519 benar (32 bytes)
-    let pub_key_raw: [u8; 32] = pub_key_full.iter()
-        .rev()
-        .take(32)
-        .collect::<Vec<_>>()
-        .into_iter()
-        .rev()
-        .cloned()
-        .collect::<Vec<u8>>()
-        .try_into()
-        .map_err(|_| "[x] Invalid public key 32 bytes")
-        .expect("[-] Invalid Public Key Length (must be 32 bytes)");
+    let public_key = VerifyingKey::from_bytes(&key_bytes).expect("[-] Failed to create VerifyingKey");
 
-    let public_key = VerifyingKey::from_bytes(&pub_key_raw)
-        .expect("[-] Failed to create VerifyingKey");
+    // --- 2. Load & Parse JSON ---
+    let content = fs::read_to_string(db_path).expect("[-] ERROR: Manifest file not found");
+    let manifest: Manifest = serde_json::from_str(&content).expect("[-] ERROR: JSON format broken");
 
-    // 2. Load & Parse JSON
-    let content = fs::read_to_string(db_path)
-        .expect("[-] ERROR: Manifest file not found");
-    let manifest: Manifest = serde_json::from_str(&content)
-        .expect("[-] ERROR: JSON format broken");
-
-    // 3. Verifikasi Signature
-    // Penting: serialize kembali ke JSON string yang rapat untuk diverifikasi
-    let files_json = serde_json::to_string(&manifest.files)
-        .expect("[-] Failed to reserialize");
-
-    let signature_bytes = general_purpose::STANDARD.decode(&manifest.metadata.signature)
-        .expect("[-] Invalid Signature Base64");
-
-    let signature = Signature::from_slice(&signature_bytes)
-        .expect("[-] Invalid Signature format");
+    // --- 3. Verifikasi Signature ---
+    let files_json = serde_json::to_string(&manifest.files).expect("[-] Failed to reserialize");
+    let signature_bytes = general_purpose::STANDARD.decode(&manifest.metadata.signature).expect("[-] Invalid Signature Base64");
+    let signature = Signature::from_slice(&signature_bytes).expect("[-] Invalid Signature format");
 
     if public_key.verify(files_json.as_bytes(), &signature).is_err() {
         println!("\n[!] FATAL ERROR: DIGITAL SIGNATURE MISMATCH!");
-        println!("[!] Integrity seal broken. Exiting...");
         std::process::exit(1);
     }
 
     println!("[+] Digital Signature Verified. Manifest is authentic.");
 
-    // 4. Audit Files
+    // --- 4. Audit Files ---
     let mut verified_count = 0;
     let mut modified_files = Vec::new();
     let mut untracked_files = Vec::new();
     let mut found_in_disk = HashSet::new();
 
-    let ignored_items = [".git", "__pycache__", ".pytest_cache",
-                         ".github", "storm.db", "signed_manifest.json",
-                         ".gitignore", ".env", "target"];
+    let ignored_items = [".git", "__pycache__", ".pytest_cache", ".github", "storm.db", "signed_manifest.json", ".gitignore", ".env", "target"];
 
     for entry in WalkDir::new(".").into_iter().filter_map(|e| e.ok()) {
         let path = entry.path();
@@ -114,7 +90,6 @@ fn main() {
             let clean_path = path_str.strip_prefix("./").unwrap_or(path_str);
             found_in_disk.insert(clean_path.to_string());
 
-            // Ganti database.get menjadi manifest.files.get
             match manifest.files.get(clean_path) {
                 Some(info) => {
                     if calculate_hash(path).unwrap_or_default() == info.sha256 {
@@ -130,23 +105,19 @@ fn main() {
         }
     }
 
-    // Cek file yang hilang (ada di JSON tapi gak ada di disk)
+    // Cek file yang hilang
     let mut missing_files = Vec::new();
-    for (json_path, _) in &manifest.files {
+    for json_path in manifest.files.keys() {
         if !found_in_disk.contains(json_path) {
             missing_files.push(json_path);
         }
     }
 
-    if !modified_files.is_empty() {
-        println!("\n[!] WARNING: Modified Files Found!");
-        for f in &modified_files { println!("    -> {}", f); }
+    if !modified_files.is_empty() || !missing_files.is_empty() {
+        println!("\n\n[!] INTEGRITY BREACH DETECTED!");
+        for f in &modified_files { println!("    [MODIFIED] -> {}", f); }
+        for f in &missing_files { println!("    [MISSING]  -> {}", f); }
+    } else {
+        println!("\n\n[✓] System integrity 100% intact.");
     }
-
-    if !missing_files.is_empty() {
-        println!("\n[!] WARNING: Missing Files!");
-        for f in &missing_files { println!("    -> {}", f); }
-    }
-
-    println!("\n[*] Audit Completed.");
 }
