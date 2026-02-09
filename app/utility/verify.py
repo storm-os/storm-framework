@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-def execute(options):
+def run_verif():
     bin_p = "app/base/check"
 
     if not os.path.exists(bin_p):
