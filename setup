@@ -149,7 +149,7 @@ fi
 # 5. Creating a Dynamic Wrapper Script
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 
-echo -e "$[+] Creating a wrapper script: ${TOOL_NAME}"
+echo -e "[+] Creating a wrapper script: ${TOOL_NAME}"
 
 # Create wrapper content in variables for easy management
 CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_DST
