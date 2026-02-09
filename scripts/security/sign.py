@@ -15,7 +15,7 @@ def calculate_sha256(file_path):
 
 def generate_folder_manifest():
     root_dir = Path(__file__).resolve().parent.parent.parent
-    print(f"[*] Signature starts from: {root_dir}")
+    print("[+] Get started with Storm Framework security.")
 
     # 1. Load Private Key dari .env
     priv_key_b64 = None
@@ -84,8 +84,7 @@ def generate_folder_manifest():
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(final_data, f, indent=4)
 
-    print(f"[+] Success! Manifest signed and saved.")
-    print(f"[+] Registered files: {len(sorted_manifest)}")
+    print(f"[✓] Success! Manifest signed and saved.")
 
 if __name__ == "__main__":
     generate_folder_manifest()
