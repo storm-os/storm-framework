@@ -1,6 +1,6 @@
-# 🛠️ Cyber-Pentest Framework Contribution Guide
+# 🛠️ Storm-Framework Contribution Guide
 
-Hello! Thank you for your interest in enlarging **Cyber-Pentest**. This project is a project *open-source*, So your help means a lot to make this tool stronger and more solid!
+Hello! Thank you for your interest in enlarging **Storm-Framework**. This project is a project *open-source*, So your help means a lot to make this tool stronger and more solid!
 
 ---
 
@@ -17,7 +17,7 @@ In order for the code merging process (*Merge*) to run smoothly, please follow t
 - **Requirements**: If your module requires additional libraries, please note them in the `requirements.txt` file.
 
 > [!IMPORTANT]
-> **Safety & Ethics**: We keep Cyber-Pentest clean. Inserting malicious code is strictly prohibited. (*malware*), *backdoor*, or scripts that steal user data. We will check each PR manually line by line.
+> **Safety & Ethics**: We keep Storm-Framework clean. Inserting malicious code is strictly prohibited. (*malware*), *backdoor*, or scripts that steal user data. We will check each PR manually line by line.
 
 ---
 
@@ -26,7 +26,7 @@ In order for the code merging process (*Merge*) to run smoothly, please follow t
 | Step | Order / Action |
 | :--- | :--- |
 | **1. Fork** | Click the button **Fork** in the top right corner of this repo. |
-| **2. Clone** | `git clone https://github.com/storm-os/Cyber-Pentest.git` |
+| **2. Clone** | `git clone https://github.com/storm-os/storm-framework.git` |
 | **3. Branch** | `git checkout -b your new features` |
 | **4. Commit** | `git commit -m "Add scanner module X"` |
 | **5. Push** | `git push origin your new features` |
@@ -38,7 +38,7 @@ In order for the code merging process (*Merge*) to run smoothly, please follow t
 ## 🏆 Award
 We really appreciate your hard work. The name of each contributor whose code was successfully-*merge* will be permanently displayed at:
 * **File CONTRIBUTE.md** (Part Hall of Fame).
-* **Menu About** in the Cyber-Pentest tools.
+* **Menu About** in the Storm-Framework tools.
 
 ---
 
