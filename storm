@@ -4,11 +4,12 @@
 import os
 import readline  # noqa: F401
 import app.base.config_ui as config_ui
-
-from lib.core import handler
 from app.base.config_update import check_update
 from app.utility.colors import C
+from app.utility.verify import run_verif
 from app.banners.banner import get_random_banner
+
+from lib.core import handler
 
 def clear_screen():
     """Clearing the terminal screen"""
@@ -22,6 +23,7 @@ def clear_screen():
 # --- Menu Functions ---
 
 def main():
+    run_verif()
     clear_screen()
     print(get_random_banner())
     config_ui.stormUI()
