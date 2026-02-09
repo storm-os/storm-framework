@@ -16,11 +16,11 @@ def resolve_path(kata_kunci):
 
     assets_dir = os.path.join(ROOT_DIR, "assets/wordlist")
 
-    # Cek input manual dulu
+    # Check manual input first
     if os.path.exists(kata_kunci):
         return os.path.abspath(kata_kunci)
 
-    # Cari di assets
+    # Search in assets
     if os.path.exists(assets_dir):
         for root, dirs, files in os.walk(assets_dir):
             for file in files:
@@ -64,7 +64,7 @@ EXT = (".py", ".go", ".rs", ".c", ".cpp", ".rb", ".php",
 
 def count_modules():
     total = 0
-    # Ambil path absolut root
+    # Get absolute root path
     path = os.path.join(ROOT_DIR, "modules")
 
     if not os.path.exists(path):
@@ -79,7 +79,7 @@ def count_modules():
 
 def count_by_category():
     """
-    Menghitung jumlah modul berdasarkan folder kategori
+    Counting the number of modules based on category folders
     """
     stats = {}
     modules_path = os.path.join(ROOT_DIR, "modules")
@@ -87,20 +87,20 @@ def count_by_category():
     if not os.path.exists(modules_path):
         return stats
 
-    # Ambil folder langsung di bawah /modules (sebagai kategori utama)
+    # Take the folder directly under /modules (as the main category)
     categories = [d for d in os.listdir(modules_path)
                   if os.path.isdir(os.path.join(modules_path, d))]
 
     for cat in categories:
         cat_full_path = os.path.join(modules_path, cat)
         count = 0
-        # Hitung file di dalam folder kategori tersebut (rekursif)
+        # Count files in the category folder (recursive)
         for root, dirs, files in os.walk(cat_full_path):
             for file in files:
                 if file.endswith(EXT) and file != "__init__.py":
                     count += 1
 
-        # Masukkan ke dictionary jika folder tersebut berisi modul
+        # Add to dictionary if the folder contains modules
         if count > 0:
             stats[cat] = count
 
@@ -110,7 +110,7 @@ def count_by_category():
 
 # LOGIC SHOW
 def get_categories():
-    """Mengambil daftar folder kategori di dalam /modules"""
+    """Get a list of category folders inside /modules"""
     modules_path = os.path.join(ROOT_DIR, "modules")
     if not os.path.exists(modules_path):
         return []
@@ -118,7 +118,7 @@ def get_categories():
             if os.path.isdir(os.path.join(modules_path, d)) and d != "__pycache__"]
 
 def get_modules_in_category(category):
-    """Mengambil semua file .py di dalam kategori tertentu"""
+    """Retrieves all .py files within a specified category"""
     category_path = os.path.join(ROOT_DIR, "modules", category)
     modules_list = []
 
@@ -126,7 +126,7 @@ def get_modules_in_category(category):
         for root, dirs, files in os.walk(category_path):
             for file in files:
                 if file.endswith(".py") and file != "__init__.py":
-                    # Ambil path relatif terhadap folder modules root
+                    # Get the path relative to the root modules folder
                     rel_path = os.path.relpath(os.path.join(root, file), os.path.join(ROOT_DIR, "modules"))
                     modules_list.append(rel_path.replace('.py', ''))
     return modules_list
