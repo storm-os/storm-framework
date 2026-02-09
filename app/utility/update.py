@@ -6,7 +6,7 @@ from app.utility.colors import C
 
 def run_update():
 
-    url = "https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/version.txt"
+    url = "https://raw.githubusercontent.com/storm-os/storm-framework/main/version.txt"
     try:
         response = requests.get(url, timeout=5)
         latest_version = response.text.strip()
