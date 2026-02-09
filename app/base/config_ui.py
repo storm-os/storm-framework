@@ -10,7 +10,7 @@ def show_about():
     print(f"{C.INPUT}      Contributor               : There isn't any yet")
     print(f"{C.INPUT}      Purpose                   : All-in-One Pentest Tools")
     print(f"{C.INPUT}      Version                   : {v.VERSION}")
-    print(f"{C.INPUT}      GitHub                    : github.com/storm-os/Cyber-Pentest")
+    print(f"{C.INPUT}      GitHub                    : github.com/storm-os/storm-framework")
     print(f"{C.HEADER}==========================================================================\n")
 
 def show_help():
@@ -61,7 +61,7 @@ def stormUI():
         print(f"{C.HEADER}+-- --=[ {C.INPUT}{line_text} {C.HEADER}]=--")
 
     print("")
-    print("The Cyber Pentest is a storm-os Open Source Project")
+    print("The Storm Framework is a storm-os Open Source Project")
     print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
     print("")
 
