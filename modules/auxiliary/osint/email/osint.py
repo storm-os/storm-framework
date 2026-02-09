@@ -1,4 +1,3 @@
-import sys
 from app.utility.colors import C
 
 try:
