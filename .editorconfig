@@ -1,0 +1,34 @@
+# EditorConfig helps developers define and maintain a consistent coding style.
+# http://editorconfig.org
+
+root = True
+
+[*]
+# Set character encoding to UTF-8
+charset = utf-8
+# Set line break character (Unix style is safer for security tools)
+end_of_line = lf
+# Ensure there is one blank line at the end of each file
+insert_final_newline = True
+# Removes spaces that are accidentally at the end of lines
+trim_trailing_whitespace = True
+
+[*.py]
+# Python Standard (PEP 8): Use 4 spaces, not Tabs
+indent_style = space
+indent_size = 4
+
+[*.{rs,toml}]
+# Rust Standard: Use 4 spaces
+indent_style = space
+indent_size = 4
+
+[*.{yaml,yml}]
+# YAML must use 2 spaces to avoid errors
+indent_style = space
+indent_size = 2
+
+[Makefile]
+# Makefiles must use Tabs, no Spaces
+indent_style = tab
+
