@@ -1,19 +1,17 @@
-
+import sys
 from app.utility.colors import C
-
 
 try:
     from script.osint.handstorm import StormOSModuleRunner
-except ImportError as e:
-    print(f"[*] Run {C.SUCCESS}down OSINT{C.RESET} before using it.")
-    print(f"{C.ERROR}[x] ERROR: {e}{C.RESET}")
-
+except ImportError:
+    print(f"[*] Try running {C.SUCCESS}down osint{C.RESET} first to download the module.")
 
 
 REQUIRED_OPTIONS = {
         "EMAIL": ""
 }
 def execute(options):
+
     mail = options.get("EMAIL")
     runner = StormOSModuleRunner()
 
@@ -21,4 +19,4 @@ def execute(options):
         runner.set_options(mail)
         runner.run_module()
     else:
-        print(f"{C.ERROR}[x] ERROR: EMAIL is not set. Use 'set EMAIL <target>'{C.RESET}")
+        print(f"{C.ERROR}[x] ERROR: EMAIL is not set. Use 'set email <target>'{C.RESET}")

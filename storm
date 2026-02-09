@@ -49,9 +49,17 @@ def main():
     }
 
     while True:
-        p_mod = f"({C.ERROR}{current_module_name}{C.INPUT})" if current_module else ""
+        START_INV = "\001"
+        END_INV = "\002"
+
+        C_INPUT_INV = f"{START_INV}{C.INPUT}{END_INV}"
+        C_ERROR_INV = f"{START_INV}{C.ERROR}{END_INV}"
+        C_RESET_INV = f"{START_INV}{C.RESET}{END_INV}"
+
+        p_mod = f"({C_ERROR_INV}{current_module_name}{C_INPUT_INV})" if current_module else ""
         try:
-            user_input = input(f"{C.INPUT}[~]{p_mod}==> ").strip().split()
+            promp = f"{C_INPUT_INV}[~]{p_mod}==> {C_RESET_INV}"
+            user_input = input(promp).strip().split()
         except EOFError: break
 
         if not user_input: continue
