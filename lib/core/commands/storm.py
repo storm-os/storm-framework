@@ -1,4 +1,5 @@
 from app.utility.update import run_update
+from app.utility.verify import run_verif
 from app.utility.colors import C
 
 def execute(args, context):
@@ -10,6 +11,8 @@ def execute(args, context):
         
     if cmd == "update":
         run_update()
+    elif cmd == "verify":
+        run_verif()
     else:
         print(f"{C.ERROR}[!] ERROR: {cmd} > Not found.")
     
