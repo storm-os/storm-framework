@@ -23,7 +23,7 @@ def show_help():
   show options                  : View the variables that have been set
   show modules                  : Displaying module categories
   show <name_categories>        : Displays the complete contents
-  
+
   search <filename>             : To search for files
   about                         : Information Development
   info <cve_name>               : Complete CVE information
@@ -36,7 +36,7 @@ def show_help():
   run / exploit                 : Run the selected module
 
 {C.INPUT}
-  use integrity_check           : Used to check the signature of all files
+  storm verify                  : Used to check the signature of all files
 {C.HEADER}==========================================================================
     """)
 
