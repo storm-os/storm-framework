@@ -1,4 +1,4 @@
-## 🛡️ Cyber-Pentest 
+## 🛡️ Storm-Framework
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 ![Kali Linux](https://img.shields.io/badge/Kali%20Linux-supported-blue?logo=kalilinux)
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-supported-orange?logo=ubuntu)
@@ -11,7 +11,7 @@ Tool Suite for Information Gathering and Initial Vulnerability Analysis.
 
 ### 🚀 Introduction
 
-**Cyber-Pentest** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
+**Storm-Framework** is a cyber tool suite specifically designed to assist cybersecurity professionals, bug bounty hunters, and researchers in the cybersecurity phase **information gathering (reconnaissance)** and **initial vulnerability analysis**. This tool aims to simplify the initial steps in the penetration testing process (pentest).
 
 
 ### ⚠️ Important Warning & Legal Disclaimer
@@ -44,7 +44,7 @@ Make sure you have **Python 3.12.x** installed on your system. This tool is opti
 Use the command `curl` following to clone the repository and run the necessary installation scripts:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/storm-os/Cyber-Pentest/main/setup | bash 
+curl -fsSL https://raw.githubusercontent.com/storm-os/storm-framework/main/setup | bash 
 ```
 
 ### 2. Run
@@ -56,11 +56,11 @@ sudo pentest
 ```
 
 ### 📖 Wiki
-If you need further explanation about Cyber-Pentest, don't forget to read at [wiki](https://github.com/storm-os/Cyber-Pentest/wiki)
+If you need further explanation about Storm-Framework, don't forget to read at [wiki](https://github.com/storm-os/storm-framework/wiki)
 
 ### 🤝 Contributing 
 
-This open source Cyber Pentest Framework project is open to anyone. 
+This open source Storm-Framework project is open to anyone. 
 If you're interested in helping develop this project—whether through bug fixes, feature additions, or documentation—please check out our contribution guidelines. 
 
 👉 **Read the contribution guidelines here:** 
