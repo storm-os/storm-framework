@@ -27,7 +27,7 @@ def execute(options):
 
         # 2. Iterate (Loop) through each Header received
         print(f"{C.MENU}\n  HEADER RECEIVED:")
-        for header, value in response.headers.items()
+        for header, value in response.headers.items():
             print(f"  {C.HEADER}{header}:{C.RESET} {value}")
 
         # 3. Security Validation
