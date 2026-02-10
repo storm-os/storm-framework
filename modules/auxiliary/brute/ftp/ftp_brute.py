@@ -34,7 +34,7 @@ def execute(options):
                 
         if wordlist_path and os.path.exists(wordlist_path):
             with open(wordlist_path, 'r', errors='ignore') as f:
-                passwords = [line.strip() for line in f if line.strip()]
+                password = [line.strip() for line in f if line.strip()]
                 
                 for user in COMMON_USERS:
                     print(f"{C.MENU}  [*] Testing user: {user}")
