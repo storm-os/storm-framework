@@ -36,7 +36,7 @@ jobs:
 
     - name: Run black
       run: |
-        black . --no-gitignore --verbose
+        black app modules lib --verbose
 
     - name: Commit black to repo
       run: |
