@@ -36,7 +36,7 @@ jobs:
 
     - name: Run black
       run: |
-        black .
+        black . --verbose
 
     - name: Commit black to repo
       run: |
@@ -56,8 +56,8 @@ jobs:
         
     - name: Commit and Push Changes
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"       
+        git config --global user.name "flake8[bot]"
+        git config --global user.email "storm[bot]@github.com"       
         CHANGED_FILES=$(git status --porcelain | sed 's/^M //g' | tr '\n' ', ')       
         git add .
         
