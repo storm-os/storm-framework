@@ -3,6 +3,7 @@
 import dns.resolver
 import dns.exception
 import socket
+import ipaddress
 
 from app.utility.colors import C
 
