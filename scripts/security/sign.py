@@ -4,13 +4,13 @@ import base64
 from pathlib import Path
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
+
 def calculate_sha256(file_path):
     sha256_hash = hashlib.sha256()
     with open(file_path, "rb") as f:
         for byte_block in iter(lambda: f.read(4096), b""):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest()
-
 
 
 def generate_folder_manifest():
@@ -35,18 +35,23 @@ def generate_folder_manifest():
     # 2. Scanning Files (Logika lama kamu)
     manifest = {}
     ignored_dirs = {
-        '.git', '__pycache__', '.pytest_cache',
-        '.github', 'storm.db', '.gitignore', '.env'
+        ".git",
+        "__pycache__",
+        ".pytest_cache",
+        ".github",
+        "storm.db",
+        ".gitignore",
+        ".env",
     }
 
-    for path in root_dir.rglob('*'):
+    for path in root_dir.rglob("*"):
         if path.is_file() and path.name != "signed_manifest.json":
             if not any(part in ignored_dirs for part in path.parts):
                 relative_path = str(path.relative_to(root_dir))
                 # Gunakan fungsi hash sha256 kamu di sini
                 manifest[relative_path] = {
                     "sha256": calculate_sha256(path),
-                    "size_bytes": path.stat().st_size
+                    "size_bytes": path.stat().st_size,
                 }
 
     # 3. Urutkan manifest agar hash JSON selalu konsisten (Penting!)
@@ -54,7 +59,9 @@ def generate_folder_manifest():
 
     # 4. Proses Signing
     # Convert dict ke string JSON yang rapat (compact) untuk di-hash
-    manifest_string = json.dumps(sorted_manifest, sort_keys=True, separators=(',', ':')).encode('utf-8')
+    manifest_string = json.dumps(
+        sorted_manifest, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
     # Load private key dari Base64 DER
     try:
         priv_bytes = base64.b64decode(priv_key_b64)
@@ -62,18 +69,15 @@ def generate_folder_manifest():
 
         # Buat Signature
         signature = private_key.sign(manifest_string)
-        signature_b64 = base64.b64encode(signature).decode('utf-8')
+        signature_b64 = base64.b64encode(signature).decode("utf-8")
     except Exception as e:
         print(f"[!] Signing Error: {e}")
         return
 
     # 5. Bungkus manifest dengan Signature-nya
     final_data = {
-        "metadata": {
-            "version": "1.0",
-            "signature": signature_b64
-        },
-        "files": sorted_manifest
+        "metadata": {"version": "1.0", "signature": signature_b64},
+        "files": sorted_manifest,
     }
 
     # 6. Simpan
@@ -85,6 +89,7 @@ def generate_folder_manifest():
         json.dump(final_data, f, indent=4)
 
     print(f"[✓] Success! Manifest signed and saved.")
+
 
 if __name__ == "__main__":
     generate_folder_manifest()
