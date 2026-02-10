@@ -3,7 +3,7 @@ line-length = 88
 target-version = ['py312']
 
 # Forcefully override .gitignore rules
-include = '(app/|modules/|lib/|scripts/).*\.py$'
+include = '(app/|modules/|lib/).*\.py$'
 
 # Keep the metadata folder safe
 exclude = '''
