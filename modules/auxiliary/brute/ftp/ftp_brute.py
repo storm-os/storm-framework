@@ -43,7 +43,7 @@ def execute(options):
                             print(f"{C.SUCCESS} \n  [+] LOGIN SUCCESS! -> U:{user} P:{pw}")
                             return
 
-     except KeyboardInterrupt:
-         return
-     except Exception as e:
-         print("{C.ERROR}[x] ERROR: {e}")
+    except KeyboardInterrupt:
+        return
+    except Exception as e:
+        print("{C.ERROR}[x] ERROR: {e}")
