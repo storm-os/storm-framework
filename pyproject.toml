@@ -1,11 +1,22 @@
 [tool.black]
-force-exclude = '''
+line-length = 88
+target-version = ['py312']
+
+# Forcefully override .gitignore rules
+include = '(app/|modules/|lib/|scripts/).*\.py$'
+
+# Keep the metadata folder safe
+exclude = '''
 /(
     \.git
     | \.hg
-    | \.mybatis
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
 )/
 '''
-# Folder access
-include = '\.pyi?$'
 
