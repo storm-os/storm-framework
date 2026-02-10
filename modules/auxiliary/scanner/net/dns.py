@@ -46,72 +46,54 @@ DNS_RECORDS = [
 ]
 
 REQUIRED_OPTIONS = {
-        "DOMAIN"           : ""
-    }
+        "DOMAIN": ""
+}
 
 def execute(options):
-    """Retrieving various types of DNS records from a domain."""
-
     target_domain = options.get("DOMAIN")
-
-    # Custom NameServer
-    custom_resolver = dns.resolver.Resolver(configure=False)
-    custom_resolver.nameservers = ['8.8.8.8', '1.1.1.1']
-
-    dns.resolver.get_default_resolver = lambda: custom_resolver
-    # ---------------------------------
-
-    # 1. Pastikan target adalah domain yang valid, bukan IP Address
-    if target_domain.replace('.', '').isdigit():
-        print(f"{C.ERROR}[!] ERROR: ENTER DOMAIN (ex: google.com).")
-        print(f"{C.HEADER} ---------------------------------------------")
-        return
-
-    print(f"{C.HEADER}\n DNS ENUMERATION For {target_domain}\n")
+    if not target_domain: return
 
     try:
-        # 1. Pastikan domain bisa di-resolve ke IP (valid) - Cek awal
-        try:
-            socket.gethostbyname(target_domain)
-        except socket.error:
-            print(f"{C.ERROR}[!] ERROR: Domain cannot be resolved.")
-            print(f"{C.HEADER} ---------------------------------------------\n")
-            return
+        ipaddress.ip_address(target_domain)
+        return
+    except ValueError:
+        pass
 
-        # 2. Iterasi melalui setiap tipe record yang diinginkan
+    # 2. Setup Resolver tanpa merusak settingan global
+    resolver = dns.resolver.Resolver(configure=False)
+    resolver.nameservers = ['8.8.8.8', '1.1.1.1']
+    resolver.timeout = 2.0
+    resolver.lifetime = 3.0
+
+    print(f"{C.HEADER}\n DNS ENUMERATION For {target_domain}")
+
+    try:
+        socket.gethostbyname(target_domain)
+
         for record_type in DNS_RECORDS:
             try:
-                # Menggunakan resolver untuk query record
-                # Set timeout (opsional, tapi baik untuk koneksi lambat)
-                answers = custom_resolver.resolve(target_domain, record_type, lifetime=3.0)
+                answers = resolver.resolve(target_domain, record_type)
 
                 print(f"{C.MENU} \n[{record_type} Records]:")
-
                 for rdata in answers:
-                    output_line = str(rdata)
-
-                    # Beri penekanan khusus pada record keamanan (TXT)
                     if record_type == 'TXT':
-                        print(f"{C.SUCCESS}  {SYM_SECURITY} {output_line}")
+                        print(f"{C.SUCCESS}  {SYM_SECURITY} {rdata}")
                     else:
-                        # Gunakan warna MENU untuk output reguler
-                        print(f"{C.MENU}  {SYM_INFO} {output_line}")
+                        print(f"{C.MENU}  {SYM_INFO} {rdata}")
 
-            except dns.resolver.NoAnswer:
-                pass
-            except dns.resolver.NXDOMAIN:
-                pass
+            except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
+                continue 
             except dns.exception.Timeout:
-                print(f"{C.ERROR}[!] Timeout {record_type} Records.\n")
-                pass # Next
+                print(f"{C.ERROR}[!] Timeout: {record_type}")
             except Exception as e:
-                print(f"{C.ERROR}[!] ERROR {record_type}: {e}\n")
-                continue
+                print(f"{C.ERROR}[!] ERROR {record_type}: {e}")
 
-
+    except socket.gaierror:
+        print(f"{C.ERROR}[!] ERROR: Domain not found.")
     except KeyboardInterrupt:
         return
     except Exception as e:
-        print(f"{C.ERROR}[!] ERROR: {e}\n")
+        print(f"{C.ERROR}[!] Global ERROR: {e}")
 
-    print(f"{C.HEADER} ---------------------------------------------\n")
+    print(f"{C.HEADER}\n ---------------------------------------------")
+
