@@ -6,8 +6,8 @@ from app.utility.colors import C
 
 
 REQUIRED_OPTIONS = {
-        "DOMAIN"           : "",
-        "IP"            : ""
+        "DOMAIN"           : "opsional",
+        "IP"            : "opsional"
     }
 
 def execute(options):
@@ -32,7 +32,7 @@ def execute(options):
  
     try:
         # Panggil fungsi Whois
-        w = whois.whois(target)
+        w = whois.whois(target_type)
 
         # 2. Tampilkan Informasi Penting
         print(f"{C.MENU} Domain Name:            {C.RESET}{w.domain_name}")
