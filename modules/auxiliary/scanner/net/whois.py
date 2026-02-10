@@ -19,11 +19,11 @@ def execute(options):
     target = target_url if target_url else target_ip
 
     # Menghapus 'http://' atau 'https://' jika ada
-    target = target.replace('http://', '').replace('https://', '').strip('/')
+    clean = target.replace('http://', '').replace('https://', '').strip('/')
 
     # 1. Tentukan apakah target adalah IP atau Domain
     try:
-        ipaddress.ip_address(target)
+        ipaddress.ip_address(clean)
         target_type = "IP Address"
     except ValueError:
         target_type = "Domain"
