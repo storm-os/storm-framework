@@ -1,6 +1,5 @@
 import requests
 import urllib3
-import sys
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 REQUIRED_OPTIONS = {"URL": ""}
@@ -12,7 +11,7 @@ def execute(options):
     port = 443
 
     print(f"[*] Testing CVE-2024-55591 on https://{target}:{port}")
-    
+
     url = f"https://{target}:{port}/api/v2/monitor/system/status"
 
     # 'Magic Header' which leaks authentication
