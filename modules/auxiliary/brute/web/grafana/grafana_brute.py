@@ -81,7 +81,7 @@ def execute(options):
                                 return
                             print(f"{C.MENU}  [>] Try: U:{target_user:<20} P:{passwd:<20}", end='\r', flush=True)
 
-                  print(f"{C.MENU} \n[!] Brute Force finish.")
+                     print(f"{C.MENU} \n[!] Brute Force finish.")
 
             except Exception as e:
                 print(f"{C.ERROR} \n [!] ERROR: {e}")
