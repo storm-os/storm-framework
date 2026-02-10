@@ -8,7 +8,7 @@ from app.utility.colors import C
 REQUIRED_OPTIONS = {
         "DOMAIN"           : "opsional",
         "IP"            : "opsional"
-    }
+}
 
 def execute(options):
     """Retrieving Whois information from Domain/IP"""
