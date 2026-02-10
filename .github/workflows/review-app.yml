@@ -34,22 +34,6 @@ jobs:
       run: |
         autoflake --in-place --remove-all-unused-imports --recursive .
 
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82,F401,W191 --show-source --statistics
-        
-    - name: Commit and Push Changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"       
-        CHANGED_FILES=$(git status --porcelain | sed 's/^M //g' | tr '\n' ', ')       
-        git add .
-        
-        if ! git diff --cached --quiet; then
-          git commit -m "style: Cleanup imports in: ${CHANGED_FILES%, }"
-          git push
-        fi
-
     - name: Run black
       run: |
         black .
@@ -66,7 +50,18 @@ jobs:
             git push
           fi
 
-    
-
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82,F401,W191 --show-source --statistics
         
-
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"       
+        CHANGED_FILES=$(git status --porcelain | sed 's/^M //g' | tr '\n' ', ')       
+        git add .
+        
+        if ! git diff --cached --quiet; then
+          git commit -m "style: Cleanup imports in: ${CHANGED_FILES%, }"
+          git push
+        fi
