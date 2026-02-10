@@ -4,7 +4,7 @@ from app.utility.colors import C
 
 
 REQUIRED_OPTIONS = {
-        "DOMAIN": "opsional",
+        "DOMAIN": "opsional"
 }
 def get_clean_data(data):
     """Tidy up the output which can be a list or None"""
