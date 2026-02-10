@@ -1,16 +1,13 @@
 import socket
 
+REQUIRED_OPTIONS = {"IP": "", "PORT": "standar port 5060"}
 
-REQUIRED_OPTIONS = {
-        "IP": "",
-        "PORT": "standar port 5060"
-}
 
 def execute(options):
 
     ip = options.get("IP")
     port = int(options.get("PORT"))
-    
+
     payload = (
         f"OPTIONS sip:{ip} SIP/2.0\r\n"
         "Via: SIP/2.0/UDP 127.0.0.1:5060;branch=z9hG4bK-storm\r\n"

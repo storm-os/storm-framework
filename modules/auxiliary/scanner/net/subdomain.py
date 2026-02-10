@@ -6,18 +6,45 @@ from app.utility.colors import C
 # Subdomain list sederhana untuk pengujian
 # Dalam pentest nyata, list ini bisa berisi ribuan kata
 SUBDOMAINS = [
-    "www", "dev", "api", "mail", "blog", "test", "staging",
-    "admin", "ftp", "vpn", "server", "cms", "cdn", "static",
-    "app", "auth", "assets", "img", "images", "media", "beta",
-    "demo", "panel", "dashboard", "internal", "intranet", "ssh",
-    "git", "gitlab", "repo", "status", "cpanel", "webmail",
-    "cpcalendars"
+    "www",
+    "dev",
+    "api",
+    "mail",
+    "blog",
+    "test",
+    "staging",
+    "admin",
+    "ftp",
+    "vpn",
+    "server",
+    "cms",
+    "cdn",
+    "static",
+    "app",
+    "auth",
+    "assets",
+    "img",
+    "images",
+    "media",
+    "beta",
+    "demo",
+    "panel",
+    "dashboard",
+    "internal",
+    "intranet",
+    "ssh",
+    "git",
+    "gitlab",
+    "repo",
+    "status",
+    "cpanel",
+    "webmail",
+    "cpcalendars",
 ]
 
 
-REQUIRED_OPTIONS = {
-        "DOMAIN"           : ""
-    }
+REQUIRED_OPTIONS = {"DOMAIN": ""}
+
 
 def execute(options):
     """Searching for active subdomains"""
@@ -25,7 +52,9 @@ def execute(options):
     target_domain = options.get("DOMAIN")
 
     # Menghapus 'http://' atau 'https://' jika ada
-    target_domain = target_domain.replace('http://', '').replace('https://', '').strip('/')
+    target_domain = (
+        target_domain.replace("http://", "").replace("https://", "").strip("/")
+    )
 
     print(f"{C.HEADER}\n SUBDOMAIN ENUMERATION for {target_domain}")
 
@@ -33,7 +62,7 @@ def execute(options):
     found_count = 0
 
     PROTOCOLS = ["http", "https"]
-    
+
     for subdomain in SUBDOMAINS:
         # Loop kedua untuk mengecek setiap protokol pada satu subdomain
         for proto in PROTOCOLS:
@@ -45,7 +74,9 @@ def execute(options):
                 status_code = response.status_code
 
                 if status_code < 400 or status_code == 403:
-                    print(f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}")
+                    print(
+                        f"{C.SUCCESS}[✓] Subdomain Found: {url} - Status: {status_code}"
+                    )
                     found_count += 1
 
                 print(f"{C.SUCCESS}\n[✓] Subdomain active: {found_count}")
@@ -56,10 +87,8 @@ def execute(options):
             except Exception as e:
                 print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
                 continue
-                    
-        
+
     if found_count == 0:
         print(f"{C.ERROR} No active subdomains found with list.\n")
-
 
     print(f"{C.HEADER} -------------------------------------------------\n")

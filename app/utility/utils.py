@@ -3,16 +3,18 @@ import importlib
 
 from app.utility.config_path import ROOT_DIR
 
-
 """
 utils.py It all contains help logic to make it easier during repairs and updates.
 
 This is included in the core category which cannot be modified.
 
 """
+
+
 # LOGIC GLOBAL WORDLIST
 def resolve_path(kata_kunci):
-    if not kata_kunci: return None
+    if not kata_kunci:
+        return None
 
     assets_dir = os.path.join(ROOT_DIR, "assets/wordlist")
 
@@ -58,9 +60,8 @@ def load_module_dynamically(module_name):
 
 
 # UI MODULES
-EXT = (".py", ".go", ".rs", ".c", ".cpp", ".rb", ".php",
-       ".sh", ".js", ".ts", ".html"
-)
+EXT = (".py", ".go", ".rs", ".c", ".cpp", ".rb", ".php", ".sh", ".js", ".ts", ".html")
+
 
 def count_modules():
     total = 0
@@ -88,8 +89,11 @@ def count_by_category():
         return stats
 
     # Take the folder directly under /modules (as the main category)
-    categories = [d for d in os.listdir(modules_path)
-                  if os.path.isdir(os.path.join(modules_path, d))]
+    categories = [
+        d
+        for d in os.listdir(modules_path)
+        if os.path.isdir(os.path.join(modules_path, d))
+    ]
 
     for cat in categories:
         cat_full_path = os.path.join(modules_path, cat)
@@ -107,15 +111,18 @@ def count_by_category():
     return stats
 
 
-
 # LOGIC SHOW
 def get_categories():
     """Get a list of category folders inside /modules"""
     modules_path = os.path.join(ROOT_DIR, "modules")
     if not os.path.exists(modules_path):
         return []
-    return [d for d in os.listdir(modules_path)
-            if os.path.isdir(os.path.join(modules_path, d)) and d != "__pycache__"]
+    return [
+        d
+        for d in os.listdir(modules_path)
+        if os.path.isdir(os.path.join(modules_path, d)) and d != "__pycache__"
+    ]
+
 
 def get_modules_in_category(category):
     """Retrieves all .py files within a specified category"""
@@ -127,7 +134,8 @@ def get_modules_in_category(category):
             for file in files:
                 if file.endswith(".py") and file != "__init__.py":
                     # Get the path relative to the root modules folder
-                    rel_path = os.path.relpath(os.path.join(root, file), os.path.join(ROOT_DIR, "modules"))
-                    modules_list.append(rel_path.replace('.py', ''))
+                    rel_path = os.path.relpath(
+                        os.path.join(root, file), os.path.join(ROOT_DIR, "modules")
+                    )
+                    modules_list.append(rel_path.replace(".py", ""))
     return modules_list
-

@@ -2,9 +2,8 @@ import os
 import subprocess
 import shutil
 
-REQUIRED_OPTIONS = {
-    "INTERFACE": "example: eth0"
-}
+REQUIRED_OPTIONS = {"INTERFACE": "example: eth0"}
+
 
 def execute(options):
     interface = options.get("INTERFACE")
@@ -41,7 +40,7 @@ def execute(options):
             os.system(conv_cmd)
 
             if os.path.exists(output_wav):
-                os.remove(output_pcm) # Hapus file mentah agar bersih
+                os.remove(output_pcm)  # Hapus file mentah agar bersih
                 print(f"[+] Success! Final Audio: {output_wav}")
             else:
                 print("[!] Conversion failed. Raw file kept at storm_capture.pcm")

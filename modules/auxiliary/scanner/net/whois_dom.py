@@ -2,15 +2,15 @@
 import whois
 from app.utility.colors import C
 
+REQUIRED_OPTIONS = {"DOMAIN": "opsional"}
 
-REQUIRED_OPTIONS = {
-        "DOMAIN": "opsional"
-}
+
 def get_clean_data(data):
     """Tidy up the output which can be a list or None"""
     if isinstance(data, list):
         return ", ".join([str(i) for i in data if i])
     return data if data else "N/A"
+
 
 def execute(options):
     target = options.get("DOMAIN")
@@ -19,13 +19,15 @@ def execute(options):
         return
 
     # Pembersihan URL
-    clean_domain = target.replace('http://', '').replace('https://', '').split('/')[0].strip()
+    clean_domain = (
+        target.replace("http://", "").replace("https://", "").split("/")[0].strip()
+    )
 
     print(f"{C.HEADER}\n[ DOMAIN WHOIS LOOKUP ] -> {clean_domain}")
 
     try:
         w = whois.whois(clean_domain)
-        
+
         # Tampilkan Informasi
         print(f"{C.MENU} Registrar:      {C.RESET}{w.registrar}")
         print(f"{C.MENU} Created Date:   {C.RESET}{get_clean_data(w.creation_date)}")

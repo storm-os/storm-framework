@@ -1,5 +1,6 @@
 from app.utility.search import search_modules
 
+
 def execute(args, context):
     query = args[0] if args else ""
     if not query:

@@ -1,9 +1,7 @@
 import subprocess
 
-REQUIRED_OPTIONS = {
-        "IP": "",
-        "THREAD": "example: 1000"
-}
+REQUIRED_OPTIONS = {"IP": "", "THREAD": "example: 1000"}
+
 
 def execute(options):
     target = options.get("IP")
@@ -22,7 +20,7 @@ def execute(options):
         process = subprocess.Popen(
             [bin_path, "-t", target, "-p", port, "-w", threads],
             stdout=None,
-            stderr=None
+            stderr=None,
         )
 
         print(f"[+] Attack ID: {process.pid}")

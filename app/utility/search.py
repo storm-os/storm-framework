@@ -1,6 +1,7 @@
 import os
 from app.utility.config_path import ROOT_DIR
 
+
 def search_modules(query):
     # Langsung gunakan ROOT_DIR, tidak perlu os.path.dirname lagi di sini
     modules_path = os.path.join(ROOT_DIR, "modules")

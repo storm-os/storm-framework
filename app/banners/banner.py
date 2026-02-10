@@ -4,6 +4,7 @@ import importlib
 from app.utility.colors import C
 from app.utility.config_path import ROOT_DIR
 
+
 def get_random_banner():
     # Gunakan ROOT_DIR agar lebih bersih
     banner_dir = os.path.join(ROOT_DIR, "lib", "ui", "banners")
@@ -12,7 +13,11 @@ def get_random_banner():
         if not os.path.exists(banner_dir):
             return f"{C.SUCCESS}Cyber-Pentest Framework (Folder Not Found)"
 
-        all_files = [f for f in os.listdir(banner_dir) if f.endswith(".py") and f != "__init__.py"]
+        all_files = [
+            f
+            for f in os.listdir(banner_dir)
+            if f.endswith(".py") and f != "__init__.py"
+        ]
 
         if not all_files:
             return f"{C.SUCCESS}Cyber-Pentest Framework"
@@ -22,7 +27,7 @@ def get_random_banner():
 
         # Reload module jika perlu atau import biasa
         banner_module = importlib.import_module(module_path)
-        raw_banner = getattr(banner_module, 'DATA', 'Banner data not found.')
+        raw_banner = getattr(banner_module, "DATA", "Banner data not found.")
 
         # --- LOGIKA PENGUKUR LAYAR (RESPONSIVE) ---
         try:
@@ -31,7 +36,8 @@ def get_random_banner():
             columns = 80
 
         lines = raw_banner.splitlines()
-        if not lines: return raw_banner
+        if not lines:
+            return raw_banner
 
         # Cari baris terpanjang untuk menentukan lebar asli banner
         max_banner_width = max(len(line) for line in lines)

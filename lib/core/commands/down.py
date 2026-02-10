@@ -1,6 +1,7 @@
 from app.utility.down_osint import install_osint_module
 from app.utility.colors import C
 
+
 def execute(args, context):
     cmd = args[0].lower() if args else ""
 

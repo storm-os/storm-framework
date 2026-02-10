@@ -14,45 +14,38 @@ SYM_SECURITY = "🔒"
 # List tipe record DNS yang ingin kita cari
 DNS_RECORDS = [
     # === Core addressing ===
-    'A',        # IPv4
-    'AAAA',     # IPv6
-    'CNAME',    # Alias / takeover risk 🔥
-
+    "A",  # IPv4
+    "AAAA",  # IPv6
+    "CNAME",  # Alias / takeover risk 🔥
     # === Mail ===
-    'MX',       # Mail server
-    'TXT',      # SPF, DKIM, DMARC, verification
-
+    "MX",  # Mail server
+    "TXT",  # SPF, DKIM, DMARC, verification
     # === Authority & zone ===
-    'NS',       # Nameserver
-    'SOA',      # Zone info (serial, refresh)
-
+    "NS",  # Nameserver
+    "SOA",  # Zone info (serial, refresh)
     # === Service discovery ===
-    'SRV',      # _sip, _ldap, _xmpp, internal services 👀
-    'NAPTR',    # VoIP / telecom (rare tapi kadang bocor info)
-
+    "SRV",  # _sip, _ldap, _xmpp, internal services 👀
+    "NAPTR",  # VoIP / telecom (rare tapi kadang bocor info)
     # === Security / SSL ===
-    'CAA',      # Allowed CA (fingerprinting infra)
-    'TLSA',     # DANE (jarang tapi worth check)
-
+    "CAA",  # Allowed CA (fingerprinting infra)
+    "TLSA",  # DANE (jarang tapi worth check)
     # === Reverse / legacy ===
-    'PTR',
-
+    "PTR",
     # === DNSSEC (info only, bukan vuln langsung)
-    'DNSKEY',
-    'DS',
-    'RRSIG',
-
+    "DNSKEY",
+    "DS",
+    "RRSIG",
     # === Microsoft / enterprise vibes ===
-    'LOC'
+    "LOC",
 ]
 
-REQUIRED_OPTIONS = {
-        "DOMAIN": ""
-}
+REQUIRED_OPTIONS = {"DOMAIN": ""}
+
 
 def execute(options):
     target_domain = options.get("DOMAIN")
-    if not target_domain: return
+    if not target_domain:
+        return
 
     try:
         ipaddress.ip_address(target_domain)
@@ -62,7 +55,7 @@ def execute(options):
 
     # 2. Setup Resolver tanpa merusak settingan global
     resolver = dns.resolver.Resolver(configure=False)
-    resolver.nameservers = ['8.8.8.8', '1.1.1.1']
+    resolver.nameservers = ["8.8.8.8", "1.1.1.1"]
     resolver.timeout = 2.0
     resolver.lifetime = 3.0
 
@@ -77,13 +70,13 @@ def execute(options):
 
                 print(f"{C.MENU} \n[{record_type} Records]:")
                 for rdata in answers:
-                    if record_type == 'TXT':
+                    if record_type == "TXT":
                         print(f"{C.SUCCESS}  {SYM_SECURITY} {rdata}")
                     else:
                         print(f"{C.MENU}  {SYM_INFO} {rdata}")
 
             except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
-                continue 
+                continue
             except dns.exception.Timeout:
                 print(f"{C.ERROR}[!] Timeout: {record_type}")
             except Exception as e:
@@ -97,4 +90,3 @@ def execute(options):
         print(f"{C.ERROR}[!] Global ERROR: {e}")
 
     print(f"{C.HEADER}\n ---------------------------------------------")
-

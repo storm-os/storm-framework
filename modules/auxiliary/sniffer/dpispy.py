@@ -5,6 +5,7 @@ REQUIRED_OPTIONS = {
     "INTERFACE": "example: eth0",
 }
 
+
 def execute(options):
 
     iface = options.get("INTERFACE")
@@ -23,7 +24,7 @@ def execute(options):
             [bin_path, iface],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            text=True
+            text=True,
         )
 
         while True:

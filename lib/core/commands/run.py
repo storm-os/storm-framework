@@ -1,6 +1,7 @@
 from app.utility.colors import C
 import app.utility.utils as utils
 
+
 def execute(args, context):
     current_module = context["current_module"]
     options = context["options"]
@@ -11,8 +12,10 @@ def execute(args, context):
 
     # --- TAHAP VALIDASI (SATPAM) ---
     # Ambil daftar variabel yang wajib diisi dari modul yang dipilih
-    required_vars = getattr(current_module, 'REQUIRED_OPTIONS', {})
-    missing = [key for key in required_vars.keys() if not str(options.get(key, "")).strip()]
+    required_vars = getattr(current_module, "REQUIRED_OPTIONS", {})
+    missing = [
+        key for key in required_vars.keys() if not str(options.get(key, "")).strip()
+    ]
 
     if missing:
         print(f"{C.ERROR}[!] Failed to run. Variabel null.")

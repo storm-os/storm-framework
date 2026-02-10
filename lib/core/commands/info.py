@@ -4,6 +4,7 @@ import textwrap
 
 from app.utility.colors import C
 
+
 def execute(args, context):
     query = args[0] if args else ""
     if not query:
@@ -40,12 +41,17 @@ def execute(args, context):
 
             # Rapikan Deskripsi
             print(f"{C.SUCCESS}DESCRIPTION   :")
-            desc = textwrap.fill(info['description'].strip(), width=width-2, initial_indent=" ", subsequent_indent=" ")
+            desc = textwrap.fill(
+                info["description"].strip(),
+                width=width - 2,
+                initial_indent=" ",
+                subsequent_indent=" ",
+            )
             print(desc)
 
             print(f"{C.HEADER}{'-'*width}")
             print(f"{C.SUCCESS}REFERENCES    :")
-            for link in info['URL']:
+            for link in info["URL"]:
                 print(f" - {link}")
             print(f"{C.HEADER}{'-'*width}")
 
