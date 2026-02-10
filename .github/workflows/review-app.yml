@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 autoflake black
+        pip install -U flake8 autoflake black
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Auto Cleanup (Remove Unused Imports)
