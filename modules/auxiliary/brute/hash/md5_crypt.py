@@ -4,52 +4,51 @@ import crypt
 from app.utility.colors import C
 
 REQUIRED_OPTIONS = {
-        "HASH"          : "",
-        "PASS"          : ""
-    }
+        "HASH": "",
+        "PASS": ""
+}
 
-# --- Fungsi Cracker Utama ---
+# --- Main Cracker Functions ---
 def execute(options):
     """
-    Memecahkan hash password MD5-Crypt menggunakan wordlist.
+    Cracking MD5-Crypt password hashes using wordlists.
     """
     shadow_entry = options.get("HASH")
     wordlist_file = options.get("PASS")
 
-    # 1. Parsing Hash dari /etc/shadow
+    # 1. Parsing Hash
     try:
         parts = shadow_entry.split(':')
 
-        # Pastikan entri memiliki setidaknya 2 bagian (user:hash...)
         if len(parts) < 2:
-            print(f"{C.ERROR} Input setidaknya (user:hash...)")
+            print(f"{C.ERROR} Input at least (user:hash...)")
             return
 
         username = parts[0]
         full_hash = parts[1]
 
-        # Ekstrak Salt untuk MD5-Crypt ($1$)
+        # Salt Extraction for MD5-Crypt ($1$)
         if full_hash.startswith('$1$'):
-            # Memastikan struktur MD5-Crypt memiliki 3 bagian: $1$salt$hash_value
+            # Ensure the MD5-Crypt structure has 3 parts: $1$salt$hash_value
             salt_parts = full_hash.split('$')
             if len(salt_parts) < 3:
-                 print(f"{C.ERROR} Struktur hash MD5-Crypt tidak lengkap.")
+                 print(f"{C.ERROR} Incomplete MD5-Crypt hash structure.")
                  return
 
             salt_crypt = f"${salt_parts[1]}${salt_parts[2]}" # Format: $1$t7y583it
         else:
-            print(f"{C.ERROR} Format hash tidak didukung (Bukan MD5-Crypt $1$).")
+            print(f"{C.ERROR} Unsupported hash format (Not MD5-Crypt $1$).")
             return
     except Exception as e:
-        print(f"{C.ERROR} Error parsing hash: {e}")
+        print(f"{C.ERROR} Hash parsing error: {e}")
         return
 
     print(f"{C.MENU} \n--- PYTHON SHADOW CRACKER (MD5-Crypt) ---")
     print(f"{C.MENU} [*] Target User: {username}")
     print(f"{C.MENU} [*] Hash Type: MD5-Crypt ($1$)")
     print(f"{C.MENU} [*] Salt: {salt_crypt}")
-    print(f"{C.MENU} [*] Memuat Wordlist dari: {wordlist_file}")
-    # 2. Memulai Cracking
+    print(f"{C.MENU} [*] Loading Wordlist from: {wordlist_file}")
+    # 2. Starting Cracking
     try:
         with open(wordlist_file, 'r', encoding='latin-1') as f:
             for line in f:
@@ -57,19 +56,21 @@ def execute(options):
                 if not word:
                     continue
 
-                # Membuat ulang hash MD5-Crypt dengan salt yang sama
+                # Regenerate MD5-Crypt hash with the same salt
                 hashed_word = crypt.crypt(word, salt_crypt)
 
-                print(f"{C.MENU}  Mencoba: {word}{C.RESET}", end='\r')
-                # Membandingkan hash yang dibuat ulang dengan hash asli
+                print(f"{C.MENU}  Try: {word}{C.RESET}", end='\r')
+                # Compares the regenerated hash with the original hash
                 if hashed_word == full_hash:
-                    print(f"{C.SUCCESS} \n[!!!] PW BERHASIL DITEMUKAN: {username}:{word}")
+                    print(f"{C.SUCCESS} \n[!!!] PW SUCCESSFULLY FOUND U:{username} H:{word}")
                     print(f"{C.SUCCESS} --------------------------------------------------")
                     return
 
-        print(f"{C.ERROR} \n[-] Gagal menemukan password dalam wordlist.")
+        print(f"{C.ERROR} \n[-] Failed to find password in wordlist.")
 
+    except KeyboardInterrupt:
+        return
     except FileNotFoundError:
-        print(f"{C.ERROR} \n[-] ERROR: File wordlist '{wordlist_file}' tidak ditemukan.")
+        print(f"{C.ERROR} \n[-] ERROR: Wordlist file not found.")
     except Exception as e:
-        print(f"{C.ERROR} \n[-] ERROR tak terduga saat cracking: {e}")
+        print(f"{C.ERROR} \n[-] Unexpected error while cracking: {e}")
