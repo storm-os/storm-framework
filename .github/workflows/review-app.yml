@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 autoflake
+        pip install flake8 autoflake black
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Auto Cleanup (Remove Unused Imports)
@@ -49,6 +49,22 @@ jobs:
           git commit -m "style: Cleanup imports in: ${CHANGED_FILES%, }"
           git push
         fi
+
+    - name: Run black
+      run: |
+        black .
+
+    - name: Commit black to repo
+      run: |
+        git config --global user.name "black-style[bot]"
+          git config --global user.email "storm[bot]@github.com"
+          CHANGED_FILES=$(git status --porcelain | sed 's/^M //g' | tr '\n' ', ')
+          git add .
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto format with Black: ${CHANGED_FILES%, }"
+            git push
+          fi
 
     
 
