@@ -18,7 +18,7 @@ DATA = f"""
 {C.ERROR}                "-._                             _.-"
 {C.ERROR}                    "-._______________________.-"
 {C.ERROR}                         {C.HEADER}      V V V
-{C.HEADER}                   --[ {C.SUCCESS}STORM FRAMEWORK {C.HEADER}]--
+{C.HEADER}                          --[ {C.SUCCESS}STORM FRAMEWORK {C.HEADER}]--
 {C.HEADER}                   --[ {C.INPUT}Code Matrix: 0100 01 01101 {C.HEADER}]--
-{C.SUCCESS}                [!] Security is just an illusion [!]
+{C.SUCCESS}                   [!] Security is just an illusion [!]
 """
