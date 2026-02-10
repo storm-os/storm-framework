@@ -1,3 +1,4 @@
+import ipaddress
 from ipwhois import IPWhois
 from app.utility.colors import C
 
