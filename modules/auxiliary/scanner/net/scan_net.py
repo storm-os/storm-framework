@@ -153,7 +153,6 @@ def execute(options):
     # Specify the total column width for the Port and Service Name sections.
     # Adjusted so that the colons are always aligned
     MAX_TOTAL_WIDTH = 30
-
     try:
         for port in ports_to_check:
             # Call the function that returns the status and banner
@@ -186,7 +185,8 @@ def execute(options):
 
             # 3. Full Single Line Print
             print(output_line)
+            
         print(f"{C.HEADER} --- SCAN COMPLETE ---\n")
-     except KeyboardInterrupt:
+    except KeyboardInterrupt:
         print(f"\n{C.ERROR}[!] Scan stopped.{C.RESET}")
 
