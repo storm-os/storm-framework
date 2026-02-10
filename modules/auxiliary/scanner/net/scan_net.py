@@ -63,7 +63,7 @@ def get_service_banner(target_ip, port, timeout=1.0):
             return f"{C.ERROR} CLOSED " + STATUS_CLOSED, None
 
     except KeyboardInterrupt:
-        raise KeyboardInterrupt
+        return
     finally:
         s.close()
 
