@@ -11,11 +11,10 @@ def execute(options):
 
     target_url = options.get("URL")
 
-    # 1. Pastikan URL memiliki skema (http:// atau https://)
+    # 1. Make sure the URL has a scheme (http:// or https://)
     if not target_url.startswith(("https://", "http://")):
         target_url = "https://" + target_url
 
-    # Menggunakan warna HEADER untuk garis pemisah
     print(f"{C.HEADER}\n CHECKING THE HEADER: {target_url}")
 
     try:
@@ -24,41 +23,34 @@ def execute(options):
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
         }
 
-        # Mengirim permintaan GET
         response = requests.get(target_url, headers=headers, timeout=5)
 
-        # 2. Iterasi (Loop) melalui setiap Header yang diterima
-        # Menggunakan warna MENU untuk Header dan nilai
+        # 2. Iterate (Loop) through each Header received
         print(f"{C.MENU}\n  HEADER RECEIVED:")
-        for header, value in response.headers.items():
-            # Membuat Header (kunci) menjadi lebih menonjol (misalnya menggunakan HEADER/ERROR)
+        for header, value in response.headers.items()
             print(f"  {C.HEADER}{header}:{C.RESET} {value}")
 
-        # 3. Validasi Keamanan
+        # 3. Security Validation
         print(f"{C.HEADER} \n--- HEADER SECURITY ANALYSIS ---\n")
 
-        # Cek Header 'Server' (seringkali diekspos)
+        # Check the 'Server' Header (often exposed)
         server_header = response.headers.get("Server")
         if server_header:
-            # Menggunakan warna ERROR untuk peringatan eksposur
             print(f"{C.ERROR}[!] Server Version Exposed: {server_header}{C.RESET}")
         else:
-            # Menggunakan warna SUCCESS jika header tidak ada (seringkali lebih aman)
             print(f"{C.SUCCESS}[✓] Server header not found or hidden.{C.RESET}")
 
-        # Cek Header Keamanan X-Frame-Options (Pencegahan Clickjacking)
+        # Check X-Frame-Options Security Header (Clickjacking Prevention)
         if "X-Frame-Options" not in response.headers:
-            # Menggunakan warna ERROR untuk peringatan keamanan
             print(
                 f"{C.ERROR}[!] X-Frame-Options header is MISSING. Potential for Clickjacking.{C.RESET}"
             )
         else:
-            # Menggunakan warna SUCCESS jika header ada
             print(
                 f"{C.SUCCESS}[✓] X-Frame-Options: {response.headers.get('X-Frame-Options')}. (Safe){C.RESET}"
             )
 
-        # Contoh Cek Tambahan: Strict-Transport-Security (Pencegahan Downgrade)
+        # Strict-Transport-Security (Downgrade Prevention)
         if (
             "Strict-Transport-Security" not in response.headers
             and target_url.startswith("https://")
@@ -69,7 +61,7 @@ def execute(options):
         else:
             print(f"{C.SUCCESS}[✓] HSTS found.{C.RESET}")
 
-        # 1. Cek Content-Security-Policy (Pencegahan XSS)
+        # 1. Check Content-Security-Policy (XSS Prevention)
         if "Content-Security-Policy" not in response.headers:
             print(
                 f"{C.ERROR}[!] CSP Header MISSING. Risk of Cross-Site Scripting (XSS).{C.RESET}"
@@ -113,7 +105,6 @@ def execute(options):
     except KeyboardInterrupt:
         return
     except requests.exceptions.RequestException as e:
-        # Menggunakan warna ERROR untuk pesan kegagalan
         print(f"{C.ERROR}[x] ERROR WHILE CONNECTING TO {target_url}: {e}{C.RESET}\n")
 
     print(f"{C.HEADER} ---------------------------------------")
