@@ -1,0 +1,11 @@
+[tool.black]
+force-exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mybatis
+)/
+'''
+# Folder access
+include = '\.pyi?$'
+
