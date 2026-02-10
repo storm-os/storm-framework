@@ -88,7 +88,7 @@ def execute(options):
         else:
             print(f"\n{C.MENU}  {SYM_FAILED} All attempts failed.")
 
-except KeyboardInterrupt:
-    return
-except Exception as e:
-    print("{C.ERROR}[x] GLOBAL ERROR: {e}")
+    except KeyboardInterrupt:
+        return
+    except Exception as e:
+        print("{C.ERROR}[x] GLOBAL ERROR: {e}")
