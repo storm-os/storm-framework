@@ -186,7 +186,7 @@ def execute(options):
 
             # 3. Full Single Line Print
             print(output_line)
-     except KeyboardInterrupt:
-            print(f"\n{C.ERROR}[!] Scan stopped.{C.RESET}")
-
         print(f"{C.HEADER} --- SCAN COMPLETE ---\n")
+     except KeyboardInterrupt:
+        print(f"\n{C.ERROR}[!] Scan stopped.{C.RESET}")
+
