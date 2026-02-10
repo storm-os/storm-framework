@@ -1,4 +1,6 @@
-# Isi file requirement.txt:
+# File contents requirement.txt
+# All required libraries must be present
+
 requests
 urllib3
 colorama
@@ -9,3 +11,5 @@ paramiko
 scapy
 pytest
 cryptography
+ipwhois
+ipaddress
