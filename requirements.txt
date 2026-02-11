@@ -6,10 +6,13 @@ urllib3
 colorama
 python-nmap
 python-whois
+
 dnspython
 paramiko
 scapy
 pytest
 cryptography
+
 ipwhois
 ipaddress
+whoisdomain
