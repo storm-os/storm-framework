@@ -1,6 +1,7 @@
 import json
 import hashlib
 import base64
+from rootmap import ROOT
 from pathlib import Path
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
@@ -14,12 +15,11 @@ def calculate_sha256(file_path):
 
 
 def generate_folder_manifest():
-    root_dir = Path(__file__).resolve().parent.parent.parent
     print("[+] Get started with Storm Framework security.")
 
     # 1. Load Private Key dari .env
     priv_key_b64 = None
-    env_path = root_dir / ".env"
+    env_path = ROOT / ".env"
 
     if env_path.exists():
         with open(env_path, "r") as f:
@@ -44,10 +44,10 @@ def generate_folder_manifest():
         ".env",
     }
 
-    for path in root_dir.rglob("*"):
+    for path in ROOT.rglob("*"):
         if path.is_file() and path.name != "signed_manifest.json":
             if not any(part in ignored_dirs for part in path.parts):
-                relative_path = str(path.relative_to(root_dir))
+                relative_path = str(path.relative_to(ROOT))
                 # Gunakan fungsi hash sha256 kamu di sini
                 manifest[relative_path] = {
                     "sha256": calculate_sha256(path),
@@ -81,7 +81,7 @@ def generate_folder_manifest():
     }
 
     # 6. Simpan
-    output_dir = root_dir / "lib" / "core" / "database"
+    output_dir = ROOT / "lib" / "core" / "database"
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest_path = output_dir / "signed_manifest.json"
 
