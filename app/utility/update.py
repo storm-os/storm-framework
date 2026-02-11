@@ -40,11 +40,11 @@ def run_update():
     )
 
     for line in process.stdout:
-    match = pattern.search(line)
-    if match:
-        bytes_received = match.group(1)
-        print(f"\rProgress update: {bytes_received}", end="")
-        sys.stdout.flush()
+        match = pattern.search(line)
+        if match:
+            bytes_received = match.group(1)
+            print(f"\rProgress update: {bytes_received}", end="")
+            sys.stdout.flush()
     process.wait()
 
 
