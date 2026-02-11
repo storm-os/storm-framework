@@ -138,16 +138,12 @@ if [ ! -f .env ]; then
 fi
 
 # This ensures that the command always matches the environment.
-SIGN_DIR="scripts/security"
-
 if $NEEDS_SUDO; then
     sudo chmod 600 .env
-    cd "$SIGN_DIR"
-    sudo python3 sign.py
+    sudo python3 -m scripts.security.sign
 else
     chmod 600 .env
-    cd "$SIGN_DIR"
-    python3 sign.py
+    python3 python3 -m scripts.security.sign
 fi
 
 
