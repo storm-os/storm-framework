@@ -138,13 +138,16 @@ if [ ! -f .env ]; then
 fi
 
 # This ensures that the command always matches the environment.
+STORM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 if $NEEDS_SUDO; then
-    sudo chmod 600 .env
-    sudo python3 scripts/security/sign.py
+    sudo chmod 600 "$STORM_DIR/.env"
+    (cd "$STORM_DIR" && sudo python3 scripts/security/sign.py)
 else
     chmod 600 .env
-    python scripts/security/sign.py
+    (cd "$STORM_DIR" && python3 scripts/security/sign.py)
 fi
+
 
 # 5. Creating a Dynamic Wrapper Script
 WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
