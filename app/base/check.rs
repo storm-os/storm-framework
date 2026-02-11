@@ -117,7 +117,7 @@ fn main() {
         println!("\n\n[!] INTEGRITY BREACH DETECTED!");
         for f in &modified_files { println!("    [MODIFIED]  -> {}", f); }
         for f in &missing_files { println!("    [MISSING]  -> {}", f); }
-        for f in &untracked_files { println!("    [UNTRACKED]  -> {}" f); }
+        for f in &untracked_files { println!("    [UNTRACKED]  -> {}", f); }
 
         if !modified_files.is_empty() || !missing_files.is_empty() {
             println!("\nSTATUS: WARNING - Run 'storm update' to re-sign!!");
