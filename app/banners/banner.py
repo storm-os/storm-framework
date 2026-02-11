@@ -2,12 +2,12 @@ import os
 import random
 import importlib
 from app.utility.colors import C
-from app.utility.config_path import ROOT_DIR
+from rootmap import ROOT
 
 
 def get_random_banner():
     # Gunakan ROOT_DIR agar lebih bersih
-    banner_dir = os.path.join(ROOT_DIR, "lib", "ui", "banners")
+    banner_dir = os.path.join(ROOT, "lib", "ui", "banners")
 
     try:
         if not os.path.exists(banner_dir):
@@ -33,7 +33,7 @@ def get_random_banner():
         try:
             columns = os.get_terminal_size().columns
         except:
-            columns = 80
+            columns = 100
 
         lines = raw_banner.splitlines()
         if not lines:
