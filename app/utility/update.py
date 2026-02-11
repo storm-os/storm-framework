@@ -22,7 +22,7 @@ def run_update():
         ["git", "fetch", "--all", "--progress"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        text=True
+        text=True,
     )
 
     # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
@@ -34,9 +34,7 @@ def run_update():
 
     # 3. Reset Execution (Update file to the latest version)
     process = subprocess.run(
-        ["git", "reset", "--hard", "origin/main"],
-        stderr=subprocess.PIPE,
-        text=True
+        ["git", "reset", "--hard", "origin/main"], stderr=subprocess.PIPE, text=True
     )
 
     for line in process.stdout:
@@ -46,7 +44,6 @@ def run_update():
             print(f"\rProgress update: {bytes_received}", end="")
             sys.stdout.flush()
     process.wait()
-
 
     if process.returncode == 0:
         print(f"{C.SUCCESS}\n[✓] System updated to version: {latest_version}.{C.RESET}")
