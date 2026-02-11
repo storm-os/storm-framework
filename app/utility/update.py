@@ -1,4 +1,5 @@
 import sys
+import re
 import requests
 import subprocess
 
@@ -18,7 +19,7 @@ def run_update():
 
     pattern = re.compile(r"Receiving objects:.*,\s([\d\.]+ [KMGT]?i?B) \|")
     # 1. Get the latest info without changing the locale first
-    subprocess.run(
+    process = subprocess.Popen(
         ["git", "fetch", "--all", "--progress"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
@@ -46,7 +47,7 @@ def run_update():
     process.wait()
 
     if process.returncode == 0:
-        print(f"{C.SUCCESS}\n[✓] System updated to version: {latest_version}.{C.RESET}")
+        print(f"{C.SUCCESS}\n[✓] System updated to version: {latest_version}{C.RESET}")
 
     # 4. Trigger Compiler ONLY IF needed
     try:
