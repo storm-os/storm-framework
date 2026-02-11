@@ -16,12 +16,12 @@ def run_verif():
 
     try:
         result = subprocess.run([bin_p])
-    
+
         if result.returncode != 0:
             print(f"\n[-] CRITICAL: Reinstall Storm (Code: {result.returncode})")
             sys.exit(result.returncode)
 
-        return True 
+        return True
 
     except Exception as e:
         print(f"[-] ERROR during execution: {e}")
