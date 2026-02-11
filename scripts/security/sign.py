@@ -2,7 +2,6 @@ import json
 import hashlib
 import base64
 from rootmap import ROOT
-from pathlib import Path
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
 
