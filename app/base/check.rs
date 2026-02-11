@@ -120,10 +120,10 @@ fn main() {
         for f in &untracked_files { println!("    [UNTRACKED]  -> {}" f); }
 
         if !modified_files.is_empty() || !missing_files.is_empty() {
-            println!("\nSTATUS: WARNING - Run 'storm update' to re-sign.!");
+            println!("\nSTATUS: WARNING - Run 'storm update' to re-sign!!");
         } else {
-            println!("\nSTATUS: CRITICAL - File injection detected, reinstall Storm.");
-            std::process::exit(1);
+            println!("\nSTATUS: CRITICAL - File injection detected.");
+            std::process::exit(203);
         }
     } else {
         println!("\n\n[✓] System integrity 100% intact.");
