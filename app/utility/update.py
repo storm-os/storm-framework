@@ -17,22 +17,11 @@ def run_update():
 
     print(f"{C.SUCCESS}[*] Attempting to update Storm Framework.{C.RESET}")
 
-    pattern = re.compile(r"Receiving objects:.*,\s([\d\.]+ [KMGT]?i?B) \|")
     # 1. Get the latest info without changing the locale first
-    process = subprocess.Popen(
-        ["git", "fetch", "--all", "--progress"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
+    subprocess.run(
+        ["git", "fetch", "--all"],
+        stdout=subprocess.DEVNULL
     )
-
-    for line in process.stdout:
-        match = pattern.search(line)
-        if match:
-            bytes_received = match.group(1)
-            print(f"\rProgress update: {bytes_received}", end="")
-            sys.stdout.flush()
-    process.wait()
 
     # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
     check_diff = subprocess.run(
