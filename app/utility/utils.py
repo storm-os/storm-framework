@@ -41,7 +41,7 @@ def load_module_dynamically(module_name):
 
             if name_without_ext == module_name and ext == ".py":
                 full_file_path = os.path.join(root, file)
-                relative_path = os.path.relpath(full_file_path, ROOT_DIR)
+                relative_path = os.path.relpath(full_file_path, ROOT)
 
                 if relative_path.endswith(".py"):
                     clean_path = relative_path[:-3]
@@ -135,7 +135,7 @@ def get_modules_in_category(category):
                 if file.endswith(".py") and file != "__init__.py":
                     # Get the path relative to the root modules folder
                     rel_path = os.path.relpath(
-                        os.path.join(root, file), os.path.join(ROOT_DIR, "modules")
+                        os.path.join(root, file), os.path.join(ROOT, "modules")
                     )
                     modules_list.append(rel_path.replace(".py", ""))
     return modules_list
