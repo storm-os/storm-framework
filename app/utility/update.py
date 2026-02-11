@@ -26,6 +26,14 @@ def run_update():
         text=True,
     )
 
+    for line in process.stdout:
+        match = pattern.search(line)
+        if match:
+            bytes_received = match.group(1)
+            print(f"\rProgress update: {bytes_received}", end="")
+            sys.stdout.flush()
+    process.wait()
+
     # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
     check_diff = subprocess.run(
         ["git", "diff", "--name-only", "HEAD", "origin/main"],
@@ -37,14 +45,6 @@ def run_update():
     process = subprocess.run(
         ["git", "reset", "--hard", "origin/main"], stderr=subprocess.PIPE, text=True
     )
-
-    for line in process.stdout:
-        match = pattern.search(line)
-        if match:
-            bytes_received = match.group(1)
-            print(f"\rProgress update: {bytes_received}", end="")
-            sys.stdout.flush()
-    process.wait()
 
     if process.returncode == 0:
         print(f"{C.SUCCESS}\n[✓] System updated to version: {latest_version}{C.RESET}")
