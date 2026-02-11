@@ -1,7 +1,7 @@
 import os
 import importlib
 
-from app.utility.config_path import ROOT_DIR
+from rootmap import ROOT
 
 """
 utils.py It all contains help logic to make it easier during repairs and updates.
@@ -16,7 +16,7 @@ def resolve_path(kata_kunci):
     if not kata_kunci:
         return None
 
-    assets_dir = os.path.join(ROOT_DIR, "assets/wordlist")
+    assets_dir = os.path.join(ROOT, "assets/wordlist")
 
     # Check manual input first
     if os.path.exists(kata_kunci):
@@ -33,7 +33,7 @@ def resolve_path(kata_kunci):
 
 # LOGIC SEARCHING & USE
 def load_module_dynamically(module_name):
-    base_path = os.path.join(ROOT_DIR, "modules")
+    base_path = os.path.join(ROOT, "modules")
 
     for root, dirs, files in os.walk(base_path):
         for file in files:
@@ -66,7 +66,7 @@ EXT = (".py", ".go", ".rs", ".c", ".cpp", ".rb", ".php", ".sh", ".js", ".ts", ".
 def count_modules():
     total = 0
     # Get absolute root path
-    path = os.path.join(ROOT_DIR, "modules")
+    path = os.path.join(ROOT, "modules")
 
     if not os.path.exists(path):
         return 0
@@ -83,7 +83,7 @@ def count_by_category():
     Counting the number of modules based on category folders
     """
     stats = {}
-    modules_path = os.path.join(ROOT_DIR, "modules")
+    modules_path = os.path.join(ROOT, "modules")
 
     if not os.path.exists(modules_path):
         return stats
@@ -114,7 +114,7 @@ def count_by_category():
 # LOGIC SHOW
 def get_categories():
     """Get a list of category folders inside /modules"""
-    modules_path = os.path.join(ROOT_DIR, "modules")
+    modules_path = os.path.join(ROOT, "modules")
     if not os.path.exists(modules_path):
         return []
     return [
@@ -126,7 +126,7 @@ def get_categories():
 
 def get_modules_in_category(category):
     """Retrieves all .py files within a specified category"""
-    category_path = os.path.join(ROOT_DIR, "modules", category)
+    category_path = os.path.join(ROOT, "modules", category)
     modules_list = []
 
     if os.path.isdir(category_path):
