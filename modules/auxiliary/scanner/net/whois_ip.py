@@ -7,17 +7,17 @@ REQUIRED_OPTIONS = {"IP": "opsional"}
 def execute(options):
     target_ip = options.get("IP")
     if not target_ip:
-        print(f"{C.ERROR} Error: Masukkan alamat IP target!")
+        print(f"{C.ERROR} ERROR: IP variable content 'set ip x.x.x.x'!")
         return
 
     print(f"{C.HEADER}\n[ IP WHOIS/RDAP LOOKUP ] -> {target_ip}")
 
     try:
         obj = IPWhois(target_ip)
-        # Menggunakan RDAP (lebih modern & stabil dari WHOIS standar)
+        # Using RDAP (more modern & stable than standard WHOIS)
         results = obj.lookup_rdap()
 
-        # Ekstraksi Email secara mendalam dari objek RDAP
+        # Deep Email Extraction from RDAP objects
         emails = []
         if "objects" in results:
             for handle, info in results["objects"].items():
@@ -28,7 +28,7 @@ def execute(options):
 
         unique_emails = ", ".join(list(set(emails))) if emails else "N/A"
 
-        # Tampilkan Informasi
+        # Show Information
         print(f"{C.MENU} ASN:            {C.RESET}{results.get('asn')}")
         print(f"{C.MENU} CIDR:           {C.RESET}{results.get('asn_cidr')}")
         print(f"{C.MENU} Country:        {C.RESET}{results.get('asn_country_code')}")
