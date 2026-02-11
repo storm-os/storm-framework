@@ -138,14 +138,16 @@ if [ ! -f .env ]; then
 fi
 
 # This ensures that the command always matches the environment.
-STORM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SIGN_DIR="scripts/security"
 
 if $NEEDS_SUDO; then
-    sudo chmod 600 "$STORM_DIR/.env"
-    (cd "$STORM_DIR" && sudo python3 scripts/security/sign.py)
+    sudo chmod 600 .env
+    cd "$SIGN_DIR"
+    sudo python3 sign.py
 else
     chmod 600 .env
-    (cd "$STORM_DIR" && python3 scripts/security/sign.py)
+    cd "$SIGN_DIR"
+    python3 sign.py
 fi
 
 
