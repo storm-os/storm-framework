@@ -58,7 +58,6 @@ def main():
         "DOMAIN": "",
         "HOSTNAME": ""
     }
-
     while True:
         START_INV = "\001"
         END_INV = "\002"
