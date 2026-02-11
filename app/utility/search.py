@@ -1,10 +1,10 @@
 import os
-from app.utility.config_path import ROOT_DIR
+from rootmap import ROOT
 
 
 def search_modules(query):
     # Langsung gunakan ROOT_DIR, tidak perlu os.path.dirname lagi di sini
-    modules_path = os.path.join(ROOT_DIR, "modules")
+    modules_path = os.path.join(ROOT, "modules")
 
     print(f"\n[*] Searching for: {query}")
     print(f"{'Module Path':<35} {'Category'}")
