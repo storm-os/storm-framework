@@ -1,17 +1,13 @@
-import pathlib
 import sys
+from pathlib import Path
 
-def find_root():
-    curr = pathlib.Path(__file__).resolve()
-    while curr != curr.parent:
-        if list(curr.glob('.git')):
-            return curr
-        curr = curr.parent
+def find_and_inject_root():
+    p = Path(__file__).resolve()
+    for parent in p.parents:
+        if (parent / '.git').exists():
+            if str(parent) not in sys.path:
+                sys.path.insert(0, str(parent))
+            return parent
     return None
 
-ROOT = find_root()
-
-# bisa langsung di-import meskipun script dijalankan dari folder yang sangat dalam.
-if ROOT and str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
+ROOT = find_and_inject_root()
