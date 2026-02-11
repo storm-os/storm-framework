@@ -10,17 +10,22 @@ def run_verif():
 
     if not os.path.exists(bin_p):
         print(f"[-] ERROR: Rust binary not found in {bin_p}")
-        return False
+        sys.exit(1)
 
     print(f"[*] [INTEGRITY] Launching Rust Engine")
 
     try:
-        # Menjalankan Rust binary
-        subprocess.run([bin_p])
-    except Exception as e:
-        print(f"[-] ERROR: {e}")
+        result = subprocess.run([bin_p])
+    
+        if result.returncode != 0:
+            print(f"\n[-] CRITICAL: Reinstall Storm (Code: {result.returncode})")
+            sys.exit(result.returncode)
 
-    return True
+        return True 
+
+    except Exception as e:
+        print(f"[-] ERROR during execution: {e}")
+        sys.exit(1)
 
 
 def check_critical_files():
