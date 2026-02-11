@@ -1,14 +1,12 @@
 import os
 import subprocess
 import sys
+from rootmap import ROOT
 
 
 def install_osint_module():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(current_dir, "../../"))
-
     repo_url = "https://github.com/storm-os/OSINT.git"
-    target_dir = os.path.join(project_root, "script", "osint")
+    target_dir = os.path.join(ROOT, "script", "osint")
 
     # 1. Clone/Update Repo
     if os.path.exists(os.path.join(target_dir, ".git")):
