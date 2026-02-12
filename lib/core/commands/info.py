@@ -24,7 +24,7 @@ def execute(args, context):
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
 
-            # --- AMBIL DICTIONARY CVE_INFO ---
+            # --- GET DICTIONARY CVE_INFO ---
             info = mod.CVE_INFO
             width = 55
 
@@ -39,7 +39,7 @@ def execute(args, context):
             print(f"{C.SUCCESS}{'UPDATED':<13} : {info['updated']}")
             print(f"{C.HEADER}{'-'*width}")
 
-            # Rapikan Deskripsi
+            # Clean Up Description
             print(f"{C.SUCCESS}DESCRIPTION   :")
             desc = textwrap.fill(
                 info["description"].strip(),
@@ -56,6 +56,7 @@ def execute(args, context):
             print(f"{C.HEADER}{'-'*width}")
 
             print(f"{C.SUCCESS}{'SCANNER':<13} : {info['scanner']}")
+            print(f"{C.SUCCESS}{'EXPLOIT':<13} : {info['exploit']}")
             print(f"{C.HEADER}{'='*width}\n")
 
         except Exception as e:
