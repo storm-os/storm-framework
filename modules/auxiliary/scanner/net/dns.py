@@ -16,7 +16,7 @@ DNS_RECORDS = [
     # === Core addressing ===
     "A",  # IPv4
     "AAAA",  # IPv6
-    "CNAME",  # Alias / takeover risk 🔥
+    "CNAME",  # Alias / takeover risk 
     # === Mail ===
     "MX",  # Mail server
     "TXT",  # SPF, DKIM, DMARC, verification
@@ -24,7 +24,7 @@ DNS_RECORDS = [
     "NS",  # Nameserver
     "SOA",  # Zone info (serial, refresh)
     # === Service discovery ===
-    "SRV",  # _sip, _ldap, _xmpp, internal services 👀
+    "SRV",  # _sip, _ldap, _xmpp, internal services 
     "NAPTR",  # VoIP / telecom (rare tapi kadang bocor info)
     # === Security / SSL ===
     "CAA",  # Allowed CA (fingerprinting infra)
@@ -59,7 +59,7 @@ def execute(options):
     resolver.timeout = 2.0
     resolver.lifetime = 3.0
 
-    print(f"{C.HEADER}\n DNS ENUMERATION For {target_domain}")
+    print(f"{C.HEADER} DNS ENUMERATION For {target_domain}")
 
     try:
         socket.gethostbyname(target_domain)
@@ -89,4 +89,3 @@ def execute(options):
     except Exception as e:
         print(f"{C.ERROR}[!] Global ERROR: {e}")
 
-    print(f"{C.HEADER}\n ---------------------------------------------")
