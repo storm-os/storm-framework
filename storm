@@ -68,8 +68,10 @@ def main():
 
         p_mod = f"({C_ERROR_INV}{current_module_name}{C_INPUT_INV})" if current_module else ""
         try:
+            print()
             promp = f"{C_INPUT_INV}[~]{p_mod}==> {C_RESET_INV}"
             user_input = input(promp).strip().split()
+            print()
         except EOFError: break
 
         if not user_input: continue
