@@ -26,7 +26,7 @@ def execute(options):
     port = 21
     wordlist_path = options.get("PASS")
 
-    print(f"{C.HEADER} \n--- FTP BRUTE FORCE: {target_ip} ---")
+    print(f"{C.HEADER}--- FTP BRUTE FORCE: {target_ip} ---")
     try:
         for user, passwd in DEFAULT_CREDS:
             if test_ftp(target_ip, port, user, passwd):
@@ -42,7 +42,7 @@ def execute(options):
                     for pw in password:
                         if test_ftp(target_ip, port, user, pw):
                             print(
-                                f"{C.SUCCESS} \n  [+] LOGIN SUCCESS! -> U:{user} P:{pw}"
+                                f"{C.SUCCESS}  [+] LOGIN SUCCESS! -> U:{user} P:{pw}"
                             )
                             return
 
