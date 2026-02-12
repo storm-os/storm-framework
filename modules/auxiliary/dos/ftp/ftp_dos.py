@@ -23,8 +23,8 @@ def execute(options):
             stderr=None,
         )
 
-        print(f"[+] Attack ID: {process.pid}")
-        print("[!] Press Ctrl+C to stop the flood.\n")
+        print(f"[!] Attack ID: {process.pid}")
+        print("[!] Press Ctrl+C to stop the flood.")
 
         process.wait()
 
@@ -32,4 +32,4 @@ def execute(options):
         process.terminate()
         print("\n\n[!] Attack Terminated. Target might be down or lucky.")
     except Exception as e:
-        print(f"[-] Error: {e}")
+        print(f"[-] ERROR: {e}")
