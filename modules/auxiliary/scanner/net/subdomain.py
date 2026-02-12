@@ -56,7 +56,7 @@ def execute(options):
         target_domain.replace("http://", "").replace("https://", "").strip("/")
     )
 
-    print(f"{C.HEADER}\n SUBDOMAIN ENUMERATION for {target_domain}")
+    print(f"{C.HEADER} SUBDOMAIN ENUMERATION for {target_domain}")
 
     # Jumlah subdomain ditemukan
     found_count = 0
@@ -79,7 +79,6 @@ def execute(options):
                     )
                     found_count += 1
 
-                print(f"{C.SUCCESS}\n[✓] Subdomain active: {found_count}")
             except KeyboardInterrupt:
                 return
             except requests.exceptions.RequestException:
@@ -88,7 +87,9 @@ def execute(options):
                 print(f"{C.ERROR}[!] ERROR on {url}: {e}{C.RESET}")
                 continue
 
-    if found_count == 0:
-        print(f"{C.ERROR} No active subdomains found with list.\n")
+    print(f"{C.SUCCESS}\n[✓] Subdomain active: {found_count}")
 
-    print(f"{C.HEADER} -------------------------------------------------\n")
+    if found_count == 0:
+        print(f"{C.ERROR} No active subdomains found with list: {found_count}")
+
+
