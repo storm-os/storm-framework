@@ -10,7 +10,7 @@ def execute(options):
         print(f"{C.ERROR} ERROR: IP variable content 'set ip x.x.x.x'!")
         return
 
-    print(f"{C.HEADER}\n[ IP WHOIS/RDAP LOOKUP ] -> {target_ip}")
+    print(f"{C.HEADER}[ IP WHOIS/RDAP LOOKUP ] -> {target_ip}")
 
     try:
         obj = IPWhois(target_ip)
