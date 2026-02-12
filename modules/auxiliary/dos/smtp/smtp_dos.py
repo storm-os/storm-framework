@@ -28,7 +28,7 @@ def execute(options):
         print("[!] This module requires root. Requesting sudo...")
         command = ["sudo", bin_path, "-t", target, "-p", port, "-w", threads]
 
-    print(f"[*] Starting SMTP Flood on {target}\n")
+    print(f"[*] Starting SMTP Flood on {target}")
     try:
         process = subprocess.Popen(command, stdout=None, stderr=None)
         process.wait()
