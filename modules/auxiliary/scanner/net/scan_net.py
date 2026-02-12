@@ -147,7 +147,7 @@ def execute(options):
     }
     ports_to_check = port_names.keys()
 
-    print(f"{C.HEADER}\n SCANNING: PORT & VERSION in {target_ip}")
+    print(f"{C.HEADER} SCANNING: PORT & VERSION in {target_ip}")
 
     # Specify the total column width for the Port and Service Name sections.
     # Adjusted so that the colons are always aligned
@@ -189,6 +189,6 @@ def execute(options):
             # 3. Full Single Line Print
             print(output_line)
 
-        print(f"{C.HEADER} --- SCAN COMPLETE ---\n")
+        print(f"{C.HEADER} --- SCAN COMPLETE ---")
     except KeyboardInterrupt:
         print(f"\n{C.ERROR}[!] Scan stopped.{C.RESET}")
