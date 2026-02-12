@@ -60,9 +60,7 @@ def execute(options):
                 print(f"{C.MENU}  Try: {word}{C.RESET}", end="\r")
                 # Compares the regenerated hash with the original hash
                 if hashed_word == full_hash:
-                    print(
-                        f"{C.SUCCESS} [✓] SUCCESSFULLY FOUND U:{username} H:{word}"
-                    )
+                    print(f"{C.SUCCESS} [✓] SUCCESSFULLY FOUND U:{username} H:{word}")
                     print(
                         f"{C.SUCCESS} --------------------------------------------------"
                     )
