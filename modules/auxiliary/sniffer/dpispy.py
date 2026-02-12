@@ -13,13 +13,13 @@ def execute(options):
     bin_path = os.path.join(base_dir, "src", "dpi_netspy")
 
     if not os.path.isfile(bin_path):
-        print(f"[!] Error: Binary not found {bin_path}.")
+        print(f"[!] ERROR: Binary not found {bin_path}.")
         return False
 
     print(f"[*] Run Go-Sniffer on interface: {iface}")
 
     try:
-        # Memanggil binary Go dengan argumen interface
+        # Calling a Go binary with interface arguments
         proc = subprocess.Popen(
             [bin_path, iface],
             stdout=subprocess.PIPE,
@@ -37,6 +37,6 @@ def execute(options):
         print("\n[*] Stop Sniffer...")
         proc.terminate()
     except Exception as e:
-        print(f"[!] Error: {e}")
+        print(f"[!] ERROR: {e}")
 
     return True
