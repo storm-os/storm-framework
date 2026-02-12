@@ -41,7 +41,7 @@ def execute(options):
         print(f"{C.ERROR} Hash parsing error: {e}")
         return
 
-    print(f"{C.MENU} \n--- PYTHON SHADOW CRACKER (MD5-Crypt) ---")
+    print(f"{C.MENU} --- PYTHON SHADOW CRACKER (MD5-Crypt) ---")
     print(f"{C.MENU} [*] Target User: {username}")
     print(f"{C.MENU} [*] Hash Type: MD5-Crypt ($1$)")
     print(f"{C.MENU} [*] Salt: {salt_crypt}")
@@ -61,7 +61,7 @@ def execute(options):
                 # Compares the regenerated hash with the original hash
                 if hashed_word == full_hash:
                     print(
-                        f"{C.SUCCESS} \n[!!!] PW SUCCESSFULLY FOUND U:{username} H:{word}"
+                        f"{C.SUCCESS} [✓] SUCCESSFULLY FOUND U:{username} H:{word}"
                     )
                     print(
                         f"{C.SUCCESS} --------------------------------------------------"
