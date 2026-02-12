@@ -91,5 +91,3 @@ def execute(options):
 
     if found_count == 0:
         print(f"{C.ERROR} No active subdomains found with list: {found_count}")
-
-
