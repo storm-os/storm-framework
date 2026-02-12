@@ -66,12 +66,11 @@ def main():
         C_ERROR_INV = f"{START_INV}{C.ERROR}{END_INV}"
         C_RESET_INV = f"{START_INV}{C.RESET}{END_INV}"
 
-        p_mod = f"({C_ERROR_INV}{current_module_name}{C_INPUT_INV})" if current_module else ""
+        p_mod = current_module_name if current_module else "[~]"
         try:
-            print()
-            promp = f"{C_INPUT_INV}[~]{p_mod}==> {C_RESET_INV}"
+            print(f"{C_INPUT_INV}┌─[ {p_mod} ]{C_RESET_INV}")
+            promp = f"{C_INPUT_INV}└─➤ {C_RESET_INV}"
             user_input = input(promp).strip().split()
-            print()
         except EOFError: break
 
         if not user_input: continue
