@@ -13,6 +13,19 @@ DEFAULT_CREDS = [
     ("user", "root"),
     ("root", "user"),
     ("root", "admin"),
+    ("admin", "stdONUi0"),
+    ("telecomadmin", "admintelecom"),
+    ("root", "realtek"),
+    ("admin", "realtek"),
+    ("admin", "1234"),
+    ("root", "1234"),
+    ("user", "realtek"),
+    ("user", "1234"),
+    ("root", "Zimmlink"),
+    ("user", "Zimmlink"),
+    ("admin", "Zimmlink"),
+    ("root", "ponroot"),
+    ("admin", "admin123"),
     ("", ""), # Anonymous login
 ]
 
@@ -27,5 +40,8 @@ COMMON_USERS = [
      "mikrotik"
      "postgres",
      "mysql",
-     "operator"
+     "operator",
+     "realtek",
+     "ponroot",
+     "zimlink"
 ]
