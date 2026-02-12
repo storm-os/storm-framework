@@ -6,6 +6,7 @@ from app.utility.colors import C
 
 REQUIRED_OPTIONS = {"URL": ""}
 
+
 def execute(options):
     """Checking the security header of a URL."""
 
@@ -38,7 +39,9 @@ def execute(options):
             if re.search(r"\d+\.\d+", server):
                 print(f"{C.ERROR}[!] Server Version Exposed: {server}{C.RESET}")
             else:
-                print(f"{C.SUCCESS}[✓] Server identified without version disclosure: {server}{C.RESET}")
+                print(
+                    f"{C.SUCCESS}[✓] Server identified without version disclosure: {server}{C.RESET}"
+                )
         else:
             print(f"{C.SUCCESS}[✓] Server header not found or hidden.{C.RESET}")
 
@@ -56,9 +59,7 @@ def execute(options):
                 f"{C.ERROR}[!] X-Frame-Options header is MISSING. Potential for Clickjacking.{C.RESET}"
             )
         else:
-            print(
-                f"{C.SUCCESS}[✓] X-Frame-Options: {xfo}.{C.RESET}"
-            )
+            print(f"{C.SUCCESS}[✓] X-Frame-Options: {xfo}.{C.RESET}")
 
         # Strict-Transport-Security (Downgrade Prevention)
         hsts = response.headers.get("Strict-Transport-Security")
@@ -96,9 +97,7 @@ def execute(options):
                 f"{C.ERROR}[!] Referrer-Policy header MISSING. Potential data leakage via Referrer header.{C.RESET}"
             )
         else:
-            print(
-                f"{C.SUCCESS}[✓] Referrer-Policy: {rp}.{C.RESET}"
-            )
+            print(f"{C.SUCCESS}[✓] Referrer-Policy: {rp}.{C.RESET}")
 
         set_cookie = response.headers.get("Set-Cookie")
         if set_cookie:
@@ -112,7 +111,7 @@ def execute(options):
 
             if "samesite" not in cookie_lower:
                 print(f"{C.ERROR}[!] Cookie missing 'SameSite' flag.{C.RESET}")
- 
+
     except KeyboardInterrupt:
         return
     except requests.exceptions.RequestException as e:
