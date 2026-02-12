@@ -41,9 +41,7 @@ def execute(options):
                     print(f"{C.MENU}  [*] Testing user: {user}")
                     for pw in password:
                         if test_ftp(target_ip, port, user, pw):
-                            print(
-                                f"{C.SUCCESS}  [+] LOGIN SUCCESS! -> U:{user} P:{pw}"
-                            )
+                            print(f"{C.SUCCESS}  [+] LOGIN SUCCESS! -> U:{user} P:{pw}")
                             return
 
     except KeyboardInterrupt:
