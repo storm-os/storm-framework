@@ -16,7 +16,7 @@ DNS_RECORDS = [
     # === Core addressing ===
     "A",  # IPv4
     "AAAA",  # IPv6
-    "CNAME",  # Alias / takeover risk 
+    "CNAME",  # Alias / takeover risk
     # === Mail ===
     "MX",  # Mail server
     "TXT",  # SPF, DKIM, DMARC, verification
@@ -24,7 +24,7 @@ DNS_RECORDS = [
     "NS",  # Nameserver
     "SOA",  # Zone info (serial, refresh)
     # === Service discovery ===
-    "SRV",  # _sip, _ldap, _xmpp, internal services 
+    "SRV",  # _sip, _ldap, _xmpp, internal services
     "NAPTR",  # VoIP / telecom (rare tapi kadang bocor info)
     # === Security / SSL ===
     "CAA",  # Allowed CA (fingerprinting infra)
@@ -88,4 +88,3 @@ def execute(options):
         return
     except Exception as e:
         print(f"{C.ERROR}[!] Global ERROR: {e}")
-
