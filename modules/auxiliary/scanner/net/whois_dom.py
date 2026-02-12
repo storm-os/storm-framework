@@ -24,7 +24,7 @@ def execute(options):
         target.replace("http://", "").replace("https://", "").split("/")[0].strip()
     )
 
-    print(f"{C.HEADER}\n[ DOMAIN WHOIS LOOKUP (Modern) ] -> {clean_domain}")
+    print(f"{C.HEADER}[ DOMAIN WHOIS LOOKUP ] -> {clean_domain}")
     try:
         w = whois.query(clean_domain)
 
