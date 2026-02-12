@@ -33,7 +33,7 @@ def execute(options):
     port = options.get("PORT")
     wordlist_path = options.get("PASS")
 
-    print(f"{C.HEADER} \n--- GRAFANA BRUTE FORCE: {target_ip} ---")
+    print(f"{C.HEADER} --- GRAFANA BRUTE FORCE: {target_ip} ---")
 
     # ---------------------------------------------
     # Stage 1: Kredensial Default
@@ -69,7 +69,7 @@ def execute(options):
                                 continue
                             if test_grafana(target_ip, port, target_user, passwd):
                                 print(
-                                    f"{C.SUCCESS} \n  {SYM_SUCCESS} LOGIN SUCCESS! (Grafana) -> U:{target_user} P:{passwd}"
+                                    f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN SUCCESS! (Grafana) -> U:{target_user} P:{passwd}"
                                 )
                                 return
                             print(
@@ -78,7 +78,7 @@ def execute(options):
                                 flush=True,
                             )
 
-                    print(f"{C.MENU} \n[!] Brute Force finish.")
+                    print(f"{C.MENU} [!] Brute Force finish.")
 
             except Exception as e:
                 print(f"{C.ERROR} \n [!] ERROR: {e}")
