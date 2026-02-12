@@ -8,7 +8,6 @@ def execute(args, context):
         var_name = args[0].upper()
         var_value = args[1]
 
-        # Logika otomatis untuk PATH (seperti di main.py lama kamu)
         if "PATH" in var_name or var_name == "PASS":
             found_path = utils.resolve_path(var_value)
             if found_path:
