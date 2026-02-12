@@ -17,7 +17,9 @@ def run_update():
     print(f"{C.SUCCESS}[*] Attempting to update Storm Framework.{C.RESET}")
 
     # 1. Get the latest info without changing the locale first
-    subprocess.run(["git", "fetch", "--all"], stdout=subprocess.DEVNULL)
+    subprocess.run(["git", "fetch", "--all"],
+                   stderr=subprocess.DEVNULL
+                  )
 
     # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
     check_diff = subprocess.run(
