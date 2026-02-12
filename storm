@@ -68,7 +68,7 @@ def main():
 
         p_mod = current_module_name if current_module else "[~]"
         try:
-            print(f"{C_INPUT_INV}┌─(storm::framework)-[{p_mod}]{C_RESET_INV}")
+            print(f"{C_INPUT_INV}┌─(storm::framework){C_RESET_INV}-{C_ERROR_INV}[{p_mod}]{C_RESET_INV}")
             print(f"{C_INPUT_INV}│{C_RESET_INV}")
             promp = f"{C_INPUT_INV}└─➤ {C_RESET_INV}"
             user_input = input(promp).strip().split()
