@@ -25,6 +25,6 @@ def execute(options):
     try:
         sock.sendto(payload.encode(), (ip, port))
         data, addr = sock.recvfrom(2048)
-        print(f"[+] Response from {addr}:\n{data.decode()}")
+        print(f"[+] Response from {addr}: {data.decode()}")
     except Exception as e:
         print(f"[-] No Response: {e}")
