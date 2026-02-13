@@ -71,6 +71,7 @@ def main():
             print(f"{C_INPUT_INV}┌─(storm::framework){C_RESET_INV}-{C_ERROR_INV}[{p_mod}]{C_RESET_INV}")
             promp = f"{C_INPUT_INV}└─➤ {C_RESET_INV}"
             user_input = input(promp).strip().split()
+        except KeyboardInterrupt: return
         except EOFError: break
 
         if not user_input: continue
