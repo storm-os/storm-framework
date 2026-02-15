@@ -6,11 +6,9 @@ def execute(args, context):
     mod = utils.load_module_dynamically(module_name)
 
     if mod:
-        # JANGAN cuma bikin variabel, tapi MASUKKAN ke context
         context["current_module"] = mod
         context["current_module_name"] = module_name
     else:
         print(f"[-] Module: {module_name} > Not found.")
 
-    # Sekarang context sudah berisi data yang baru
     return context
