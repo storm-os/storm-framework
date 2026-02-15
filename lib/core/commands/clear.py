@@ -4,10 +4,10 @@ import app.base.config_ui as config_ui
 
 
 def execute(args, context):
-    # Bersihkan layar sesuai OS
+    # Clean the screen according to the OS
     os.system("cls" if os.name == "nt" else "clear")
 
-    # Tampilkan ulang identitas tools
+    # Redisplay tool identity
     print(get_random_banner())
     config_ui.stormUI()
 
