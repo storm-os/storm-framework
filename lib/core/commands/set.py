@@ -14,7 +14,7 @@ def execute(args, context):
                 options[var_name] = found_path
                 print(f"{var_name} => {found_path}")
             else:
-                print(f"[-] File '{var_value}' not found!")
+                print(f"[-] File: {var_value} > not found!")
         else:
             options[var_name] = var_value
             print(f"{var_name} => {var_value}")
