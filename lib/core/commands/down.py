@@ -1,6 +1,8 @@
 from app.utility.down_osint import install_osint_module
 from app.utility.colors import C
 
+# Download all OSINT modules from the repo
+# The OSINT structure will be applied according to the storm logic rules.
 
 def execute(args, context):
     cmd = args[0].lower() if args else ""
