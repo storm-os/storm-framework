@@ -10,6 +10,7 @@ from app.utility.colors import C
 # The most important thing is to make sure that the CVE uses the example data format that has been provided.
 # Otherwise the output will be messy and not according to storm rules.
 
+
 def execute(args, context):
     query = args[0] if args else ""
     if not query:
