@@ -1,9 +1,10 @@
 import os
+from rootmap import ROOT
 
 
-def session(options, cache_folder="cache"):
-
-    cache_path = os.path.join(cache_folder, ".storm-session")
+def session(options):
+    full_path = os.path.join(ROOT, "lib", "smf", "cache")
+    cache_path = os.path.join(full_path, ".storm-session")
     try:
         with open(cache_path, "w") as f:
             for key, value in options.items():
