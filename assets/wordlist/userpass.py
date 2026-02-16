@@ -1,5 +1,5 @@
 # script/wordlist.py
-# Daftar kredensial default yang sederhana
+# Default credentials list
 DEFAULT_CREDS = [
     ("admin", "admin"),
     ("user", "user"),
@@ -7,6 +7,12 @@ DEFAULT_CREDS = [
     ("ftp", "ftp"),
     ("guest", "guest"),
     ("root", "Zte521"),
+    ("root", "Zl521"),
+    ("root", "ZL521"),
+    ("root", "zl521"),
+    ("admin", "Zl521"),
+    ("admin", "ZL521"),
+    ("admin", "zl521"),
     ("admin", "user"),
     ("user", "admin"),
     ("admin", "root"),
@@ -26,10 +32,11 @@ DEFAULT_CREDS = [
     ("admin", "Zimmlink"),
     ("root", "ponroot"),
     ("admin", "admin123"),
+    ("superadmin", "superoem"),
     ("", ""), # Anonymous login
 ]
 
-# Anda bisa menambahkan list lain di sini, misalnya:
+# Tambahkan list apapun disini
 COMMON_USERS = [
      "admin",
      "root",
@@ -43,5 +50,9 @@ COMMON_USERS = [
      "operator",
      "realtek",
      "ponroot",
-     "zimlink"
+     "zimlink",
+     "superoem",
+     "superadmin",
+     "Zl521",
+     "Zte521",
 ]
