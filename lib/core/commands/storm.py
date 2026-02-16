@@ -1,4 +1,4 @@
-from app.utility.load_var import load_variable
+from app.utility.restart import run_restart
 from app.utility.update import run_update
 from app.utility.verify import run_verif
 from app.utility.colors import C
@@ -12,11 +12,13 @@ def execute(args, context):
         return context
 
     if cmd == "update":
-        run_update()
+        status = run_update()
+        if status:
+            run_restart(context)
     elif cmd == "verify":
         run_verif()
     elif cmd == "restart":
-        load_variable(context)
+        run_restart(context)
     else:
         print(f"{C.ERROR}[!] ERROR: {cmd} > Not found.")
 
