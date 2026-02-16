@@ -3,7 +3,7 @@ import sys
 import lib.smf.svch as svch
 
 
-def load_var(context):
+def load_variable(context):
     # save old variables
     svch.session(context["options"])
 
