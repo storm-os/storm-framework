@@ -1,5 +1,5 @@
 from app.utility.down_osint import install_osint_module
-from app.utility.load_var import load_variable
+from app.utility.restart import run_restart
 from app.utility.colors import C
 
 # Download all OSINT modules from the repo
@@ -16,7 +16,7 @@ def execute(args, context):
     if cmd == "osint":
         status = install_osint_module()
         if status == True:
-            load_variable(context)
+            run_restart(context)
     else:
         print(f"{C.ERROR}[!] ERROR: {cmd} > Not found.")
 
