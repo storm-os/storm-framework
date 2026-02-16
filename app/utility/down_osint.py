@@ -34,5 +34,6 @@ def install_osint_module():
     except Exception as e:
         print(f"ERROR: {e}")
 
+
 if __name__ == "__main__":
     install_osint_module()
