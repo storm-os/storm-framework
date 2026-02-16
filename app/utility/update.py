@@ -1,4 +1,3 @@
-import sys
 import requests
 import subprocess
 
@@ -38,7 +37,7 @@ def run_update():
     try:
         from scripts.security.sign import generate_folder_manifest
         from app.utility.load_var import load_variable
-        
+
         generate_folder_manifest()
         load_variable()
     except Exception as e:
