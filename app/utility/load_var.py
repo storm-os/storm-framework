@@ -2,6 +2,7 @@ import os
 import sys
 import lib.smf.svch as svch
 
+
 def load_var():
     # save old variables
     svch.session(context["options"])
@@ -14,4 +15,3 @@ def load_var():
     except Exception as e:
         print(f"[-] Restart failed: {e}")
         sys.exit(1)
-      
