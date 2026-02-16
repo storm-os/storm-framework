@@ -52,7 +52,7 @@ def execute(options):
     # ---------------------------------------------
     # Stage 1: Kredensial Default
     # ---------------------------------------------
-    print(f"{C.MENU}  [*] Starting stage 1: Kredensial Default...")
+    print(f"{C.MENU}  [*] Starting stage 1: Kredensial Default")
     found_weak_creds = False
 
     try:
@@ -72,7 +72,7 @@ def execute(options):
         # Stage 2: Brute Force Wordlist
         # ---------------------------------------------
         if wordlist_path and os.path.exists(wordlist_path):
-            print(f"\n{C.MENU}  [*] Starting stage 2: Brute Force {wordlist_path}...")
+            print(f"\n{C.MENU}  [*] Starting stage 2: Brute Force {wordlist_path}")
 
             try:
                 with open(wordlist_path, "r", encoding="latin-1") as f:
