@@ -59,7 +59,7 @@ def main():
         "DOMAIN": "",
         "HOSTNAME": ""
     }
-    ldch.session(context["options"])
+    options = ldch.session(options)
 
     while True:
         START_INV = "\001"
