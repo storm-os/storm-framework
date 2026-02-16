@@ -16,7 +16,7 @@ def execute(args, context):
     elif cmd == "verify":
         run_verif()
     elif cmd == "restart":
-        load_variable()
+        load_variable(context)
     else:
         print(f"{C.ERROR}[!] ERROR: {cmd} > Not found.")
 
