@@ -28,13 +28,11 @@ def install_osint_module():
 
     try:
         from scripts.security.sign import generate_folder_manifest
-        import app.utility.load_var as ld
 
         generate_folder_manifest()
-        ld.load_variable(context)
+        return True
     except Exception as e:
         print(f"ERROR: {e}")
-
 
 if __name__ == "__main__":
     install_osint_module()
