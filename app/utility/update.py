@@ -37,9 +37,9 @@ def run_update():
     # 4. Trigger Compiler ONLY IF needed
     try:
         from scripts.security.sign import generate_folder_manifest
-
+        from app.utility.load_var import load_variable
+        
         generate_folder_manifest()
+        load_variable()
     except Exception as e:
         print(f"ERROR: {e}")
-
-    sys.exit()
