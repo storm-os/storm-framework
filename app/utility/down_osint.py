@@ -29,7 +29,7 @@ def install_osint_module():
     try:
         from scripts.security.sign import generate_folder_manifest
         import app.utility.load_var as ld
-        
+
         generate_folder_manifest()
         ld.load_var()
     except Exception as e:
