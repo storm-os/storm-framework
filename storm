@@ -7,6 +7,7 @@ import sys
 import readline  # noqa: F401
 import app.base.config_ui as config_ui
 import app.utility.verify as r
+import lib.smf.ldch as ldch
 
 from app.base.config_update import check_update
 from app.utility.colors import C
@@ -58,6 +59,8 @@ def main():
         "DOMAIN": "",
         "HOSTNAME": ""
     }
+    ldch.session(context["options"])
+
     while True:
         START_INV = "\001"
         END_INV = "\002"
