@@ -13,7 +13,7 @@ def execute(args, context):
 
     if cmd == "update":
         status = run_update()
-        if status:
+        if status == True:
             run_restart(context)
     elif cmd == "verify":
         run_verif()
