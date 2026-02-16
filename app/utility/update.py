@@ -39,6 +39,6 @@ def run_update():
         from app.utility.load_var import load_variable
 
         generate_folder_manifest()
-        load_variable()
+        load_variable(context)
     except Exception as e:
         print(f"ERROR: {e}")
