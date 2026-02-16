@@ -31,7 +31,7 @@ def generate_folder_manifest():
         print("[!] Error: STORM_PRIVKEY not found in .env. Run setup.sh first!")
         return
 
-    # 2. Scanning Files (Logika lama kamu)
+    # 2. Scanning Files
     manifest = {}
     ignored_dirs = {
         ".git",
@@ -41,6 +41,7 @@ def generate_folder_manifest():
         "storm.db",
         ".gitignore",
         ".env",
+        "cache/"
     }
 
     for path in ROOT.rglob("*"):
