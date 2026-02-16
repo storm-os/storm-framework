@@ -31,7 +31,7 @@ def install_osint_module():
         import app.utility.load_var as ld
 
         generate_folder_manifest()
-        ld.load_var()
+        ld.load_variable()
     except Exception as e:
         print(f"ERROR: {e}")
 
