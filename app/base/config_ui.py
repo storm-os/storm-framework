@@ -43,7 +43,7 @@ def show_help():
 {C.INPUT}
   use <nama_modul>              : Selecting a module
   set <key> <val>               : Filling in the parameters
-  run / exploit                 : Run the selected module
+  run                           : Run the selected module
 
 {C.INPUT}
   storm update                  : Make updates if necessary
