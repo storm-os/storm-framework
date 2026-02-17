@@ -13,7 +13,7 @@ compile_modules() {
         cd "$BASE_PATH" || return 1
     fi
 
-    # --- SEMUA GOLANG DI SELURUH PROJECT ---
+    # --- ALL GOLANG IN ALL PROJECTS ---
     if command -v go > /dev/null; then
         [ -f "go.mod" ] && rm go.mod
 
@@ -27,17 +27,15 @@ compile_modules() {
 
         find . -name "*.go" -not -path "*/.*" -not -path "*/vendor/*" | while read -r src; do
             output="${src%.go}"
-            echo -e "[+] Compiling Go module: $src"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
             chmod +x "$output"
         done
     fi
 
-    # --- SEMUA C DI SELURUH PROJECT ---
+    # --- ALL C's IN THE WHOLE PROJECT ---
     if command -v gcc > /dev/null; then
         find . -name "*.c" -not -path "*/.*" | while read -r src; do
             output="${src%.c}"
-            echo -e "[+] Compiling C module: $src"
             if grep -q "pcap.h" "$src"; then
                 gcc "$src" -o "$output" -lpcap
             else
