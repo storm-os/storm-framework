@@ -4,7 +4,7 @@ import base64
 from rootmap import ROOT
 from cryptography.hazmat.primitives.asymmetric import ed25519
 
-
+# logic for sha256 mathematical calculations
 def calculate_sha256(file_path):
     sha256_hash = hashlib.sha256()
     with open(file_path, "rb") as f:
@@ -16,7 +16,9 @@ def calculate_sha256(file_path):
 def generate_folder_manifest():
     print("[+] Get started with Storm Framework security.")
 
-    # 1. Load Private Key dari .env
+    # Load Private Key dari .env
+    # .env is mandatory in every Storm installation because it is (IMPORTANT)
+    # If .evn is intentionally deleted storm will not cancel the startup
     priv_key_b64 = None
     env_path = ROOT / ".env"
 
@@ -28,10 +30,11 @@ def generate_folder_manifest():
                     break
 
     if not priv_key_b64:
-        print("[!] Error: STORM_PRIVKEY not found in .env. Run setup.sh first!")
+        print("[!] ERROR: STORM_PRIVKEY not found in .env. Reinstall storm!")
         return
 
-    # 2. Scanning Files
+    # Scanning Files
+    # ignore names that do not need to be signed
     manifest = {}
     ignored_dirs = {
         ".git",
@@ -48,39 +51,39 @@ def generate_folder_manifest():
         if path.is_file() and path.name != "signed_manifest.json":
             if not any(part in ignored_dirs for part in path.parts):
                 relative_path = str(path.relative_to(ROOT))
-                # Gunakan fungsi hash sha256 kamu di sini
+                # calculate sha256 to create hash
                 manifest[relative_path] = {
                     "sha256": calculate_sha256(path),
                     "size_bytes": path.stat().st_size,
                 }
 
-    # 3. Urutkan manifest agar hash JSON selalu konsisten (Penting!)
+    # Sort the manifest so that the JSON hash is always consistent (Important!)
     sorted_manifest = dict(sorted(manifest.items()))
 
-    # 4. Proses Signing
-    # Convert dict ke string JSON yang rapat (compact) untuk di-hash
+    # Signing Process
+    # Convert dict to compact JSON string for hashing
     manifest_string = json.dumps(
         sorted_manifest, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
-    # Load private key dari Base64 DER
+    # Load private key from Base64 DER
     try:
         priv_bytes = base64.b64decode(priv_key_b64)
         private_key = ed25519.Ed25519PrivateKey.from_private_bytes(priv_bytes[-32:])
 
-        # Buat Signature
+        # Create a Signature
         signature = private_key.sign(manifest_string)
         signature_b64 = base64.b64encode(signature).decode("utf-8")
     except Exception as e:
         print(f"[!] Signing Error: {e}")
         return
 
-    # 5. Bungkus manifest dengan Signature-nya
+    # Wrap all hashes into a valid signature
     final_data = {
         "metadata": {"version": "1.0", "signature": signature_b64},
         "files": sorted_manifest,
     }
 
-    # 6. Simpan
+    # save the results
     output_dir = ROOT / "lib" / "core" / "database"
     output_dir.mkdir(parents=True, exist_ok=True)
     manifest_path = output_dir / "signed_manifest.json"
