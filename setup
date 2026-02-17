@@ -12,6 +12,26 @@ RED='\033[91m'
 BLUE='\033[94m'
 NC='\033[0m'
 
+write_to_file() {
+    local content=$1
+    local file=$2
+    local append=$3
+
+    if $NEEDS_SUDO; then
+        if [ "$append" = true ]; then
+            echo "$content" | sudo tee -a "$file" > /dev/null
+        else
+            echo "$content" | sudo tee "$file" > /dev/null
+        fi
+    else
+        if [ "$append" = true ]; then
+            echo "$content" >> "$file"
+        else
+            echo "$content" > "$file"
+        fi
+    fi
+}
+
 # -----------------------------------------------------------------------------
 # --- AUTOMATIC ENVIRONMENT DETECTION & PATH CONFIGURATION ---
 # -----------------------------------------------------------------------------
@@ -131,8 +151,8 @@ if [ ! -f .env ]; then
 
     # This code will insert the key into .env
     # This is very crucial because if there is only 1 space it will not be usable.
-    echo "STORM_PRIVKEY=${PRIV_KEY}" > .env
-    echo "STORM_PUBKEY=${PUB_KEY}" >> .env
+    write_to_file "STORM_PRIVKEY=${PRIV_KEY}" ".env" false
+    write_to_file "STORM_PUBKEY=${PUB_KEY}" ".env" true
 
     echo -e "[✓] Security identity created successfully."
 fi
@@ -153,20 +173,17 @@ WRAPPER_DST="$BIN_DIR/$TOOL_NAME"
 echo -e "[+] Creating a wrapper script: ${TOOL_NAME}"
 
 # Create wrapper content in variables for easy management
-CREATE_WRAPPER="cat << 'EOF' > $WRAPPER_DST
-$SHEBANG_PATH
+CREATE_WRAPPER="${SHEBANG_PATH}
 PROJECT_DIR=\"$INSTALL_DIR\"
-cd \"\$PROJECT_DIR\" || { echo \"$[x] ERROR: Failed to access project directory.\"; exit 1; }
-exec ./storm \"\$@\"
-EOF"
+cd \"\$PROJECT_DIR\" || { echo \"[x] ERROR: Failed to access project directory.\"; exit 1; }
+exec ./storm \"\$@\""
+
+write_to_file "$CREATE_WRAPPER" "$WRAPPER_DST" false
 
 # Execute file creation based on access rights (Sudo vs User)
 if $NEEDS_SUDO; then
-    sudo bash -c "$CREATE_WRAPPER"
     sudo chmod +x "$WRAPPER_DST"
 else
-    # For Termux (Without Sudo)
-    bash -c "$CREATE_WRAPPER"
     chmod +x "$WRAPPER_DST"
 fi
 
