@@ -46,7 +46,9 @@ def show_help():
   run / exploit                 : Run the selected module
 
 {C.INPUT}
+  storm update                  : Make updates if necessary
   storm verify                  : Used to check the signature of all files
+  storm restart                 : To restart if you experience a bug or error
 {C.HEADER}==========================================================================
     """)
 
