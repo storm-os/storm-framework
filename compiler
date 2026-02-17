@@ -13,39 +13,37 @@ compile_modules() {
         cd "$BASE_PATH" || return 1
     fi
 
-    # --- BAGIAN GOLANG ---
+    # --- SEMUA GOLANG DI SELURUH PROJECT ---
     if command -v go > /dev/null; then
         [ -f "go.mod" ] && rm go.mod
 
-        echo -e "[*] Initializing Go modules."
+        echo -e "[*] Initializing Go modules globally."
         go mod init github.com/storm-os/storm-framework
 
-        echo -e "\n[*] Downloading dependencies."
+        echo -e "[*] Syncing dependencies."
         go get github.com/google/gopacket@latest
         go get github.com/google/gopacket/pcap@latest
         go mod tidy
 
-        find modules/ -name "*.go" | while read -r src; do
+        find . -name "*.go" -not -path "*/.*" -not -path "*/vendor/*" | while read -r src; do
             output="${src%.go}"
+            echo -e "[+] Compiling Go module: $src"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
             chmod +x "$output"
-
         done
     fi
 
-    # --- LOGIKA C ---
+    # --- SEMUA C DI SELURUH PROJECT ---
     if command -v gcc > /dev/null; then
-        find modules/ -name "*.c" | while read -r src; do
+        find . -name "*.c" -not -path "*/.*" | while read -r src; do
             output="${src%.c}"
-
-            echo -e "[*] Initializing C modules."
+            echo -e "[+] Compiling C module: $src"
             if grep -q "pcap.h" "$src"; then
                 gcc "$src" -o "$output" -lpcap
             else
                 gcc "$src" -o "$output"
             fi
             chmod +x "$output"
-
         done
     fi
 }

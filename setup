@@ -112,7 +112,6 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
 
     if [ $? -ne 0 ]; then
         echo -e "${RED}[x] ERROR: Failed to install Python dependencies.${NC}"
-        # Optional: Don't immediately exit if it fails, just give a warning.
     fi
 fi
 
@@ -125,8 +124,13 @@ COMPILER_SRC="./compiler"
 
 if [ -f "$COMPILER_SRC" ]; then
     echo -e "[*] Run binary compilation."
-    . "$COMPILER_SRC"
-    compile_modules
+    if $NEEDS_SUDO; then
+        sudo bash -c "export NEEDS_SUDO=true; . $COMPILER_SRC; compile_modules"
+    else
+        . "$COMPILER_SRC"
+        compile_modules
+    fi
+    cd "$INSTALL_DIR" || { echo -e "${RED}[x] ERROR: Lost track of directory!${NC}"; exit 1; }
 else
     echo -e "${RED}[x] ERROR: File compiler not found in $(pwd)!"
     echo -e "${RED}[!] Make sure the file exists in the project directory."
