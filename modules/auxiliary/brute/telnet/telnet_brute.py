@@ -1,4 +1,3 @@
-import telnetlib3
 import socket
 import os
 from assets.wordlist.userpass import DEFAULT_CREDS, COMMON_USERS
