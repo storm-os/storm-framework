@@ -16,3 +16,4 @@ cryptography
 ipwhois
 ipaddress
 whoisdomain
+telnetlib3
