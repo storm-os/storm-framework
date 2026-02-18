@@ -18,10 +18,7 @@ async def test_telnet(target_ip, port, username, password):
     try:
         # Flash connection
         reader, writer = await telnetlib3.open_connection(
-            host=target_ip,
-            port=int(port),
-            connect_minwait=0.05,
-            connect_maxwait=2.5
+            host=target_ip, port=int(port), connect_minwait=0.05, connect_maxwait=2.5
         )
 
         # Look for a login (e.g.: "login:")
@@ -120,4 +117,3 @@ def execute(options):
     except RuntimeError:
         loop = asyncio.get_event_loop()
         loop.run_until_complete(_execute_async(options))
-
