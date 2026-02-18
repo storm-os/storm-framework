@@ -17,7 +17,6 @@ compile_modules() {
     if command -v go > /dev/null; then
         [ -f "go.mod" ] && rm go.mod
 
-        echo -e "[✓] Compile Go is executed!"
         go mod init github.com/storm-os/storm-framework
 
         echo -e "[*] Syncing dependencies."
@@ -29,13 +28,12 @@ compile_modules() {
             output="${src%.go}"
             CGO_ENABLED=1 go build -mod=mod -o "$output" "$src"
             chmod +x "$output"
-        echo -e "[✓] Compiled Go success!" 
         done
+        echo -e "[✓] Compiled Go success!"
     fi
 
     # --- ALL C's IN THE WHOLE PROJECT ---
     if command -v gcc > /dev/null; then
-        echo -e "[✓] Compile C is executed!"
 
         find . -name "*.c" -not -path "*/.*" | while read -r src; do
             output="${src%.c}"
@@ -45,13 +43,12 @@ compile_modules() {
                 gcc "$src" -o "$output"
             fi
             chmod +x "$output"
-        echo -e "[✓] Compiled C success!"
         done
+        echo -e "[✓] Compiled C success!"
     fi
 
     # --- AUTOMATIC RUST DISCOVERY ---
     if command -v cargo > /dev/null; then
-        echo -e "[✓] Compile Rust is executed!"
 
         find . -name "*.rs" -not -path "*/.*" | while read -r src; do
             output_dir="$(dirname "$src")"
@@ -59,17 +56,20 @@ compile_modules() {
 
             (
                 cd "$output_dir" || exit
+
                 cargo build --release --quiet
 
                 if [ -f "target/release/$output_name" ]; then
                     cp "target/release/$output_name" "./$output_name"
                     chmod +x "$output_name"
-                    
+
                     rm -rf target Cargo.lock
+                else
+                    echo -e "[!] Failed to build: $output_name"
                 fi
             )
-        echo -e "[✓] Compiled Rust success!"
         done
+        echo -e "[✓] Compiled Rust success!"
     fi
 
 }
