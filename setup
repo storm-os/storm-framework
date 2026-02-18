@@ -45,7 +45,7 @@ if [ -d "/data/data/com.termux" ]; then
     INSTALL_DIR="$PREFIX/share/$REPO_NAME"
 
     NEEDS_SUDO=false
-    pkg install -y python git golang build-essential libpcap clang ffmpeg openssl
+    pkg install -y python git golang build-essential libpcap clang ffmpeg openssl cargo
 else
     # Standard Linux Environment
     echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
@@ -56,7 +56,7 @@ else
     INSTALL_DIR="/opt/$REPO_NAME"
 
     NEEDS_SUDO=true
-    sudo apt install -y python3 python3-pip git golang build-essential libpcap-dev clang ffmpeg openssl
+    sudo apt install -y python3 python3-pip git golang build-essential libpcap-dev clang ffmpeg openssl cargo
 fi
 
 # -----------------------------------------------------------------------------
