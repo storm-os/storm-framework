@@ -45,7 +45,7 @@ if [ -d "/data/data/com.termux" ]; then
     INSTALL_DIR="$PREFIX/share/$REPO_NAME"
 
     NEEDS_SUDO=false
-    pkg install -y python git golang build-essential libpcap clang ffmpeg openssl cargo
+    pkg install -y python git golang build-essential libpcap clang ffmpeg openssl
 else
     # Standard Linux Environment
     echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
