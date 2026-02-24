@@ -1,3 +1,9 @@
+# Copyright (c) 2026 Storm Framework
+
+# Licensed under the MIT License.
+
+See LICENSE file in the project root for full license information.
+
 import os
 from app.banners.banner import get_random_banner
 import app.base.config_ui as config_ui

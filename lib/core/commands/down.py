@@ -1,3 +1,9 @@
+# Copyright (c) 2026 Storm Framework
+
+# Licensed under the MIT License.
+
+See LICENSE file in the project root for full license information.
+
 from app.utility.down_osint import install_osint_module
 from app.utility.restart import run_restart
 from app.utility.colors import C
