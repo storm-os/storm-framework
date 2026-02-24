@@ -1,6 +1,6 @@
 import os
 import sys
-import lib.smf.svch as svch
+import lib.smf.core.sf.svch as svch
 
 
 def run_restart(context):
