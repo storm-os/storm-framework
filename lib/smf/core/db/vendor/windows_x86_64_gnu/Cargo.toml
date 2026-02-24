@@ -10,34 +10,14 @@
 # See Cargo.toml.orig for the original contents.
 
 [package]
-edition = "2021"
-rust-version = "1.60"
+edition = "2018"
 name = "windows_x86_64_gnu"
-version = "0.53.1"
-build = "build.rs"
-autolib = false
-autobins = false
-autoexamples = false
-autotests = false
-autobenches = false
+version = "0.48.5"
+authors = ["Microsoft"]
 description = "Import lib for Windows"
-readme = "readme.md"
-categories = ["os::windows-apis"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/microsoft/windows-rs"
 
 [package.metadata.docs.rs]
 default-target = "x86_64-pc-windows-msvc"
 targets = []
-
-[lib]
-name = "windows_x86_64_gnu"
-path = "src/lib.rs"
-
-[lints.rust]
-missing_unsafe_on_extern = "warn"
-
-[lints.rust.unexpected_cfgs]
-level = "warn"
-priority = 0
-check-cfg = ["cfg(windows_raw_dylib, windows_slim_errors)"]

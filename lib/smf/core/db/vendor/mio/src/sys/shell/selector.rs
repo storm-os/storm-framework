@@ -1,6 +1,6 @@
 use std::io;
 #[cfg(unix)]
-use std::os::fd::{AsRawFd, RawFd};
+use std::os::unix::io::{AsRawFd, RawFd};
 use std::time::Duration;
 
 pub type Event = usize;
@@ -21,7 +21,7 @@ impl Selector {
 }
 
 #[cfg(unix)]
-cfg_os_ext! {
+cfg_any_os_ext! {
     use crate::{Interest, Token};
 
     impl Selector {

@@ -1,11 +1,11 @@
-use std::os::fd::{AsFd, AsRawFd, BorrowedFd, FromRawFd, IntoRawFd, OwnedFd, RawFd};
-use std::os::unix::net::{self, SocketAddr};
+use crate::io_source::IoSource;
+use crate::net::{SocketAddr, UnixStream};
+use crate::{event, sys, Interest, Registry, Token};
+
+use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
+use std::os::unix::net;
 use std::path::Path;
 use std::{fmt, io};
-
-use crate::io_source::IoSource;
-use crate::net::UnixStream;
-use crate::{event, sys, Interest, Registry, Token};
 
 /// A non-blocking Unix domain socket server.
 pub struct UnixListener {
@@ -15,8 +15,7 @@ pub struct UnixListener {
 impl UnixListener {
     /// Creates a new `UnixListener` bound to the specified socket `path`.
     pub fn bind<P: AsRef<Path>>(path: P) -> io::Result<UnixListener> {
-        let addr = SocketAddr::from_pathname(path)?;
-        UnixListener::bind_addr(&addr)
+        sys::uds::listener::bind(path.as_ref()).map(UnixListener::from_std)
     }
 
     /// Creates a new `UnixListener` bound to the specified socket `address`.
@@ -45,8 +44,8 @@ impl UnixListener {
     }
 
     /// Returns the local socket address of this listener.
-    pub fn local_addr(&self) -> io::Result<SocketAddr> {
-        self.inner.local_addr()
+    pub fn local_addr(&self) -> io::Result<sys::SocketAddr> {
+        sys::uds::listener::local_addr(&self.inner)
     }
 
     /// Returns the value of the `SO_ERROR` option.
@@ -106,32 +105,5 @@ impl FromRawFd for UnixListener {
     /// non-blocking mode.
     unsafe fn from_raw_fd(fd: RawFd) -> UnixListener {
         UnixListener::from_std(FromRawFd::from_raw_fd(fd))
-    }
-}
-
-impl From<UnixListener> for net::UnixListener {
-    fn from(listener: UnixListener) -> Self {
-        // Safety: This is safe since we are extracting the raw fd from a well-constructed
-        // mio::net::uds::UnixListener which ensures that we actually pass in a valid file
-        // descriptor/socket
-        unsafe { net::UnixListener::from_raw_fd(listener.into_raw_fd()) }
-    }
-}
-
-impl From<UnixListener> for OwnedFd {
-    fn from(unix_listener: UnixListener) -> Self {
-        unix_listener.inner.into_inner().into()
-    }
-}
-
-impl AsFd for UnixListener {
-    fn as_fd(&self) -> BorrowedFd<'_> {
-        self.inner.as_fd()
-    }
-}
-
-impl From<OwnedFd> for UnixListener {
-    fn from(fd: OwnedFd) -> Self {
-        UnixListener::from_std(From::from(fd))
     }
 }

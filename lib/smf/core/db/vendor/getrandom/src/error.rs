@@ -3,26 +3,17 @@ extern crate std;
 
 use core::fmt;
 
+// This private alias mirrors `std::io::RawOsError`:
+// https://doc.rust-lang.org/std/io/type.RawOsError.html)
 cfg_if::cfg_if!(
     if #[cfg(target_os = "uefi")] {
         // See the UEFI spec for more information:
         // https://uefi.org/specs/UEFI/2.10/Apx_D_Status_Codes.html
-
-        /// Raw error code.
-        ///
-        /// This alias mirrors unstable [`std::io::RawOsError`].
-        ///
-        /// [`std::io::RawOsError`]: https://doc.rust-lang.org/std/io/type.RawOsError.html
-        pub type RawOsError = usize;
+        type RawOsError = usize;
         type NonZeroRawOsError = core::num::NonZeroUsize;
         const UEFI_ERROR_FLAG: RawOsError = 1 << (RawOsError::BITS - 1);
     } else {
-        /// Raw error code.
-        ///
-        /// This alias mirrors unstable [`std::io::RawOsError`].
-        ///
-        /// [`std::io::RawOsError`]: https://doc.rust-lang.org/std/io/type.RawOsError.html
-        pub type RawOsError = i32;
+        type RawOsError = i32;
         type NonZeroRawOsError = core::num::NonZeroI32;
     }
 );
@@ -57,25 +48,7 @@ impl Error {
     /// Custom errors can be in the range of 2^17..(2^17 + 2^16)
     const CUSTOM_START: RawOsError = 1 << 17;
 
-    /// Creates a new `Error` instance from a positive error code.
-    ///
-    /// Returns [`Error::ERRNO_NOT_POSITIVE`] for zero and negative error codes.
-    #[cfg(not(target_os = "uefi"))]
-    #[allow(dead_code)]
-    pub(super) fn from_errno(errno: i32) -> Self {
-        if errno > 0 {
-            let code = errno
-                .checked_neg()
-                .expect("Positive number can be always negated");
-            Error::from_neg_error_code(code)
-        } else {
-            Error::ERRNO_NOT_POSITIVE
-        }
-    }
-
-    /// Creates a new `Error` instance from a negative error code.
-    ///
-    /// Returns [`Error::UNEXPECTED`] for zero and positive error codes.
+    /// Creates a new instance of an `Error` from a negative error code.
     #[cfg(not(target_os = "uefi"))]
     #[allow(dead_code)]
     pub(super) fn from_neg_error_code(code: RawOsError) -> Self {
@@ -177,11 +150,7 @@ impl Error {
             Error::IOS_RANDOM_GEN => "SecRandomCopyBytes: iOS Security framework failure",
             #[cfg(all(windows, target_vendor = "win7"))]
             Error::WINDOWS_RTL_GEN_RANDOM => "RtlGenRandom: Windows system function failure",
-            #[cfg(all(
-                feature = "wasm_js",
-                target_arch = "wasm32",
-                any(target_os = "unknown", target_os = "none")
-            ))]
+            #[cfg(all(feature = "wasm_js", getrandom_backend = "wasm_js"))]
             Error::WEB_CRYPTO => "Web Crypto API is unavailable",
             #[cfg(target_os = "vxworks")]
             Error::VXWORKS_RAND_SECURE => "randSecure: VxWorks RNG module is not initialized",
@@ -206,8 +175,6 @@ impl Error {
         Some(desc)
     }
 }
-
-impl core::error::Error for Error {}
 
 impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

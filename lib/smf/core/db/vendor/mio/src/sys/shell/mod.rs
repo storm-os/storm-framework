@@ -21,16 +21,12 @@ cfg_net! {
 
 cfg_io_source! {
     use std::io;
-    #[cfg(any(unix))]
-    use std::os::fd::RawFd;
-    // TODO: once <https://github.com/rust-lang/rust/issues/126198> is fixed this
-    // can use `std::os::fd` and be merged with the above.
-    #[cfg(target_os = "hermit")]
-    use std::os::hermit::io::RawFd;
     #[cfg(windows)]
     use std::os::windows::io::RawSocket;
+    #[cfg(unix)]
+    use std::os::unix::io::RawFd;
 
-    #[cfg(any(windows, unix, target_os = "hermit"))]
+    #[cfg(any(windows, unix))]
     use crate::{Registry, Token, Interest};
 
     pub(crate) struct IoSourceState;
@@ -50,7 +46,7 @@ cfg_io_source! {
         }
     }
 
-    #[cfg(any(unix, target_os = "hermit"))]
+    #[cfg(unix)]
     impl IoSourceState {
         pub fn register(
             &mut self,

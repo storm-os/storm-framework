@@ -1,7 +1,7 @@
 //! Implementations that just need to read from a file
 use crate::Error;
 use core::{
-    ffi::{CStr, c_void},
+    ffi::c_void,
     mem::MaybeUninit,
     sync::atomic::{AtomicI32, Ordering},
 };
@@ -9,8 +9,8 @@ use core::{
 #[cfg(not(any(target_os = "android", target_os = "linux")))]
 pub use crate::util::{inner_u32, inner_u64};
 
-#[path = "../utils/sys_fill_exact.rs"]
-pub(super) mod utils;
+#[path = "../util_libc.rs"]
+pub(super) mod util_libc;
 
 /// For all platforms, we use `/dev/urandom` rather than `/dev/random`.
 /// For more information see the linked man pages in lib.rs.
@@ -18,7 +18,7 @@ pub(super) mod utils;
 ///   - On Redox, only /dev/urandom is provided.
 ///   - On AIX, /dev/urandom will "provide cryptographically secure output".
 ///   - On Haiku and QNX Neutrino they are identical.
-const FILE_PATH: &CStr = c"/dev/urandom";
+const FILE_PATH: &[u8] = b"/dev/urandom\0";
 
 // File descriptor is a "nonnegative integer", so we can safely use negative sentinel values.
 const FD_UNINIT: libc::c_int = -1;
@@ -46,22 +46,33 @@ pub fn fill_inner(dest: &mut [MaybeUninit<u8>]) -> Result<(), Error> {
     if fd == FD_UNINIT || fd == FD_ONGOING_INIT {
         fd = open_or_wait()?;
     }
-    utils::sys_fill_exact(dest, |buf| unsafe {
+    util_libc::sys_fill_exact(dest, |buf| unsafe {
         libc::read(fd, buf.as_mut_ptr().cast::<c_void>(), buf.len())
     })
 }
 
 /// Open a file in read-only mode.
-fn open_readonly(path: &CStr) -> Result<libc::c_int, Error> {
+///
+/// # Panics
+/// If `path` does not contain any zeros.
+// TODO: Move `path` to `CStr` and use `CStr::from_bytes_until_nul` (MSRV 1.69)
+// or C-string literals (MSRV 1.77) for statics
+fn open_readonly(path: &[u8]) -> Result<libc::c_int, Error> {
+    assert!(path.contains(&0));
     loop {
-        let fd = unsafe { libc::open(path.as_ptr(), libc::O_RDONLY | libc::O_CLOEXEC) };
+        let fd = unsafe {
+            libc::open(
+                path.as_ptr().cast::<libc::c_char>(),
+                libc::O_RDONLY | libc::O_CLOEXEC,
+            )
+        };
         if fd >= 0 {
             return Ok(fd);
         }
-        let errno = utils::get_errno();
+        let err = util_libc::last_os_error();
         // We should try again if open() was interrupted.
-        if errno != libc::EINTR {
-            return Err(Error::from_errno(errno));
+        if err.raw_os_error() != Some(libc::EINTR) {
+            return Err(err);
         }
     }
 }
@@ -136,7 +147,7 @@ mod sync {
 
 #[cfg(any(target_os = "android", target_os = "linux"))]
 mod sync {
-    use super::{Error, FD, FD_ONGOING_INIT, open_readonly, utils};
+    use super::{open_readonly, util_libc::last_os_error, Error, FD, FD_ONGOING_INIT};
 
     /// Wait for atomic `FD` to change value from `FD_ONGOING_INIT` to something else.
     ///
@@ -152,7 +163,7 @@ mod sync {
         debug_assert!({
             match ret {
                 0 => true,
-                -1 => utils::get_errno() == libc::EAGAIN,
+                -1 => last_os_error().raw_os_error() == Some(libc::EAGAIN),
                 _ => false,
             }
         });
@@ -194,7 +205,7 @@ mod sync {
     //
     // libsodium uses `libc::poll` similarly to this.
     pub(super) fn wait_until_rng_ready() -> Result<(), Error> {
-        let fd = open_readonly(c"/dev/random")?;
+        let fd = open_readonly(b"/dev/random\0")?;
         let mut pfd = libc::pollfd {
             fd,
             events: libc::POLLIN,
@@ -209,12 +220,12 @@ mod sync {
                 debug_assert_eq!(res, 1);
                 break Ok(());
             }
-            let errno = utils::get_errno();
+            let err = last_os_error();
             // Assuming that `poll` is called correctly,
             // on Linux it can return only EINTR and ENOMEM errors.
-            match errno {
-                libc::EINTR => continue,
-                _ => break Err(Error::from_errno(errno)),
+            match err.raw_os_error() {
+                Some(libc::EINTR) => continue,
+                _ => break Err(err),
             }
         };
         unsafe { libc::close(fd) };

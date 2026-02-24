@@ -2,7 +2,7 @@
 use crate::Error;
 use core::{
     mem::MaybeUninit,
-    ptr::{self, NonNull, null_mut},
+    ptr::{self, null_mut, NonNull},
     sync::atomic::{AtomicPtr, Ordering::Relaxed},
 };
 use r_efi::{
