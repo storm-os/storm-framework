@@ -8,6 +8,7 @@ import os
 import subprocess
 import shutil
 from rootmap import ROOT
+from app.utility.spin import StormSpin
 from scripts.cpl.ioname import get_bin_name
 from scripts.cpl.advcore import safe_mode
 from concurrent.futures import ProcessPoolExecutor
@@ -43,7 +44,10 @@ def compile_rust_project(cargo_path):
     # -j 1 This ensures 1 process uses 1 CPU core
     cmd = "cargo build --release --offline -j 1"
 
-    if run_cmd(cmd, cwd=output_dir):
+    with StormSpin():
+        success = run_cmd(cmd, cwd=output_dir):
+
+    if success:
         bin_name = get_bin_name(cargo_path)
         src_bin = os.path.join(SHARED_TARGET, "release", bin_name)
         dst_bin = os.path.join(output_dir, output_name)
