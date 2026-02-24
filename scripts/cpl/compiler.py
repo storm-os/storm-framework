@@ -1,6 +1,7 @@
 import os
 import subprocess
 import shutil
+import re
 from rootmap import ROOT
 from scripts.cpl.advcore import safe_mode
 from concurrent.futures import ProcessPoolExecutor
