@@ -1,6 +1,4 @@
 import os
-import subprocess
-import platform
 
 def safe_mode():
     is_android = "TERMUX_VERSION" in os.environ or os.path.exists("/data/data/com.termux")
