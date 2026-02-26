@@ -45,7 +45,7 @@ if [ -d "/data/data/com.termux" ]; then
     echo -e "${GREEN}[!] Environment detected: Termux${NC}"
 
     BIN_DIR="$PREFIX/bin"
-    SHEBANG_PATH="#!$PREFIX/bin/bash"
+    SHEBANG_PATH="#!/usr/bin/env bash"
     PYTHON_CMD="python"
     INSTALL_DIR="$PREFIX/share/$REPO_NAME"
 
@@ -56,7 +56,7 @@ else
     echo -e "${GREEN}[!] Environment detected: Standard Linux${NC}"
 
     BIN_DIR="/usr/local/bin"
-    SHEBANG_PATH="#!/bin/bash"
+    SHEBANG_PATH="#!/bin/env bash"
     PYTHON_CMD="python3"
     INSTALL_DIR="/opt/$REPO_NAME"
 
