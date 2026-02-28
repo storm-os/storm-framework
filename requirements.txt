@@ -17,3 +17,5 @@ ipwhois
 ipaddress
 whoisdomain
 telnetlib3
+beautifulsoup4
+
