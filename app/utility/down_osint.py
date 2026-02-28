@@ -32,6 +32,7 @@ def install_osint_module():
         subprocess.run(
             [sys.executable, "-m", "pip", "install", ".", "--target", target_dir]
             + extra,
+            cwd=target_dir,
             check=True,
         )
 
