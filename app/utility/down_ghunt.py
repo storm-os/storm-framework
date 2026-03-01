@@ -6,6 +6,7 @@ from pathlib import Path
 from rootmap import ROOT
 from scripts.security.sign import generate_folder_manifest
 
+
 def down_ghunt():
     repo_url = "https://github.com/storm-os/GhOSINT.git"
     target_dir = Path(ROOT) / "script" / "ghunt"
@@ -16,10 +17,19 @@ def down_ghunt():
 
         try:
             subprocess.run(
-                ["git", "-C", str(target_dir), "fetch", "--all"], stdout=subprocess.DEVNULL
+                ["git", "-C", str(target_dir), "fetch", "--all"],
+                stdout=subprocess.DEVNULL,
             )
             check_diff = subprocess.run(
-                ["git", "-C", str(target_dir), "diff", "--name-only", "HEAD", "origin/main"],
+                [
+                    "git",
+                    "-C",
+                    str(target_dir),
+                    "diff",
+                    "--name-only",
+                    "HEAD",
+                    "origin/main",
+                ],
                 capture_output=True,
                 text=True,
             )
@@ -37,20 +47,26 @@ def down_ghunt():
         print("[*] Downloading OSINT Module...")
         subprocess.run(["git", "clone", repo_url, str(target_dir)], check=True)
 
-
     # setup after installation/update is complete
     # and register the new file identity
     venv_dir = target_dir / "venv"
     python_exe = venv_dir / "bin" / "python"
     pip_exe = venv_dir / "bin" / "pip"
-    
+
     try:
         if not venv_dir.exists():
             subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], check=True)
         else:
             pass
 
-        subprocess.run([str(pip_exe), "install", "ghunt", ], check=True)
+        subprocess.run(
+            [
+                str(pip_exe),
+                "install",
+                "ghunt",
+            ],
+            check=True,
+        )
         subprocess.run(
             [str(python_exe), "-m", "playwright", "install", "chromium"], check=True
         )
