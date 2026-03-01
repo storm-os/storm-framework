@@ -1,7 +1,7 @@
 <h2 align="center">Storm-Framework</h2>
 
 <p align="center">
-  <a href="https://github.com/storm-os/storm-framework/LICENSE">
+  <a href="https://github.com/storm-os/storm-framework/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue">
   </a>
   <a href="">
@@ -11,7 +11,7 @@
   <a href="">
     <img src="https://img.shields.io/badge/Termux-supported-black?logo=android">
   </a>
-  <a href="https://github.com/storm-os/storm-framework/README_ID.md">
+  <a href="https://github.com/storm-os/storm-framework/blob/main/README_ID.md">
     <img src="https://img.shields.io/badge/Language-Indonesian-red?logo=indonesia&logoColor=white">
   </a>
 </p>
