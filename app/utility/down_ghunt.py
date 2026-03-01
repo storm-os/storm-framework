@@ -2,31 +2,29 @@ import os
 import subprocess
 import sys
 
+from pathlib import Path
 from rootmap import ROOT
-
+from scripts.security.sign import generate_folder_manifest
 
 def down_ghunt():
     repo_url = "https://github.com/storm-os/GhOSINT.git"
-    target_dir = os.path.join(ROOT, "script", "ghunt")
+    target_dir = Path(ROOT) / "script" / "ghunt"
 
-    # 1. Clone Repo
+    # Clone Repo or Update
     if os.path.exists(os.path.join(target_dir, ".git")):
         print("[!] Module found. Updating...")
 
         try:
-            # 1. Get the latest info without changing the locale first
             subprocess.run(
-                ["git", "-C", target_dir, "fetch", "--all"], stdout=subprocess.DEVNULL
+                ["git", "-C", str(target_dir), "fetch", "--all"], stdout=subprocess.DEVNULL
             )
-            # 2. CHECK CHANGES: Compare local (HEAD) with server (origin/main)
             check_diff = subprocess.run(
-                ["git", "-C", target_dir, "diff", "--name-only", "HEAD", "origin/main"],
+                ["git", "-C", str(target_dir), "diff", "--name-only", "HEAD", "origin/main"],
                 capture_output=True,
                 text=True,
             )
-            # 3. Reset Execution (Update file to the latest version)
             process = subprocess.run(
-                ["git", "-C", target_dir, "reset", "--hard", "origin/main"],
+                ["git", "-C", str(target_dir), "reset", "--hard", "origin/main"],
                 stdout=subprocess.PIPE,
                 text=True,
             )
@@ -37,30 +35,29 @@ def down_ghunt():
             print(f"[-] Update failed: {e}")
     else:
         print("[*] Downloading OSINT Module...")
-        subprocess.run(["git", "clone", repo_url, target_dir], check=True)
+        subprocess.run(["git", "clone", repo_url, str(target_dir)], check=True)
 
-    venv_dir = base_path / "venv"
+
+    # setup after installation/update is complete
+    # and register the new file identity
+    venv_dir = target_dir / "venv"
     python_exe = venv_dir / "bin" / "python"
     pip_exe = venv_dir / "bin" / "pip"
-
+    
     try:
-        # 1. Buat Virtual Environment
         if not venv_dir.exists():
-            print("[+] Creating Virtual Environment...")
             subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], check=True)
         else:
-            print("[!] Venv already exists. Skipping creation.")
+            pass
 
-        # Kita install langsung 'ghunt' dari PyPI atau dari folder jika ada requirements.txt
-        subprocess.run([str(pip_exe), "install", "--upgrade", "pip"], check=True)
-        subprocess.run([str(pip_exe), "install", "ghunt"], check=True)
-
-        # 3. Install Playwright (Wajib untuk GHunt login/scraping)
+        subprocess.run([str(pip_exe), "install", "ghunt", ], check=True)
         subprocess.run(
             [str(python_exe), "-m", "playwright", "install", "chromium"], check=True
         )
+        print("[✓] OSINT Package ghunt installed successfully.")
 
-        print("\n[✔] GHunt Installation Complete!")
+        # New file hash and signature
+        generate_folder_manifest()
         return True
     except Exception as e:
         print(f"\n[-] Installation Failed: {e}")
