@@ -36,6 +36,7 @@ def run_cmd(cmd, cwd=None):
 
 def compile_rust_project(cargo_path):
     output_dir = os.path.dirname(cargo_path)
+    outdir = os.path.join(ROOT, "external", "source", "binary")
     bin_name = get_bin_name(cargo_path)
     
     src_bin = os.path.join(SHARED_TARGET, "release", bin_name)
@@ -55,7 +56,9 @@ def compile_rust_project(cargo_path):
 
 def compile_single_file(task):
     lang, src_path = task
-    output = os.path.splitext(src_path)[0]
+    outdir = os.path.join(ROOT, "external", "source", "binary")
+    bin_name = os.path.splitext(os.path.basename(src_path))[0]
+    output = os.path.join(outdir, bin_name)
 
     if lang == "go":
         cmd = f"CGO_ENABLED=1 go build -o '{output}' '{src_path}'"
@@ -82,7 +85,7 @@ def main():
     # SCANNING PHASE (Fast & Accurate)
     for root, dirs, files in os.walk("."):
         # ignore sensitive folders no compile
-        if any(x in root for x in [".git", "db", "cache", "target"]):
+        if any(x in root for x in [".git", "db", "cache", "target", "binary"]):
             continue
 
         if "Cargo.toml" in files:
