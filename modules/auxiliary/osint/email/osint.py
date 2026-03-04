@@ -22,5 +22,8 @@ def execute(options):
             print(
                 f"{C.ERROR}[x] ERROR: EMAIL is not set. Use 'set email <target>'{C.RESET}"
             )
-    except KeyboardInterrupt: return 
-    except Exception as e: {"status": "error": "message": {e}}
+    except KeyboardInterrupt:
+        return 
+    except Exception as e:
+        {"status": "error": "message": str(e)}
+
