@@ -7,10 +7,11 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 REQUIRED_OPTIONS = {"URL": ""}
 
+
 def execute(options):
     target = options.get("URL")
     port = 443
-    
+
     url = f"https://{target}:{port}/api/v2/monitor/system/status"
     headers = {
         "User-Agent": "Mozilla/5.0",
@@ -32,6 +33,6 @@ def execute(options):
             print("[-] Target not vulnerable or patched.")
 
     except KeyboardInterrupt:
-        return 
+        return
     except Exception as e:
         print(f"[-] GLOBAL ERROR: {e}")
