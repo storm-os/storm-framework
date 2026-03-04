@@ -109,7 +109,7 @@ async def _execute_async(options):
             print(f"\n{C.MENU}  {SYM_FAILED} All passwords are incorrect.")
 
     except KeyboardInterrupt:
-        return 
+        return
     except Exception as e:
         print(f"{C.ERROR}[x] GLOBAL ERROR: {e}")
 
