@@ -109,10 +109,10 @@ if [ -f "$INSTALL_DIR/requirements.txt" ]; then
 
     if $NEEDS_SUDO; then
         # In Ubuntu/Kali, we add the flag --break-system-packages
-        sudo "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt" --break-system-packages
+        sudo "$PYTHON_CMD" -m pip install "$INSTALL_DIR/." --break-system-packages
     else
         # In Termux, pip usually doesn't need additional flags.
-        "$PYTHON_CMD" -m pip install -r "$INSTALL_DIR/requirements.txt"
+        "$PYTHON_CMD" -m pip install "$INSTALL_DIR/."
     fi
 
     if [ $? -ne 0 ]; then
