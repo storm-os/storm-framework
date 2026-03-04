@@ -6,13 +6,14 @@ from app.utility.colors import C
 
 REQUIRED_OPTIONS = {"HASH": "", "PASS": ""}
 
+
 def execute(options):
     """
     Cracking MD5-Crypt password hashes using wordlists.
     """
     shadow_entry = options.get("HASH")
     wordlist_file = options.get("PASS")
-    
+
     try:
         parts = shadow_entry.split(":")
         if len(parts) < 2:
@@ -43,17 +44,17 @@ def execute(options):
     print(f"{C.MENU} [*] Hash Type: MD5-Crypt ($1$)")
     print(f"{C.MENU} [*] Salt: {salt_crypt}")
     print(f"{C.MENU} [*] Loading Wordlist from: {wordlist_file}")
-    
+
     try:
         with open(wordlist_file, "r", encoding="latin-1") as f:
             for line in f:
                 word = line.strip()
                 if not word:
                     continue
-                    
+
                 hashed_word = crypt.crypt(word, salt_crypt)
                 print(f"{C.MENU}  Try: {word}{C.RESET}", end="\r")
-                
+
                 if hashed_word == full_hash:
                     print(f"{C.SUCCESS} [✓] SUCCESSFULLY FOUND U:{username} H:{word}")
                     print(
@@ -69,4 +70,4 @@ def execute(options):
         print(f"{C.ERROR} \n[-] ERROR: Wordlist file not found.")
     except Exception as e:
         print(f"{C.ERROR} \n[-] Unexpected error while cracking: {e}")
-        return 
+        return
