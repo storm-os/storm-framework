@@ -78,6 +78,6 @@ def stormUI():
         print(f"{C.HEADER}+-- --=[ {C.INPUT}{line_text} {C.HEADER}]=--")
 
     print("")
-    print("The Storm Framework is a storm-os Open Source Project")
+    print("The Storm Framework is a zxelzy Open Source Project")
     print(f"Run {C.SUCCESS}about{C.RESET} to view dev information.")
     print("")
