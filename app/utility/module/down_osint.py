@@ -52,8 +52,7 @@ def install_osint_module():
         )
         # multi environment, this is good for users testing on termux or standard linux
         subprocess.run(
-            [sys.executable, "-m", "pip", "install", "."]
-            + extra,
+            [sys.executable, "-m", "pip", "install", "."] + extra,
             cwd=target_dir,
             check=True,
         )
