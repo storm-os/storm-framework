@@ -1,8 +1,6 @@
 // MIT License.
 // Copyright (c) 2026 Storm Framework
-
 // See LICENSE file in the project root for full license information.
-
 use sha2::{Sha256, Digest};
 use std::fs;
 use std::io::{self, Write};
@@ -12,6 +10,7 @@ use walkdir::WalkDir;
 use serde::{Deserialize, Serialize};
 use ed25519_dalek::{VerifyingKey, Signature, Verifier};
 use base64::{engine::general_purpose, Engine as _};
+
 #[derive(Serialize, Deserialize, Debug)]
 struct Manifest {
     metadata: Metadata,
@@ -40,7 +39,7 @@ fn main() {
     let db_path = "lib/core/database/signed_manifest.json";
     let env_path = ".env";
 
-    // --- 1. Ambil Public Key dari .env ---
+    // Ambil Public Key dari .env ---
     let env_content = fs::read_to_string(env_path).expect("[-] ERROR: .env not found");
     let pub_key_raw = env_content.lines()
         .find(|line| line.starts_with("STORM_PUBKEY="))
@@ -53,18 +52,15 @@ fn main() {
     let pub_key_clean = pub_key_raw.trim_matches(|c: char| c.is_whitespace() || c == '"' || c == '\'');
     let pub_key_full = general_purpose::STANDARD.decode(pub_key_clean).expect("[-] Invalid Base64 Public Key");
 
-    // Kupas header jika perlu
     let mut key_bytes = [0u8; 32];
     let start = if pub_key_full.len() > 32 { pub_key_full.len() - 32 } else { 0 };
     key_bytes.copy_from_slice(&pub_key_full[start..]);
 
     let public_key = VerifyingKey::from_bytes(&key_bytes).expect("[-] Failed to create VerifyingKey");
 
-    // --- 2. Load & Parse JSON ---
     let content = fs::read_to_string(db_path).expect("[-] ERROR: Manifest file not found");
     let manifest: Manifest = serde_json::from_str(&content).expect("[-] ERROR: JSON format broken");
 
-    // --- 3. Verifikasi Signature ---
     let files_json = serde_json::to_string(&manifest.files).expect("[-] Failed to reserialize");
     let signature_bytes = general_purpose::STANDARD.decode(&manifest.metadata.signature).expect("[-] Invalid Signature Base64");
     let signature = Signature::from_slice(&signature_bytes).expect("[-] Invalid Signature format");
@@ -76,7 +72,6 @@ fn main() {
 
     println!("[+] Digital Signature Verified. Manifest is authentic.");
 
-    // --- 4. Audit Files ---
     let mut verified_count = 0;
     let mut modified_files = Vec::new();
     let mut untracked_files = Vec::new();
@@ -126,6 +121,7 @@ fn main() {
         }
     }
 
+    // print log
     if !modified_files.is_empty() || !missing_files.is_empty() || !untracked_files.is_empty() {
         println!("\n\n[!] INTEGRITY BREACH DETECTED!");
         for f in &modified_files { println!("    [MODIFIED]  -> {}", f); }
